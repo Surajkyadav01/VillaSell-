@@ -7,6 +7,7 @@ import {
   MapPin, 
   ShieldCheck, 
   ArrowUp,
+  ExternalLink,
   Instagram,
   Facebook,
   Youtube
@@ -272,9 +273,9 @@ export const Footer: React.FC<FooterProps> = ({
             </ul>
           </div>
 
-          {/* Column 3: Housing Edge & Tools */}
+          {/* Column 4: VillaSell Edge & Tools */}
           <div className="space-y-3">
-            <h4 className="text-white font-extrabold text-sm uppercase tracking-wider">Housing Edge & Tools</h4>
+            <h4 className="text-white font-extrabold text-sm uppercase tracking-wider">VillaSell Edge & Tools</h4>
             <ul className="space-y-2 text-xs">
               <li>
                 <button
@@ -339,7 +340,7 @@ export const Footer: React.FC<FooterProps> = ({
             </ul>
           </div>
 
-          {/* Column 4: Legal & Compliance */}
+          {/* Column 5: Legal & Compliance */}
           <div className="space-y-3">
             <h4 className="text-white font-extrabold text-sm uppercase tracking-wider">Trust & Policies</h4>
             <ul className="space-y-2 text-xs">
@@ -396,18 +397,39 @@ export const Footer: React.FC<FooterProps> = ({
           </div>
         </div>
 
-        {/* Bottom Bar: Copyright & Back to Top */}
-        <div className="mt-12 pt-6 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
-          <p>{BRAND_CONFIG.copyright}</p>
-          <div className="flex items-center gap-4">
-            <span>Official Helpline: {BRAND_CONFIG.phone}</span>
+        {/* Bottom Bar matching exact layout from screenshot */}
+        <div className="mt-12 pt-6 border-t border-slate-800/80 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-400">
+          {/* Left: Copyright & RERA */}
+          <div className="flex items-center flex-wrap gap-2 text-center md:text-left justify-center md:justify-start">
+            <span>© 2026 VillaSell. All Rights Reserved.</span>
+            <span className="text-slate-600 hidden sm:inline">•</span>
+            <span className="text-slate-400">RERA Certified Real Estate Marketplace</span>
+          </div>
+
+          {/* Center: Built by Suraj Tech Hub Pill with clickable link */}
+          <div className="flex items-center justify-center">
+            <a
+              href="https://surajkyadav01.github.io/Suraj-Tech-Hub/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full border border-slate-700/80 bg-slate-900/90 hover:bg-slate-800/90 hover:border-cyan-500/50 text-xs transition-all shadow-xs group"
+              title="Visit Suraj Tech Hub"
+            >
+              <span className="text-slate-300">Built by</span>
+              <span className="text-cyan-400 font-bold group-hover:underline">Suraj Tech Hub</span>
+              <ExternalLink className="w-3 h-3 text-cyan-400 group-hover:translate-x-0.5 transition-transform" />
+            </a>
+          </div>
+
+          {/* Right: Back to Top Button (Privacy Policy removed as requested) */}
+          <div className="flex items-center justify-center md:justify-end">
             <button
               onClick={scrollToTop}
-              className="flex items-center gap-1 text-slate-400 hover:text-white transition-colors cursor-pointer p-1"
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl border border-slate-700/80 bg-slate-900/80 hover:bg-slate-800 hover:text-white text-slate-300 text-xs transition-colors cursor-pointer"
               title="Back to Top"
             >
-              <span>Back to Top</span>
               <ArrowUp className="w-3.5 h-3.5" />
+              <span>Back to Top</span>
             </button>
           </div>
         </div>
