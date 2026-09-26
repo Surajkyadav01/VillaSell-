@@ -1,0 +1,6 @@
+{
+  "name": "VillaSell - Real Estate & Property Aggregator",
+  "description": "Find your dream villa, luxury apartment, commercial property, and verified plots with zero brokerage and trusted legal assistance.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

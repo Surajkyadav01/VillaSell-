@@ -1,0 +1,9 @@
+# Robots.txt for VillaSell Real Estate Hub
+User-agent: *
+Allow: /
+
+# Disallow transient query hashes
+Disallow: /api/
+
+# Sitemap location
+Sitemap: https://villasell.in/sitemap.xml
