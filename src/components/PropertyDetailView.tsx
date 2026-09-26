@@ -185,10 +185,11 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({
 
             <a
               href={`tel:${BRAND_CONFIG.phoneClean}`}
-              className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs transition-colors shadow-xs"
+              className="flex items-center gap-1.5 px-2.5 sm:px-3.5 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs transition-colors shadow-xs shrink-0"
             >
               <Phone className="w-3.5 h-3.5" />
-              <span>Call Helpline</span>
+              <span className="hidden sm:inline">Call Helpline</span>
+              <span className="sm:hidden">Call</span>
             </a>
           </div>
         </div>
@@ -690,6 +691,25 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({
             </div>
           </div>
         )}
+        {/* Mobile Sticky Floating Contact Bar (Instant WhatsApp & Direct Call on Phones) */}
+        <div className="fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200 px-3.5 py-2.5 flex items-center gap-2.5 lg:hidden shadow-2xl">
+          <a
+            href={whatsappInquiryUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex-1 py-2.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-sm transition-transform active:scale-95"
+          >
+            <MessageCircle className="w-4 h-4" />
+            <span>WhatsApp Owner</span>
+          </a>
+          <a
+            href={`tel:${BRAND_CONFIG.phoneClean}`}
+            className="flex-1 py-2.5 px-3 rounded-xl bg-purple-700 hover:bg-purple-800 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-sm transition-transform active:scale-95"
+          >
+            <Phone className="w-4 h-4" />
+            <span>Call Agent</span>
+          </a>
+        </div>
       </div>
     </div>
   );

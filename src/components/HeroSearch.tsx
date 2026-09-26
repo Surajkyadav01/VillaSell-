@@ -54,7 +54,7 @@ export const HeroSearch: React.FC<HeroSearchProps> = ({
   ];
 
   return (
-    <div className="relative bg-gradient-to-r from-[#3e1470] via-[#5b2497] to-[#511e89] text-white pt-8 pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden min-h-[580px] flex flex-col justify-center">
+    <div className="relative bg-gradient-to-r from-[#3e1470] via-[#5b2497] to-[#511e89] text-white pt-6 sm:pt-8 pb-12 sm:pb-16 px-3 sm:px-6 lg:px-8 overflow-hidden min-h-[520px] sm:min-h-[580px] flex flex-col justify-center">
       {/* ----------------- HOUSING.COM STYLE BACKGROUND GRAPHICS ----------------- */}
 
       {/* 1. Atmospheric Gradient & Depth Lighting */}
@@ -287,42 +287,44 @@ export const HeroSearch: React.FC<HeroSearchProps> = ({
             </span>
           </div>
 
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white mb-2 leading-tight drop-shadow-sm">
+          <h1 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white mb-2 leading-tight drop-shadow-sm">
             Find Your Dream Villa, Apartment & Commercial Property
           </h1>
-          <p className="text-purple-100/95 text-sm sm:text-base font-normal max-w-2xl mx-auto leading-relaxed">
+          <p className="text-purple-100/95 text-xs sm:text-base font-normal max-w-2xl mx-auto leading-relaxed px-2">
             India's premier zero-brokerage property marketplace offering verified luxury villas, modern apartments, and premium commercial spaces with end-to-end legal assistance.
           </p>
         </div>
 
         {/* Housing.com Unified Search Card */}
         <div className="max-w-4xl mx-auto">
-          {/* Top Dark Tab Pill (Housing.com signature style) */}
-          <div className="inline-flex items-center bg-slate-950/80 backdrop-blur-md p-1.5 rounded-t-2xl sm:rounded-t-3xl border-t border-x border-white/20 shadow-lg">
-            {categories.map((cat) => (
-              <button
-                key={cat.key}
-                onClick={() => setFilters((prev) => ({ ...prev, category: cat.key }))}
-                className={`relative px-4 sm:px-5 py-2 rounded-xl text-xs sm:text-sm font-black tracking-wider transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5 ${
-                  filters.category === cat.key
-                    ? 'bg-purple-700 text-white shadow-md shadow-purple-900/40 border border-purple-500/30'
-                    : 'text-slate-300 hover:text-white hover:bg-white/10'
-                }`}
-              >
-                <span>{cat.label}</span>
-                {cat.badge && (
-                  <span className={`text-[9px] px-1.5 py-0.2 rounded-full font-black uppercase tracking-tight ${
-                    filters.category === cat.key ? 'bg-amber-400 text-slate-950' : 'bg-amber-400/30 text-amber-300'
-                  }`}>
-                    {cat.badge}
-                  </span>
-                )}
-              </button>
-            ))}
+          {/* Top Dark Tab Pill (Housing.com signature style - Mobile Horizontal Scrollable) */}
+          <div className="overflow-x-auto max-w-full pb-0.5 no-scrollbar">
+            <div className="inline-flex items-center bg-slate-950/85 backdrop-blur-md p-1 sm:p-1.5 rounded-t-xl sm:rounded-t-3xl border-t border-x border-white/20 shadow-lg min-w-max">
+              {categories.map((cat) => (
+                <button
+                  key={cat.key}
+                  onClick={() => setFilters((prev) => ({ ...prev, category: cat.key }))}
+                  className={`relative px-3 sm:px-5 py-1.5 sm:py-2 rounded-lg sm:rounded-xl text-xs sm:text-sm font-black tracking-wider transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5 ${
+                    filters.category === cat.key
+                      ? 'bg-purple-700 text-white shadow-md shadow-purple-900/40 border border-purple-500/30'
+                      : 'text-slate-300 hover:text-white hover:bg-white/10'
+                  }`}
+                >
+                  <span>{cat.label}</span>
+                  {cat.badge && (
+                    <span className={`text-[9px] px-1.5 py-0.2 rounded-full font-black uppercase tracking-tight ${
+                      filters.category === cat.key ? 'bg-amber-400 text-slate-950' : 'bg-amber-400/30 text-amber-300'
+                    }`}>
+                      {cat.badge}
+                    </span>
+                  )}
+                </button>
+              ))}
+            </div>
           </div>
 
           {/* Unified White Search Box with Depth */}
-          <div className="bg-white rounded-b-2xl sm:rounded-b-3xl rounded-tr-2xl sm:rounded-tr-3xl shadow-2xl p-3 sm:p-5 text-slate-900 border border-white/90">
+          <div className="bg-white rounded-b-2xl sm:rounded-b-3xl rounded-tr-xl sm:rounded-tr-3xl shadow-2xl p-3 sm:p-5 text-slate-900 border border-white/90">
             {/* Input Grid */}
             <div className="grid grid-cols-1 md:grid-cols-12 gap-2 sm:gap-3 items-center">
               {/* City Selector */}
@@ -390,15 +392,15 @@ export const HeroSearch: React.FC<HeroSearchProps> = ({
             </div>
 
             {/* Bottom Row: Trending Localities & Housing.com Purple Search Button */}
-            <div className="mt-3 pt-3 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3">
-              <div className="flex items-center gap-1.5 flex-wrap text-xs text-slate-500">
-                <span className="font-bold text-slate-700">Trending:</span>
+            <div className="mt-3 pt-3 border-t border-slate-100 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+              <div className="flex items-center gap-1.5 overflow-x-auto sm:flex-wrap text-xs text-slate-500 max-w-full no-scrollbar py-0.5">
+                <span className="font-bold text-slate-700 shrink-0">Trending:</span>
                 {popularKeywords.map((loc) => (
                   <button
                     key={loc}
                     type="button"
                     onClick={() => setFilters((prev) => ({ ...prev, keyword: loc }))}
-                    className="px-2.5 py-0.5 rounded-lg bg-slate-100 hover:bg-purple-100 hover:text-purple-800 text-slate-600 transition-colors text-[11px] font-medium cursor-pointer"
+                    className="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-purple-100 hover:text-purple-800 text-slate-600 transition-colors text-[11px] font-medium cursor-pointer shrink-0 whitespace-nowrap active:scale-95"
                   >
                     {loc}
                   </button>

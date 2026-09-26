@@ -34,6 +34,8 @@ interface NavbarProps {
   currentUser: UserProfile | null;
   onOpenLogin: () => void;
   onLogout: () => void;
+  menuDrawerOpen?: boolean;
+  setMenuDrawerOpen?: (open: boolean) => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -47,8 +49,13 @@ export const Navbar: React.FC<NavbarProps> = ({
   currentUser,
   onOpenLogin,
   onLogout,
+  menuDrawerOpen,
+  setMenuDrawerOpen,
 }) => {
-  const [menuDrawerOpen, setMenuDrawerOpen] = useState(false);
+  const [internalMenuOpen, setInternalMenuOpen] = useState(false);
+  const isDrawerOpen = menuDrawerOpen !== undefined ? menuDrawerOpen : internalMenuOpen;
+  const setIsDrawerOpen = setMenuDrawerOpen || setInternalMenuOpen;
+
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const userMenuRef = useRef<HTMLDivElement>(null);
 
@@ -330,7 +337,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
               {/* EXECUTIVE MENU BUTTON */}
               <button
-                onClick={() => setMenuDrawerOpen(true)}
+                onClick={() => setIsDrawerOpen(true)}
                 className="flex items-center gap-1.5 px-2.5 py-2 sm:px-3 sm:py-2 rounded-xl border border-white/20 text-white hover:bg-white/10 hover:border-purple-300 transition-all cursor-pointer focus:outline-none shrink-0"
                 title="Open Main Menu"
                 aria-label="Open Navigation Menu"
@@ -345,8 +352,8 @@ export const Navbar: React.FC<NavbarProps> = ({
 
       {/* Main Executive Slide-in Navigation Drawer */}
       <MenuDrawer
-        isOpen={menuDrawerOpen}
-        onClose={() => setMenuDrawerOpen(false)}
+        isOpen={isDrawerOpen}
+        onClose={() => setIsDrawerOpen(false)}
         currentUser={currentUser}
         onOpenLogin={onOpenLogin}
         onLogout={onLogout}

@@ -54,11 +54,13 @@ import { HousingPremiumView } from './components/HousingPremiumView';
 import { EmiCalculatorView } from './components/EmiCalculatorView';
 import { PropertyValuationView } from './components/PropertyValuationView';
 import { RentReceiptView } from './components/RentReceiptView';
+import { MobileBottomNav } from './components/MobileBottomNav';
 
 export default function App() {
   // Navigation & View State (NO MODALS: All views are full-page!)
   const [activeView, setActiveView] = useState<ActiveView>('home');
   const [selectedProperty, setSelectedProperty] = useState<Property | null>(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // User Profile / Authentication State with localStorage
   const [currentUser, setCurrentUser] = useState<UserProfile | null>(() => {
@@ -325,7 +327,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col antialiased selection:bg-purple-100 selection:text-purple-900">
+    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col antialiased selection:bg-purple-100 selection:text-purple-900 pb-16 md:pb-0">
       {/* Toast Alert */}
       {toast && (
         <div className="fixed bottom-6 right-6 z-50 bg-slate-900 text-white text-xs font-bold px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2 border border-slate-700 animate-in slide-in-from-bottom-5">
@@ -357,6 +359,8 @@ export default function App() {
         currentUser={currentUser}
         onOpenLogin={() => setAuthModalOpen(true)}
         onLogout={handleLogout}
+        menuDrawerOpen={mobileMenuOpen}
+        setMenuDrawerOpen={setMobileMenuOpen}
       />
 
       {/* ROUTING VIEWS (Full Page, No Popups) */}
@@ -491,7 +495,7 @@ export default function App() {
               }}
             />
 
-            {/* Quick Category Cards Section (Compact, Professional & Subtle) */}
+            {/* Quick Category Cards Section (Compact, Professional & Subtle Animated Gradient on Click) */}
             <LazySection className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6 relative z-10">
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5 sm:gap-3">
                 {/* Card 1: Luxury Villas */}
@@ -501,14 +505,14 @@ export default function App() {
                     setFilters((prev) => ({ ...prev, category: 'buy', propertyType: 'Villa' }));
                     scrollToProperties();
                   }}
-                  className={`p-3 sm:p-3.5 rounded-2xl bg-white border cursor-pointer select-none transition-all duration-150 active:scale-[0.98] ${
+                  className={`p-3 sm:p-3.5 rounded-2xl border cursor-pointer select-none transition-all duration-300 active:scale-[0.97] ${
                     activeQuickCard === 'villa'
-                      ? 'border-purple-600 ring-2 ring-purple-600/20 shadow-md'
-                      : 'border-slate-200 hover:border-slate-300 hover:shadow-md shadow-xs'
+                      ? 'bg-gradient-to-r from-purple-50 via-indigo-50/70 to-purple-100/60 animate-subtle-shimmer border-purple-500 ring-2 ring-purple-500/20 shadow-md'
+                      : 'bg-white border-slate-200 hover:border-purple-200 hover:shadow-md shadow-xs'
                   }`}
                 >
                   <div className={`w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center mb-2.5 transition-colors ${
-                    activeQuickCard === 'villa' ? 'bg-purple-100 text-purple-800' : 'bg-purple-50 text-purple-700'
+                    activeQuickCard === 'villa' ? 'bg-purple-600 text-white shadow-xs' : 'bg-purple-50 text-purple-700'
                   }`}>
                     <HomeIcon className="w-4 h-4 sm:w-5 sm:h-5" />
                   </div>
@@ -525,14 +529,14 @@ export default function App() {
                     setFilters((prev) => ({ ...prev, category: 'buy', propertyType: 'Luxury Apartment' }));
                     scrollToProperties();
                   }}
-                  className={`p-3 sm:p-3.5 rounded-2xl bg-white border cursor-pointer select-none transition-all duration-150 active:scale-[0.98] ${
+                  className={`p-3 sm:p-3.5 rounded-2xl border cursor-pointer select-none transition-all duration-300 active:scale-[0.97] ${
                     activeQuickCard === 'flats'
-                      ? 'border-purple-600 ring-2 ring-purple-600/20 shadow-md'
-                      : 'border-slate-200 hover:border-slate-300 hover:shadow-md shadow-xs'
+                      ? 'bg-gradient-to-r from-purple-50 via-indigo-50/70 to-purple-100/60 animate-subtle-shimmer border-purple-500 ring-2 ring-purple-500/20 shadow-md'
+                      : 'bg-white border-slate-200 hover:border-purple-200 hover:shadow-md shadow-xs'
                   }`}
                 >
                   <div className={`w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center mb-2.5 transition-colors ${
-                    activeQuickCard === 'flats' ? 'bg-purple-100 text-purple-800' : 'bg-purple-50 text-purple-700'
+                    activeQuickCard === 'flats' ? 'bg-purple-600 text-white shadow-xs' : 'bg-purple-50 text-purple-700'
                   }`}>
                     <Building2 className="w-4 h-4 sm:w-5 sm:h-5" />
                   </div>
@@ -549,14 +553,14 @@ export default function App() {
                     setFilters((prev) => ({ ...prev, category: 'buy', propertyType: 'all' }));
                     scrollToProperties();
                   }}
-                  className={`p-3 sm:p-3.5 rounded-2xl bg-white border cursor-pointer select-none transition-all duration-150 active:scale-[0.98] ${
+                  className={`p-3 sm:p-3.5 rounded-2xl border cursor-pointer select-none transition-all duration-300 active:scale-[0.97] ${
                     activeQuickCard === 'ready'
-                      ? 'border-emerald-600 ring-2 ring-emerald-600/20 shadow-md'
-                      : 'border-slate-200 hover:border-slate-300 hover:shadow-md shadow-xs'
+                      ? 'bg-gradient-to-r from-emerald-50 via-teal-50/70 to-emerald-100/60 animate-subtle-shimmer border-emerald-500 ring-2 ring-emerald-500/20 shadow-md'
+                      : 'bg-white border-slate-200 hover:border-emerald-200 hover:shadow-md shadow-xs'
                   }`}
                 >
                   <div className={`w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center mb-2.5 transition-colors ${
-                    activeQuickCard === 'ready' ? 'bg-emerald-100 text-emerald-800' : 'bg-emerald-50 text-emerald-700'
+                    activeQuickCard === 'ready' ? 'bg-emerald-600 text-white shadow-xs' : 'bg-emerald-50 text-emerald-700'
                   }`}>
                     <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5" />
                   </div>
@@ -573,14 +577,14 @@ export default function App() {
                     setFilters((prev) => ({ ...prev, category: 'commercial', propertyType: 'all' }));
                     scrollToProperties();
                   }}
-                  className={`p-3 sm:p-3.5 rounded-2xl bg-white border cursor-pointer select-none transition-all duration-150 active:scale-[0.98] ${
+                  className={`p-3 sm:p-3.5 rounded-2xl border cursor-pointer select-none transition-all duration-300 active:scale-[0.97] ${
                     activeQuickCard === 'commercial'
-                      ? 'border-purple-600 ring-2 ring-purple-600/20 shadow-md'
-                      : 'border-slate-200 hover:border-slate-300 hover:shadow-md shadow-xs'
+                      ? 'bg-gradient-to-r from-purple-50 via-indigo-50/70 to-purple-100/60 animate-subtle-shimmer border-purple-500 ring-2 ring-purple-500/20 shadow-md'
+                      : 'bg-white border-slate-200 hover:border-purple-200 hover:shadow-md shadow-xs'
                   }`}
                 >
                   <div className={`w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center mb-2.5 transition-colors ${
-                    activeQuickCard === 'commercial' ? 'bg-purple-100 text-purple-800' : 'bg-purple-50 text-purple-700'
+                    activeQuickCard === 'commercial' ? 'bg-purple-600 text-white shadow-xs' : 'bg-purple-50 text-purple-700'
                   }`}>
                     <Store className="w-4 h-4 sm:w-5 sm:h-5" />
                   </div>
@@ -597,14 +601,14 @@ export default function App() {
                     setFilters((prev) => ({ ...prev, category: 'plots', propertyType: 'all' }));
                     scrollToProperties();
                   }}
-                  className={`p-3 sm:p-3.5 rounded-2xl bg-white border cursor-pointer select-none transition-all duration-150 active:scale-[0.98] col-span-2 sm:col-span-1 ${
+                  className={`p-3 sm:p-3.5 rounded-2xl border cursor-pointer select-none transition-all duration-300 active:scale-[0.97] col-span-2 sm:col-span-1 ${
                     activeQuickCard === 'plots'
-                      ? 'border-purple-600 ring-2 ring-purple-600/20 shadow-md'
-                      : 'border-slate-200 hover:border-slate-300 hover:shadow-md shadow-xs'
+                      ? 'bg-gradient-to-r from-purple-50 via-indigo-50/70 to-purple-100/60 animate-subtle-shimmer border-purple-500 ring-2 ring-purple-500/20 shadow-md'
+                      : 'bg-white border-slate-200 hover:border-purple-200 hover:shadow-md shadow-xs'
                   }`}
                 >
                   <div className={`w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center mb-2.5 transition-colors ${
-                    activeQuickCard === 'plots' ? 'bg-purple-100 text-purple-800' : 'bg-purple-50 text-purple-700'
+                    activeQuickCard === 'plots' ? 'bg-purple-600 text-white shadow-xs' : 'bg-purple-50 text-purple-700'
                   }`}>
                     <Trees className="w-4 h-4 sm:w-5 sm:h-5" />
                   </div>
@@ -1045,6 +1049,24 @@ export default function App() {
           </div>
         )}
       </main>
+
+      {/* Mobile Bottom Navigation Bar (Fast Thumb Access on Phones) */}
+      <MobileBottomNav
+        activeView={activeView}
+        setActiveView={setActiveView}
+        shortlistCount={shortlist.length}
+        onPostPropertyClick={() => {
+          setActiveView('post-property');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }}
+        onSearchClick={() => {
+          if (activeView !== 'home') setActiveView('home');
+          setTimeout(() => {
+            scrollToProperties();
+          }, 60);
+        }}
+        onOpenMenu={() => setMobileMenuOpen(true)}
+      />
 
       {/* Professional Housing.com Style Footer */}
       <Footer

@@ -248,12 +248,17 @@ export const CityMegaDropdown: React.FC<CityMegaDropdownProps> = ({
 
       {/* Housing.com Mega Cities Popover Modal */}
       {isOpen && (
-        <div
-          className="fixed left-4 right-4 sm:left-0 sm:right-auto top-[72px] sm:absolute sm:top-full sm:mt-2.5 z-50 w-auto sm:w-[480px] bg-white rounded-2xl border border-slate-200/90 shadow-2xl shadow-purple-950/25 p-4 sm:p-5 text-slate-800 animate-in fade-in zoom-in-95 duration-150"
-          style={{
-            filter: 'drop-shadow(0 20px 30px rgba(0,0,0,0.18))'
-          }}
-        >
+        <>
+          <div 
+            className="fixed inset-0 bg-black/40 backdrop-blur-xs z-40 sm:hidden"
+            onClick={() => setIsOpen(false)}
+          />
+          <div
+            className="fixed left-3 right-3 sm:left-0 sm:right-auto top-[70px] sm:absolute sm:top-full sm:mt-2.5 z-50 w-auto sm:w-[480px] bg-white rounded-2xl border border-slate-200/90 shadow-2xl shadow-purple-950/25 p-4 sm:p-5 text-slate-800 animate-in fade-in zoom-in-95 duration-150"
+            style={{
+              filter: 'drop-shadow(0 20px 30px rgba(0,0,0,0.18))'
+            }}
+          >
           {/* Search Input Bar */}
           <div className="relative mb-3.5">
             <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
@@ -356,6 +361,7 @@ export const CityMegaDropdown: React.FC<CityMegaDropdownProps> = ({
             </button>
           </div>
         </div>
+        </>
       )}
     </div>
   );
