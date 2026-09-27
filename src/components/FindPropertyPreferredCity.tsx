@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { getAssetUrl } from '../utils/assetHelper';
 
 export interface PreferredCityItem {
   id: string;
@@ -8,90 +9,110 @@ export interface PreferredCityItem {
   filterValue: string;
 }
 
+// Fallback high-res landmark photos in case local file loading is blocked or delayed
+const CITY_FALLBACKS: Record<string, string> = {
+  lucknow: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=300&q=80',
+  varanasi: 'https://images.unsplash.com/photo-1561361513-2d000a50f0dc?auto=format&fit=crop&w=300&q=80',
+  prayagraj: 'https://images.unsplash.com/photo-1623880840003-889417865c3b?auto=format&fit=crop&w=300&q=80',
+  noida: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=300&q=80',
+  gurgaon: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=300&q=80',
+  delhi: 'https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&w=300&q=80',
+  mumbai: 'https://images.unsplash.com/photo-1570168007204-dfb528c6958f?auto=format&fit=crop&w=300&q=80',
+  bangalore: 'https://images.unsplash.com/photo-1596176530529-78163a4f7af2?auto=format&fit=crop&w=300&q=80',
+  pune: 'https://images.unsplash.com/photo-1588880331179-bc9b93a8cb5e?auto=format&fit=crop&w=300&q=80',
+  hyderabad: 'https://images.unsplash.com/photo-1605146769289-440113cc3d00?auto=format&fit=crop&w=300&q=80',
+  chennai: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=300&q=80',
+  kolkata: 'https://images.unsplash.com/photo-1558431382-27e303142255?auto=format&fit=crop&w=300&q=80',
+  ahmedabad: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=300&q=80',
+  thane: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=300&q=80',
+  jaipur: 'https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=300&q=80',
+  chandigarh: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=300&q=80',
+};
+
 // Top cities ordered as requested: Lucknow, Varanasi, Prayagraj, Noida, Gurgaon, Delhi, then Mumbai, Bangalore, Pune, etc.
 export const PREFERRED_CITIES_LIST: PreferredCityItem[] = [
   {
     id: 'lucknow',
     name: 'Lucknow',
     count: '38450 + Properties',
-    imageUrl: '/images/cities/lucknow.jpg',
+    imageUrl: 'images/cities/lucknow.jpg',
     filterValue: 'Lucknow'
   },
   {
     id: 'varanasi',
     name: 'Varanasi',
     count: '32180 + Properties',
-    imageUrl: '/images/cities/varanasi.jpg',
+    imageUrl: 'images/cities/varanasi.jpg',
     filterValue: 'Varanasi'
   },
   {
     id: 'prayagraj',
     name: 'Prayagraj',
     count: '28940 + Properties',
-    imageUrl: '/images/cities/prayagraj.jpg',
+    imageUrl: 'images/cities/prayagraj.jpg',
     filterValue: 'Prayagraj'
   },
   {
     id: 'noida',
     name: 'Noida',
     count: '34120 + Properties',
-    imageUrl: '/images/cities/noida.jpg',
+    imageUrl: 'images/cities/noida.jpg',
     filterValue: 'Noida'
   },
   {
     id: 'gurgaon',
     name: 'Gurgaon',
     count: '35049 + Properties',
-    imageUrl: '/images/cities/gurgaon.jpg',
+    imageUrl: 'images/cities/gurgaon.jpg',
     filterValue: 'Gurgaon'
   },
   {
     id: 'delhi',
     name: 'Delhi',
     count: '31496 + Properties',
-    imageUrl: '/images/cities/delhi.jpg',
+    imageUrl: 'images/cities/delhi.jpg',
     filterValue: 'Delhi'
   },
   {
     id: 'mumbai',
     name: 'Mumbai',
     count: '34726 + Properties',
-    imageUrl: '/images/cities/mumbai.jpg',
+    imageUrl: 'images/cities/mumbai.jpg',
     filterValue: 'Mumbai'
   },
   {
     id: 'bangalore',
     name: 'Bangalore',
     count: '36018 + Properties',
-    imageUrl: '/images/cities/bangalore.jpg',
+    imageUrl: 'images/cities/bangalore.jpg',
     filterValue: 'Bangalore'
   },
   {
     id: 'pune',
     name: 'Pune',
     count: '29506 + Properties',
-    imageUrl: '/images/cities/pune.jpg',
+    imageUrl: 'images/cities/pune.jpg',
     filterValue: 'Pune'
   },
   {
     id: 'hyderabad',
     name: 'Hyderabad',
     count: '18794 + Properties',
-    imageUrl: '/images/cities/hyderabad.jpg',
+    imageUrl: 'images/cities/hyderabad.jpg',
     filterValue: 'Hyderabad'
   },
   {
     id: 'chennai',
     name: 'Chennai',
     count: '22168 + Properties',
-    imageUrl: '/images/cities/chennai.jpg',
+    imageUrl: 'images/cities/chennai.jpg',
     filterValue: 'Chennai'
   },
   {
     id: 'kolkata',
     name: 'Kolkata',
     count: '12540 + Properties',
-    imageUrl: '/images/cities/kolkata.jpg',
+    imageUrl: 'images/cities/kolkata.jpg',
     filterValue: 'Kolkata'
   },
 ];
@@ -101,28 +122,28 @@ export const ADDITIONAL_CITIES_LIST: PreferredCityItem[] = [
     id: 'ahmedabad',
     name: 'Ahmedabad',
     count: '10038 + Properties',
-    imageUrl: '/images/cities/ahmedabad.jpg',
+    imageUrl: 'images/cities/ahmedabad.jpg',
     filterValue: 'Ahmedabad'
   },
   {
     id: 'thane',
     name: 'Thane',
     count: '17442 + Properties',
-    imageUrl: '/images/cities/thane.jpg',
+    imageUrl: 'images/cities/thane.jpg',
     filterValue: 'Thane'
   },
   {
     id: 'jaipur',
     name: 'Jaipur',
     count: '8950 + Properties',
-    imageUrl: '/images/cities/jaipur.jpg',
+    imageUrl: 'images/cities/jaipur.jpg',
     filterValue: 'Jaipur'
   },
   {
     id: 'chandigarh',
     name: 'Chandigarh',
     count: '7910 + Properties',
-    imageUrl: '/images/cities/chandigarh.jpg',
+    imageUrl: 'images/cities/chandigarh.jpg',
     filterValue: 'Chandigarh'
   }
 ];
@@ -164,10 +185,16 @@ export const FindPropertyPreferredCity: React.FC<FindPropertyPreferredCityProps>
               {/* Compact circular landmark photo */}
               <div className="relative w-[78px] h-[78px] sm:w-[86px] sm:h-[86px] rounded-full overflow-hidden border border-slate-200/90 shadow-xs group-hover:shadow-md group-hover:border-[#a31515] transition-all duration-300 bg-slate-100">
                 <img
-                  src={city.imageUrl}
+                  src={getAssetUrl(city.imageUrl)}
                   alt={city.name}
                   loading="lazy"
                   className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110"
+                  onError={(e) => {
+                    const fallback = CITY_FALLBACKS[city.id];
+                    if (fallback && e.currentTarget.src !== fallback) {
+                      e.currentTarget.src = fallback;
+                    }
+                  }}
                 />
               </div>
 

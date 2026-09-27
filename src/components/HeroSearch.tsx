@@ -3,6 +3,7 @@ import { Search, MapPin, Home, IndianRupee, CheckCircle2, ShieldCheck, Zap, Spar
 import { PropertyCategory, SearchFilterState } from '../types/property';
 import { CITIES } from '../data/mockProperties';
 import { CustomDropdown } from './CustomDropdown';
+import { getAssetUrl } from '../utils/assetHelper';
 
 interface HeroSearchProps {
   filters: SearchFilterState;
@@ -57,7 +58,7 @@ export const HeroSearch: React.FC<HeroSearchProps> = ({
     <div 
       className="relative pt-8 sm:pt-12 pb-14 sm:pb-18 px-3 sm:px-6 lg:px-8 overflow-hidden min-h-[500px] sm:min-h-[560px] flex flex-col justify-center bg-cover bg-bottom bg-no-repeat border-b border-slate-200/80"
       style={{
-        backgroundImage: "url('/images/header_bg_final.webp')",
+        backgroundImage: `url("${getAssetUrl('images/header_bg_final.webp')}")`,
         backgroundColor: '#eaf3fa'
       }}
     >
