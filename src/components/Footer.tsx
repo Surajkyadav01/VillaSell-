@@ -45,10 +45,10 @@ export const Footer: React.FC<FooterProps> = ({
   return (
     <footer className="bg-slate-950 text-slate-300 border-t border-slate-800">
       {/* Top Value Banner in Footer */}
-      <div className="bg-gradient-to-r from-purple-950 via-slate-900 to-indigo-950 border-b border-slate-800 py-8 px-4 sm:px-6 lg:px-8">
+      <div className="bg-gradient-to-r from-slate-900 via-slate-900 to-indigo-950 border-b border-slate-800 py-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-4 text-center md:text-left">
-            <div className="w-12 h-12 rounded-2xl bg-purple-700/30 text-purple-300 border border-purple-500/20 flex items-center justify-center shrink-0">
+            <div className="w-12 h-12 rounded-2xl bg-blue-600/30 text-blue-300 border border-blue-500/20 flex items-center justify-center shrink-0">
               <ShieldCheck className="w-6 h-6 text-emerald-400" />
             </div>
             <div>
@@ -65,7 +65,7 @@ export const Footer: React.FC<FooterProps> = ({
                 onSelectView('post-property');
                 scrollToTop();
               }}
-              className="px-5 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs shadow-md transition-all cursor-pointer"
+              className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-600 text-white font-bold text-xs shadow-md transition-all cursor-pointer"
             >
               Post Property FREE
             </button>
@@ -87,7 +87,7 @@ export const Footer: React.FC<FooterProps> = ({
           {/* Column 1: Brand & Bio (2 cols) */}
           <div className="lg:col-span-2 space-y-4">
             <div className="flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-purple-700 via-indigo-800 to-purple-950 border border-purple-300/35 flex items-center justify-center shadow-lg shadow-purple-950/60">
+              <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-800 to-slate-900 border border-blue-300/35 flex items-center justify-center shadow-lg shadow-slate-900/60">
                 <svg viewBox="0 0 32 32" className="w-5 h-5" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path
                     d="M16 4L4 14.5H8.5V26.5H23.5V14.5H28L16 4Z"
@@ -141,10 +141,10 @@ export const Footer: React.FC<FooterProps> = ({
 
               <a
                 href={`mailto:${BRAND_CONFIG.email}`}
-                className="flex items-center gap-2.5 text-slate-300 hover:text-purple-300 transition-colors group"
+                className="flex items-center gap-2.5 text-slate-300 hover:text-blue-300 transition-colors group"
               >
-                <div className="w-7 h-7 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center group-hover:border-purple-500">
-                  <Mail className="w-3.5 h-3.5 text-purple-400" />
+                <div className="w-7 h-7 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center group-hover:border-blue-500">
+                  <Mail className="w-3.5 h-3.5 text-blue-400" />
                 </div>
                 <span>Email: <strong className="text-white">{BRAND_CONFIG.email}</strong></span>
               </a>
@@ -265,7 +265,7 @@ export const Footer: React.FC<FooterProps> = ({
                     onClick={() => handleCityClick(city)}
                     className="hover:text-white transition-colors cursor-pointer flex items-center gap-1.5"
                   >
-                    <MapPin className="w-3 h-3 text-purple-400" />
+                    <MapPin className="w-3 h-3 text-blue-400" />
                     <span>Properties in {city}</span>
                   </button>
                 </li>
@@ -309,7 +309,7 @@ export const Footer: React.FC<FooterProps> = ({
                   }}
                   className="hover:text-white transition-colors cursor-pointer flex items-center gap-1.5"
                 >
-                  <span className="w-1.5 h-1.5 rounded-full bg-purple-400 shrink-0" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-blue-400 shrink-0" />
                   <span>EMI Calculator</span>
                 </button>
               </li>

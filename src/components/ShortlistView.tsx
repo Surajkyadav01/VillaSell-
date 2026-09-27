@@ -69,8 +69,8 @@ export const ShortlistView: React.FC<ShortlistViewProps> = ({
 
         {shortlistedProperties.length === 0 ? (
           <div className="bg-white rounded-3xl border border-slate-200 p-12 text-center max-w-lg mx-auto shadow-xs">
-            <div className="w-16 h-16 rounded-full bg-purple-50 text-purple-600 flex items-center justify-center mx-auto mb-4">
-              <Heart className="w-8 h-8 text-purple-400" />
+            <div className="w-16 h-16 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center mx-auto mb-4">
+              <Heart className="w-8 h-8 text-blue-400" />
             </div>
             <h3 className="text-xl font-bold text-slate-900 mb-2">No Saved Properties Yet</h3>
             <p className="text-sm text-slate-500 mb-6">
@@ -78,7 +78,7 @@ export const ShortlistView: React.FC<ShortlistViewProps> = ({
             </p>
             <button
               onClick={onBack}
-              className="px-6 py-3 rounded-xl bg-purple-700 hover:bg-purple-800 text-white font-bold text-sm shadow-md transition-all cursor-pointer flex items-center gap-2 mx-auto"
+              className="px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-800 text-white font-bold text-sm shadow-md transition-all cursor-pointer flex items-center gap-2 mx-auto"
             >
               <Home className="w-4 h-4" />
               <span>Explore Featured Properties</span>

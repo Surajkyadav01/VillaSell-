@@ -307,7 +307,7 @@ export const EmiCalculatorView: React.FC<EmiCalculatorViewProps> = ({
               <span>/</span>
               <span className="text-slate-900 font-bold">Housing Tools</span>
               <span>/</span>
-              <span className="text-purple-700 font-bold">EMI Calculator</span>
+              <span className="text-blue-600 font-bold">EMI Calculator</span>
             </div>
           </div>
 
@@ -315,10 +315,10 @@ export const EmiCalculatorView: React.FC<EmiCalculatorViewProps> = ({
           <div className="flex items-center gap-2">
             <button
               onClick={() => setIsShareModalOpen(true)}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-purple-200 bg-purple-50 hover:bg-purple-100 text-purple-800 font-bold text-xs transition-all shadow-xs cursor-pointer"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-blue-200 bg-blue-50 hover:bg-blue-100 text-blue-800 font-bold text-xs transition-all shadow-xs cursor-pointer"
               title="Share EMI Calculation"
             >
-              <Share2 className="w-3.5 h-3.5 text-purple-700" />
+              <Share2 className="w-3.5 h-3.5 text-blue-600" />
               <span>Share EMI</span>
             </button>
             <button
@@ -344,12 +344,12 @@ export const EmiCalculatorView: React.FC<EmiCalculatorViewProps> = ({
       {/* Main Content Hero */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
         <div className="text-center max-w-3xl mx-auto mb-8">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-100 text-purple-800 text-xs font-extrabold uppercase tracking-wider mb-2">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-100 text-blue-800 text-xs font-extrabold uppercase tracking-wider mb-2">
             <Calculator className="w-3.5 h-3.5" />
             <span>Real Estate Financial Tools</span>
           </div>
           <h1 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
-            Home Loan <span className="text-purple-700">EMI Calculator</span>
+            Home Loan <span className="text-blue-600">EMI Calculator</span>
           </h1>
           <p className="text-xs sm:text-sm text-slate-600 mt-2 leading-relaxed">
             Calculate your exact monthly installments, total interest, and complete year-wise amortization breakdown for your dream villa or apartment.
@@ -366,8 +366,8 @@ export const EmiCalculatorView: React.FC<EmiCalculatorViewProps> = ({
                 <label className="text-xs sm:text-sm font-extrabold text-slate-800">
                   Loan Amount (Principal)
                 </label>
-                <div className="flex items-center bg-purple-50 px-3 py-1.5 rounded-xl border border-purple-200">
-                  <span className="text-xs font-bold text-purple-700 mr-1">₹</span>
+                <div className="flex items-center bg-blue-50 px-3 py-1.5 rounded-xl border border-blue-200">
+                  <span className="text-xs font-bold text-blue-600 mr-1">₹</span>
                   <input
                     type="number"
                     value={loanAmount}
@@ -386,11 +386,11 @@ export const EmiCalculatorView: React.FC<EmiCalculatorViewProps> = ({
                 min={500000}
                 max={50000000}
                 step={100000}
-                className="w-full accent-purple-700 h-2 bg-slate-100 rounded-lg cursor-pointer"
+                className="w-full accent-blue-600 h-2 bg-slate-100 rounded-lg cursor-pointer"
               />
               <div className="flex justify-between text-[11px] font-semibold text-slate-500 mt-1">
                 <span>₹5 Lakhs</span>
-                <span className="font-extrabold text-purple-700">{formatLakhs(loanAmount)}</span>
+                <span className="font-extrabold text-blue-600">{formatLakhs(loanAmount)}</span>
                 <span>₹5 Crores</span>
               </div>
 
@@ -403,7 +403,7 @@ export const EmiCalculatorView: React.FC<EmiCalculatorViewProps> = ({
                     onClick={() => setLoanAmount(amt)}
                     className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all cursor-pointer ${
                       loanAmount === amt
-                        ? 'bg-purple-700 text-white shadow-xs'
+                        ? 'bg-blue-600 text-white shadow-xs'
                         : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                     }`}
                   >
@@ -419,7 +419,7 @@ export const EmiCalculatorView: React.FC<EmiCalculatorViewProps> = ({
                 <label className="text-xs sm:text-sm font-extrabold text-slate-800">
                   Annual Interest Rate (% p.a.)
                 </label>
-                <div className="flex items-center bg-purple-50 px-3 py-1.5 rounded-xl border border-purple-200">
+                <div className="flex items-center bg-blue-50 px-3 py-1.5 rounded-xl border border-blue-200">
                   <input
                     type="number"
                     value={interestRate}
@@ -429,7 +429,7 @@ export const EmiCalculatorView: React.FC<EmiCalculatorViewProps> = ({
                     step={0.05}
                     className="w-16 text-right font-black text-slate-900 text-sm bg-transparent focus:outline-none"
                   />
-                  <span className="text-xs font-bold text-purple-700 ml-1">%</span>
+                  <span className="text-xs font-bold text-blue-600 ml-1">%</span>
                 </div>
               </div>
               <input
@@ -439,11 +439,11 @@ export const EmiCalculatorView: React.FC<EmiCalculatorViewProps> = ({
                 min={6.5}
                 max={14}
                 step={0.1}
-                className="w-full accent-purple-700 h-2 bg-slate-100 rounded-lg cursor-pointer"
+                className="w-full accent-blue-600 h-2 bg-slate-100 rounded-lg cursor-pointer"
               />
               <div className="flex justify-between text-[11px] font-semibold text-slate-500 mt-1">
                 <span>6.5%</span>
-                <span className="font-extrabold text-purple-700">{interestRate}% p.a.</span>
+                <span className="font-extrabold text-blue-600">{interestRate}% p.a.</span>
                 <span>14%</span>
               </div>
 
@@ -456,7 +456,7 @@ export const EmiCalculatorView: React.FC<EmiCalculatorViewProps> = ({
                     onClick={() => setInterestRate(rate)}
                     className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all cursor-pointer ${
                       interestRate === rate
-                        ? 'bg-purple-700 text-white shadow-xs'
+                        ? 'bg-blue-600 text-white shadow-xs'
                         : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                     }`}
                   >
@@ -472,7 +472,7 @@ export const EmiCalculatorView: React.FC<EmiCalculatorViewProps> = ({
                 <label className="text-xs sm:text-sm font-extrabold text-slate-800">
                   Loan Tenure (Years)
                 </label>
-                <div className="flex items-center bg-purple-50 px-3 py-1.5 rounded-xl border border-purple-200">
+                <div className="flex items-center bg-blue-50 px-3 py-1.5 rounded-xl border border-blue-200">
                   <input
                     type="number"
                     value={tenureYears}
@@ -481,7 +481,7 @@ export const EmiCalculatorView: React.FC<EmiCalculatorViewProps> = ({
                     max={30}
                     className="w-14 text-right font-black text-slate-900 text-sm bg-transparent focus:outline-none"
                   />
-                  <span className="text-xs font-bold text-purple-700 ml-1">Years</span>
+                  <span className="text-xs font-bold text-blue-600 ml-1">Years</span>
                 </div>
               </div>
               <input
@@ -491,11 +491,11 @@ export const EmiCalculatorView: React.FC<EmiCalculatorViewProps> = ({
                 min={1}
                 max={30}
                 step={1}
-                className="w-full accent-purple-700 h-2 bg-slate-100 rounded-lg cursor-pointer"
+                className="w-full accent-blue-600 h-2 bg-slate-100 rounded-lg cursor-pointer"
               />
               <div className="flex justify-between text-[11px] font-semibold text-slate-500 mt-1">
                 <span>1 Year</span>
-                <span className="font-extrabold text-purple-700">{tenureYears} Years ({tenureYears * 12} Months)</span>
+                <span className="font-extrabold text-blue-600">{tenureYears} Years ({tenureYears * 12} Months)</span>
                 <span>30 Years</span>
               </div>
 
@@ -508,7 +508,7 @@ export const EmiCalculatorView: React.FC<EmiCalculatorViewProps> = ({
                     onClick={() => setTenureYears(t)}
                     className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all cursor-pointer ${
                       tenureYears === t
-                        ? 'bg-purple-700 text-white shadow-xs'
+                        ? 'bg-blue-600 text-white shadow-xs'
                         : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                     }`}
                   >
@@ -546,8 +546,8 @@ export const EmiCalculatorView: React.FC<EmiCalculatorViewProps> = ({
 
           {/* Right Column: Calculated Results & Chart (5 cols) */}
           <div className="lg:col-span-5 space-y-6">
-            <div className="bg-gradient-to-br from-purple-900 via-indigo-900 to-slate-950 rounded-3xl p-6 sm:p-8 text-white shadow-xl relative overflow-hidden">
-              <div className="absolute right-0 top-0 w-60 h-60 bg-purple-500/10 rounded-full blur-3xl pointer-events-none" />
+            <div className="bg-gradient-to-br from-blue-900 via-indigo-900 to-slate-950 rounded-3xl p-6 sm:p-8 text-white shadow-xl relative overflow-hidden">
+              <div className="absolute right-0 top-0 w-60 h-60 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
 
               <span className="px-2.5 py-0.5 rounded-full bg-emerald-400 text-slate-950 font-black text-[10px] uppercase tracking-wider">
                 Monthly Repayment Breakdown
@@ -564,7 +564,7 @@ export const EmiCalculatorView: React.FC<EmiCalculatorViewProps> = ({
 
               {/* Progress Visual Bar */}
               <div className="space-y-2 mb-6">
-                <div className="h-3 w-full bg-purple-950 rounded-full overflow-hidden flex border border-white/10">
+                <div className="h-3 w-full bg-slate-900 rounded-full overflow-hidden flex border border-white/10">
                   <div
                     style={{ width: `${calculation.principalPercent}%` }}
                     className="bg-emerald-400 h-full transition-all duration-500"
@@ -624,9 +624,9 @@ export const EmiCalculatorView: React.FC<EmiCalculatorViewProps> = ({
               </div>
               <a
                 href={`tel:${BRAND_CONFIG.phoneClean}`}
-                className="px-3.5 py-2 rounded-xl bg-purple-100 hover:bg-purple-200 text-purple-900 font-bold text-xs flex items-center gap-1.5 transition-colors"
+                className="px-3.5 py-2 rounded-xl bg-blue-100 hover:bg-blue-200 text-blue-900 font-bold text-xs flex items-center gap-1.5 transition-colors"
               >
-                <Phone className="w-3.5 h-3.5 text-purple-700" />
+                <Phone className="w-3.5 h-3.5 text-blue-600" />
                 <span>Call Expert</span>
               </a>
             </div>
@@ -663,7 +663,7 @@ export const EmiCalculatorView: React.FC<EmiCalculatorViewProps> = ({
               </thead>
               <tbody className="divide-y divide-slate-100">
                 {calculation.schedule.map((row) => (
-                  <tr key={row.year} className="hover:bg-purple-50/40 transition-colors">
+                  <tr key={row.year} className="hover:bg-blue-50/40 transition-colors">
                     <td className="py-2.5 px-3 font-bold text-slate-900">Year {row.year}</td>
                     <td className="py-2.5 px-3 text-slate-600">{formatCurrency(row.openingBalance)}</td>
                     <td className="py-2.5 px-3 font-medium text-slate-800">{formatCurrency(row.totalPaidYear)}</td>
@@ -684,7 +684,7 @@ export const EmiCalculatorView: React.FC<EmiCalculatorViewProps> = ({
           <div className="bg-white rounded-3xl p-6 sm:p-7 max-w-md w-full shadow-2xl space-y-5 border border-slate-200 animate-in zoom-in-95">
             <div className="flex items-center justify-between pb-3 border-b border-slate-100">
               <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center">
+                <div className="w-8 h-8 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center">
                   <Share2 className="w-4 h-4" />
                 </div>
                 <div>
@@ -701,7 +701,7 @@ export const EmiCalculatorView: React.FC<EmiCalculatorViewProps> = ({
             </div>
 
             {/* Snapshot Preview Card */}
-            <div className="p-4 rounded-2xl bg-gradient-to-br from-purple-50 to-indigo-50/50 border border-purple-100 space-y-2.5">
+            <div className="p-4 rounded-2xl bg-gradient-to-br from-blue-50 to-indigo-50/50 border border-blue-100 space-y-2.5">
               <div className="flex justify-between items-center text-xs">
                 <span className="text-slate-500 font-semibold">Loan Amount:</span>
                 <span className="font-extrabold text-slate-900">{formatCurrency(loanAmount)} ({formatLakhs(loanAmount)})</span>
@@ -710,9 +710,9 @@ export const EmiCalculatorView: React.FC<EmiCalculatorViewProps> = ({
                 <span className="text-slate-500 font-semibold">Interest & Tenure:</span>
                 <span className="font-extrabold text-slate-900">{interestRate}% p.a. • {tenureYears} Years</span>
               </div>
-              <div className="pt-2 border-t border-purple-200/60 flex justify-between items-center">
-                <span className="text-xs font-bold text-purple-900">Monthly EMI:</span>
-                <span className="text-lg font-black text-purple-700">{formatCurrency(calculation.monthlyEmi)}<span className="text-[11px] font-medium text-slate-500">/mo</span></span>
+              <div className="pt-2 border-t border-blue-200/60 flex justify-between items-center">
+                <span className="text-xs font-bold text-blue-900">Monthly EMI:</span>
+                <span className="text-lg font-black text-blue-600">{formatCurrency(calculation.monthlyEmi)}<span className="text-[11px] font-medium text-slate-500">/mo</span></span>
               </div>
             </div>
 
@@ -728,7 +728,7 @@ export const EmiCalculatorView: React.FC<EmiCalculatorViewProps> = ({
 
               <button
                 onClick={handleNativeShare}
-                className="w-full py-3 px-4 rounded-xl bg-purple-700 hover:bg-purple-800 text-white font-extrabold text-xs flex items-center justify-center gap-2 shadow-sm transition-all cursor-pointer"
+                className="w-full py-3 px-4 rounded-xl bg-blue-600 hover:bg-blue-800 text-white font-extrabold text-xs flex items-center justify-center gap-2 shadow-sm transition-all cursor-pointer"
               >
                 <Share2 className="w-4 h-4" />
                 <span>Quick Share</span>
@@ -752,7 +752,7 @@ export const EmiCalculatorView: React.FC<EmiCalculatorViewProps> = ({
             </div>
 
             <div className="p-2.5 bg-slate-50 rounded-xl text-[11px] text-slate-500 text-center flex items-center justify-center gap-1.5 border border-slate-200">
-              <Sparkles className="w-3.5 h-3.5 text-purple-600" />
+              <Sparkles className="w-3.5 h-3.5 text-blue-600" />
               <span>Includes full year-wise amortization & interest schedule details</span>
             </div>
           </div>
@@ -766,7 +766,7 @@ export const EmiCalculatorView: React.FC<EmiCalculatorViewProps> = ({
             {/* Modal Header */}
             <div className="p-4 sm:p-5 border-b border-slate-200 flex items-center justify-between bg-slate-50 shrink-0">
               <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center">
+                <div className="w-8 h-8 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center">
                   <Printer className="w-4 h-4" />
                 </div>
                 <div>
@@ -785,12 +785,12 @@ export const EmiCalculatorView: React.FC<EmiCalculatorViewProps> = ({
             {/* Printable Statement Preview (Scrollable) */}
             <div className="p-6 overflow-y-auto space-y-6 text-slate-900 bg-white">
               {/* Document Header */}
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b-2 border-purple-700 gap-2">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b-2 border-blue-600 gap-2">
                 <div>
                   <div className="flex items-center gap-2">
-                    <Building2 className="w-6 h-6 text-purple-700" />
-                    <span className="text-xl font-black text-slate-900 tracking-tight">Villa<span className="text-purple-700">Sell</span></span>
-                    <span className="text-[10px] font-bold uppercase tracking-wider bg-purple-100 text-purple-800 px-2 py-0.5 rounded-full">Housing Edge</span>
+                    <Building2 className="w-6 h-6 text-blue-600" />
+                    <span className="text-xl font-black text-slate-900 tracking-tight">Villa<span className="text-blue-600">Sell</span></span>
+                    <span className="text-[10px] font-bold uppercase tracking-wider bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full">Housing Edge</span>
                   </div>
                   <p className="text-[11px] text-slate-500 mt-0.5">India's Verified Luxury Villa & Residential Loan Advisory</p>
                 </div>
@@ -801,11 +801,11 @@ export const EmiCalculatorView: React.FC<EmiCalculatorViewProps> = ({
               </div>
 
               {/* Big Highlight Box */}
-              <div className="p-5 rounded-2xl bg-purple-50/70 border border-purple-200 text-center">
-                <span className="text-[11px] font-extrabold uppercase tracking-wider text-purple-700">
+              <div className="p-5 rounded-2xl bg-blue-50/70 border border-blue-200 text-center">
+                <span className="text-[11px] font-extrabold uppercase tracking-wider text-blue-600">
                   Calculated Monthly Repayment (EMI)
                 </span>
-                <div className="text-3xl sm:text-4xl font-black text-purple-900 mt-1">
+                <div className="text-3xl sm:text-4xl font-black text-blue-900 mt-1">
                   {formatCurrency(calculation.monthlyEmi)}
                   <span className="text-xs font-bold text-slate-600 ml-1">/ month</span>
                 </div>
@@ -819,7 +819,7 @@ export const EmiCalculatorView: React.FC<EmiCalculatorViewProps> = ({
                 <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
                   <span className="text-[10px] font-extrabold uppercase tracking-wider text-slate-500 block">Principal Loan</span>
                   <span className="text-base font-black text-slate-900 mt-0.5 block">{formatCurrency(loanAmount)}</span>
-                  <span className="text-[11px] font-semibold text-purple-700">{formatLakhs(loanAmount)}</span>
+                  <span className="text-[11px] font-semibold text-blue-600">{formatLakhs(loanAmount)}</span>
                 </div>
                 <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
                   <span className="text-[10px] font-extrabold uppercase tracking-wider text-slate-500 block">Total Interest Payable</span>
@@ -895,7 +895,7 @@ export const EmiCalculatorView: React.FC<EmiCalculatorViewProps> = ({
                 </button>
                 <button
                   onClick={executePrint}
-                  className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-purple-700 hover:bg-purple-800 text-white font-black text-xs flex items-center justify-center gap-2 shadow-md cursor-pointer transition-all hover:scale-105 active:scale-95"
+                  className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-800 text-white font-black text-xs flex items-center justify-center gap-2 shadow-md cursor-pointer transition-all hover:scale-105 active:scale-95"
                 >
                   <Printer className="w-4 h-4" />
                   <span>Print Document Now</span>

@@ -81,7 +81,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <>
-      <header className="sticky top-0 z-40 bg-gradient-to-r from-[#2c0e52] via-[#3a136b] to-[#45187e] border-b border-purple-900/60 shadow-lg backdrop-blur-md">
+      <header className="sticky top-0 z-40 bg-gradient-to-r from-[#1b4a80] via-[#255e9c] to-[#2b568d] border-b border-sky-300/35 shadow-md backdrop-blur-md">
         <div className="w-full px-3 sm:px-6 lg:px-8 xl:px-10">
           <div className="flex items-center justify-between h-18">
             {/* Left: Custom Luxury Real Estate Logo & City Selector in corner */}
@@ -93,7 +93,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 title="VillaSell Home"
               >
                 {/* Luxury Architectural Villa Emblem */}
-                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-purple-700 via-indigo-800 to-purple-950 border border-purple-300/35 flex items-center justify-center shadow-lg shadow-purple-950/60 group-hover:scale-105 group-hover:border-amber-400/50 transition-all shrink-0">
+                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-800 to-slate-900 border border-blue-300/35 flex items-center justify-center shadow-lg shadow-slate-900/60 group-hover:scale-105 group-hover:border-amber-400/50 transition-all shrink-0">
                   <svg viewBox="0 0 32 32" className="w-6 h-6" fill="none" xmlns="http://www.w3.org/2000/svg">
                     {/* Villa Structure & Roof */}
                     <path
@@ -155,8 +155,8 @@ export const Navbar: React.FC<NavbarProps> = ({
                 onClick={() => handleCategoryClick('buy')}
                 className={`px-2.5 xl:px-3 py-2 rounded-xl transition-all cursor-pointer ${
                   activeView === 'home' && selectedCategory === 'buy'
-                    ? 'text-white bg-purple-700/80 shadow-inner border border-purple-400/30'
-                    : 'text-purple-100 hover:text-white hover:bg-white/10'
+                    ? 'text-white bg-blue-500/80 shadow-inner border border-blue-300/40'
+                    : 'text-sky-100 hover:text-white hover:bg-white/10'
                 }`}
               >
                 Buy
@@ -166,8 +166,8 @@ export const Navbar: React.FC<NavbarProps> = ({
                 onClick={() => handleCategoryClick('rent')}
                 className={`px-2.5 xl:px-3 py-2 rounded-xl transition-all cursor-pointer ${
                   activeView === 'home' && selectedCategory === 'rent'
-                    ? 'text-white bg-purple-700/80 shadow-inner border border-purple-400/30'
-                    : 'text-purple-100 hover:text-white hover:bg-white/10'
+                    ? 'text-white bg-blue-500/80 shadow-inner border border-blue-300/40'
+                    : 'text-sky-100 hover:text-white hover:bg-white/10'
                 }`}
               >
                 Rent
@@ -177,8 +177,8 @@ export const Navbar: React.FC<NavbarProps> = ({
                 onClick={() => handleCategoryClick('commercial')}
                 className={`px-2.5 xl:px-3 py-2 rounded-xl transition-all cursor-pointer ${
                   activeView === 'home' && selectedCategory === 'commercial'
-                    ? 'text-white bg-purple-700/80 shadow-inner border border-purple-400/30'
-                    : 'text-purple-100 hover:text-white hover:bg-white/10'
+                    ? 'text-white bg-blue-500/80 shadow-inner border border-blue-300/40'
+                    : 'text-sky-100 hover:text-white hover:bg-white/10'
                 }`}
               >
                 Commercial
@@ -188,8 +188,8 @@ export const Navbar: React.FC<NavbarProps> = ({
                 onClick={() => handleCategoryClick('plots')}
                 className={`px-2.5 xl:px-3 py-2 rounded-xl transition-all cursor-pointer ${
                   activeView === 'home' && selectedCategory === 'plots'
-                    ? 'text-white bg-purple-700/80 shadow-inner border border-purple-400/30'
-                    : 'text-purple-100 hover:text-white hover:bg-white/10'
+                    ? 'text-white bg-blue-500/80 shadow-inner border border-blue-300/40'
+                    : 'text-sky-100 hover:text-white hover:bg-white/10'
                 }`}
               >
                 Plots
@@ -201,14 +201,14 @@ export const Navbar: React.FC<NavbarProps> = ({
                 onNavigate={navigateTo}
               />
 
-              <div className="w-px h-5 bg-purple-400/30 mx-1" />
+              <div className="w-px h-5 bg-sky-300/30 mx-1" />
 
               <button
                 onClick={() => navigateTo('contact')}
                 className={`px-2.5 xl:px-3 py-2 rounded-xl transition-all cursor-pointer ${
                   activeView === 'contact'
-                    ? 'text-white bg-purple-700/80 shadow-inner border border-purple-400/30'
-                    : 'text-purple-100 hover:text-white hover:bg-white/10'
+                    ? 'text-white bg-blue-500/80 shadow-inner border border-blue-300/40'
+                    : 'text-sky-100 hover:text-white hover:bg-white/10'
                 }`}
               >
                 Contact
@@ -222,8 +222,8 @@ export const Navbar: React.FC<NavbarProps> = ({
                 onClick={() => navigateTo('shortlist')}
                 className={`relative p-2 sm:p-2.5 rounded-xl border transition-all cursor-pointer ${
                   activeView === 'shortlist'
-                    ? 'border-purple-300 bg-purple-600/40 text-white'
-                    : 'border-white/20 text-purple-100 hover:text-white hover:border-purple-300 hover:bg-white/10'
+                    ? 'border-sky-300 bg-blue-500/40 text-white'
+                    : 'border-white/20 text-sky-100 hover:text-white hover:border-sky-300 hover:bg-white/10'
                 }`}
                 title="Saved Properties"
                 aria-label="View Saved Properties"
@@ -239,7 +239,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               {/* Post Property FREE Button */}
               <button
                 onClick={() => navigateTo('post-property')}
-                className="hidden sm:flex items-center gap-1.5 px-3 py-2 sm:px-3.5 sm:py-2 rounded-xl bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 text-white font-extrabold text-xs sm:text-sm shadow-md shadow-purple-950/40 hover:shadow-lg transition-all cursor-pointer transform active:scale-95 border border-purple-300/30 shrink-0"
+                className="hidden sm:flex items-center gap-1.5 px-3 py-2 sm:px-3.5 sm:py-2 rounded-xl bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-extrabold text-xs sm:text-sm shadow-md shadow-blue-950/40 hover:shadow-lg transition-all cursor-pointer transform active:scale-95 border border-sky-300/30 shrink-0"
               >
                 <PlusCircle className="w-4 h-4 text-white" />
                 <span>Post Property</span>
@@ -252,7 +252,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               {!currentUser ? (
                 <button
                   onClick={onOpenLogin}
-                  className="flex items-center gap-1.5 px-3 py-2 sm:px-3.5 sm:py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs sm:text-sm border border-purple-300/30 hover:border-amber-400/60 shadow-xs transition-all cursor-pointer shrink-0"
+                  className="flex items-center gap-1.5 px-3 py-2 sm:px-3.5 sm:py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs sm:text-sm border border-sky-300/30 hover:border-amber-400/60 shadow-xs transition-all cursor-pointer shrink-0"
                   title="Login or Sign Up"
                 >
                   <User className="w-4 h-4 text-amber-300" />
@@ -262,7 +262,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <div className="relative shrink-0" ref={userMenuRef}>
                   <button
                     onClick={() => setUserDropdownOpen(!userDropdownOpen)}
-                    className="flex items-center gap-1.5 sm:gap-2 p-1 sm:px-2.5 sm:py-1.5 rounded-xl bg-purple-950/70 hover:bg-purple-900 border border-purple-400/40 text-white transition-all cursor-pointer"
+                    className="flex items-center gap-1.5 sm:gap-2 p-1 sm:px-2.5 sm:py-1.5 rounded-xl bg-slate-900/70 hover:bg-blue-900 border border-blue-400/40 text-white transition-all cursor-pointer"
                     title="User Account Menu"
                   >
                     <img
@@ -273,7 +273,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     <span className="hidden md:inline-block font-extrabold text-xs max-w-[85px] truncate">
                       {currentUser.name.split(' ')[0]}
                     </span>
-                    <ChevronDown className="w-3.5 h-3.5 text-purple-200" />
+                    <ChevronDown className="w-3.5 h-3.5 text-blue-200" />
                   </button>
 
                   {/* User Profile Dropdown Menu */}
@@ -293,10 +293,10 @@ export const Navbar: React.FC<NavbarProps> = ({
                             navigateTo('shortlist');
                             setUserDropdownOpen(false);
                           }}
-                          className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold hover:bg-purple-50 text-slate-700 cursor-pointer"
+                          className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold hover:bg-blue-50 text-slate-700 cursor-pointer"
                         >
                           <span className="flex items-center gap-2">
-                            <Heart className="w-4 h-4 text-purple-600" />
+                            <Heart className="w-4 h-4 text-blue-600" />
                             Saved Shortlist
                           </span>
                           {shortlistCount > 0 && (
@@ -311,9 +311,9 @@ export const Navbar: React.FC<NavbarProps> = ({
                             navigateTo('post-property');
                             setUserDropdownOpen(false);
                           }}
-                          className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold hover:bg-purple-50 text-slate-700 cursor-pointer"
+                          className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold hover:bg-blue-50 text-slate-700 cursor-pointer"
                         >
-                          <PlusCircle className="w-4 h-4 text-purple-600" />
+                          <PlusCircle className="w-4 h-4 text-blue-600" />
                           Post Property FREE
                         </button>
                       </div>
@@ -338,7 +338,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               {/* EXECUTIVE MENU BUTTON */}
               <button
                 onClick={() => setIsDrawerOpen(true)}
-                className="flex items-center gap-1.5 px-2.5 py-2 sm:px-3 sm:py-2 rounded-xl border border-white/20 text-white hover:bg-white/10 hover:border-purple-300 transition-all cursor-pointer focus:outline-none shrink-0"
+                className="flex items-center gap-1.5 px-2.5 py-2 sm:px-3 sm:py-2 rounded-xl border border-white/20 text-white hover:bg-white/10 hover:border-blue-300 transition-all cursor-pointer focus:outline-none shrink-0"
                 title="Open Main Menu"
                 aria-label="Open Navigation Menu"
               >

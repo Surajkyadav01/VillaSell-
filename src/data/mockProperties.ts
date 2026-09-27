@@ -2,20 +2,21 @@ import { Property, CustomerReview } from '../types/property';
 
 export const CITIES = [
   'All Cities',
+  'Lucknow',
+  'Varanasi',
+  'Prayagraj',
+  'Noida',
+  'Gurgaon',
+  'Delhi',
   'Mumbai',
   'Bangalore',
   'Pune',
+  'Hyderabad',
   'Chennai',
   'Kolkata',
   'Ahmedabad',
-  'Delhi NCR',
-  'Noida',
-  'Gurgaon',
-  'Hyderabad',
   'Thane',
-  'Navi Mumbai',
-  'Varanasi',
-  'Lucknow'
+  'Navi Mumbai'
 ] as const;
 
 export const INITIAL_PROPERTIES: Property[] = [
@@ -1187,6 +1188,644 @@ export const INITIAL_PROPERTIES: Property[] = [
     },
     description: 'Modern 3 BHK apartment in Gomti Nagar Extension on Shaheed Path. Furnished with ACs, TV, beds, and modular kitchen. Zero brokerage.',
     createdAt: '2026-03-24'
+  },
+  {
+    id: 'prop-24',
+    title: '4 BHK DLF Golf Course Luxury Villa with Private Garden',
+    category: 'buy',
+    propertyType: 'Villa',
+    city: 'Gurgaon',
+    locality: 'Golf Course Road, Sector 42',
+    address: 'DLF Magnolias, Golf Course Road, Sector 42, Gurugram, Haryana - 122002',
+    price: 85000000,
+    priceDisplay: '₹ 8.50 Cr',
+    pricePerSqFt: 15454,
+    bedrooms: 4,
+    bathrooms: 5,
+    balconies: 3,
+    areaSqFt: 5500,
+    carpetAreaSqFt: 4800,
+    status: 'Ready to Move',
+    possession: 'Immediate Possession',
+    furnishing: 'Semi-Furnished',
+    facing: 'North-East',
+    floor: 'Independent G+2 Luxury Villa',
+    reraId: 'HRERA-PKL-GGM-124-2026',
+    isVerified: true,
+    isZeroBrokerage: true,
+    isFeatured: true,
+    images: [
+      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1000&q=80',
+      'https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&w=1000&q=80'
+    ],
+    amenities: [
+      'Private Landscaped Lawn',
+      'DLF Golf Course Frontage',
+      'Italian Marble Flooring',
+      'Triple Height Lobby',
+      '3 Dedicated Car Parks'
+    ],
+    localityHighlights: [
+      { title: 'Sector 42 Rapid Metro Station', distance: '400 m', type: 'metro' },
+      { title: 'Cyber Hub Entertainment & Mall', distance: '3.5 km', type: 'mall' },
+      { title: 'Fortis Memorial Hospital', distance: '2.8 km', type: 'hospital' }
+    ],
+    postedBy: {
+      name: 'Kamlesh Singhania (Owner)',
+      type: 'Owner',
+      phone: '+91 8383826205'
+    },
+    description: 'Premier 4 BHK luxury villa in Gurugram on Golf Course Road. Panoramic golf views, private swimming plunge, and verified zero brokerage documentation.',
+    createdAt: '2026-03-25'
+  },
+  {
+    id: 'prop-25',
+    title: '3 BHK High-Rise Golf Residence with Panoramic Balcony',
+    category: 'buy',
+    propertyType: 'Luxury Apartment',
+    city: 'Noida',
+    locality: 'Sector 150, Noida-Greater Noida Expressway',
+    address: 'ATS Pristine, Sector 150, Noida Expressway, Uttar Pradesh - 201310',
+    price: 18500000,
+    priceDisplay: '₹ 1.85 Cr',
+    pricePerSqFt: 8222,
+    bedrooms: 3,
+    bathrooms: 3,
+    balconies: 3,
+    areaSqFt: 2250,
+    carpetAreaSqFt: 1950,
+    status: 'Ready to Move',
+    possession: 'Immediate Possession',
+    furnishing: 'Semi-Furnished',
+    facing: 'North-East',
+    floor: '18th of 26 Floors',
+    reraId: 'UPRERAPRJ2875/2026',
+    isVerified: true,
+    isZeroBrokerage: true,
+    isFeatured: true,
+    images: [
+      'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=80'
+    ],
+    amenities: [
+      'Expressway Frontage',
+      'Clubhouse & Olympic Pool',
+      'Sports Arena & 9-Hole Golf',
+      'High-Speed Elevators',
+      'Double Basement Parking'
+    ],
+    localityHighlights: [
+      { title: 'Sector 148 Aqua Line Metro', distance: '1.2 km', type: 'metro' },
+      { title: 'Jewar International Airport Corridor', distance: '22 km', type: 'airport' },
+      { title: 'Noida Expressway', distance: '200 m', type: 'highway' }
+    ],
+    postedBy: {
+      name: 'Sunil Mathur (Owner)',
+      type: 'Owner',
+      phone: '+91 8383826205'
+    },
+    description: 'Breathtaking 3 BHK apartment in Noida Sector 150 eco-hub. Greenest sector in NCR, low density development, corner unit with triple balconies.',
+    createdAt: '2026-03-25'
+  },
+  {
+    id: 'prop-26',
+    title: '3 BHK Lake-Facing Premium Flat in Hiranandani Estate',
+    category: 'buy',
+    propertyType: 'Luxury Apartment',
+    city: 'Thane',
+    locality: 'Ghodbunder Road, Hiranandani Estate',
+    address: 'Rodas Enclave, Hiranandani Estate, Ghodbunder Road, Thane West - 400607',
+    price: 24500000,
+    priceDisplay: '₹ 2.45 Cr',
+    pricePerSqFt: 15312,
+    bedrooms: 3,
+    bathrooms: 3,
+    balconies: 2,
+    areaSqFt: 1600,
+    carpetAreaSqFt: 1320,
+    status: 'Ready to Move',
+    possession: 'Immediate Possession',
+    furnishing: 'Semi-Furnished',
+    facing: 'East',
+    floor: '14th of 28 Floors',
+    reraId: 'P51700000412/2026',
+    isVerified: true,
+    isZeroBrokerage: true,
+    isFeatured: true,
+    images: [
+      'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1000&q=80'
+    ],
+    amenities: [
+      'Neoclassical Architecture',
+      'Upvan Lake & Hill View',
+      'The House of Hiranandani Club',
+      '24/7 Security & Video Intercom',
+      'Covered Reserved Parking'
+    ],
+    localityHighlights: [
+      { title: 'Ghodbunder Highway', distance: '300 m', type: 'highway' },
+      { title: 'Viviana Mall', distance: '4.2 km', type: 'mall' },
+      { title: 'Jupiter Hospital Thane', distance: '4.5 km', type: 'hospital' }
+    ],
+    postedBy: {
+      name: 'Pooja Sawant (Owner)',
+      type: 'Owner',
+      phone: '+91 8383826205'
+    },
+    description: 'Elegant 3 BHK apartment in Hiranandani Estate Thane. Peaceful surroundings, open views of Yeoor Hills and lake, ready for immediate family occupancy.',
+    createdAt: '2026-03-25'
+  },
+  {
+    id: 'prop-27',
+    title: '4 BHK Luxury Designer Builder Floor with Stilt Parking',
+    category: 'buy',
+    propertyType: 'Villa',
+    city: 'Delhi',
+    locality: 'Greater Kailash Part 2 (GK-2)',
+    address: 'M-Block Enclave, Greater Kailash 2, South Delhi, New Delhi - 110048',
+    price: 49500000,
+    priceDisplay: '₹ 4.95 Cr',
+    pricePerSqFt: 18333,
+    bedrooms: 4,
+    bathrooms: 4,
+    balconies: 3,
+    areaSqFt: 2700,
+    carpetAreaSqFt: 2350,
+    status: 'Ready to Move',
+    possession: 'Immediate Possession',
+    furnishing: 'Semi-Furnished',
+    facing: 'North-East',
+    floor: '2nd Floor with Dedicated Lift',
+    reraId: 'DLRERA2026/089',
+    isVerified: true,
+    isZeroBrokerage: true,
+    isFeatured: true,
+    images: [
+      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&w=1000&q=80'
+    ],
+    amenities: [
+      'Private Lift Access',
+      'Stilt Car Parking for 2 Cars',
+      'Italian Modular Kitchen',
+      'Wide Road Corner Plot',
+      '100% Power Backup'
+    ],
+    localityHighlights: [
+      { title: 'Greater Kailash Metro Station (Magenta Line)', distance: '600 m', type: 'metro' },
+      { title: 'M-Block Market GK-2', distance: '300 m', type: 'mall' },
+      { title: 'Max Super Specialty Hospital Saket', distance: '3.8 km', type: 'hospital' }
+    ],
+    postedBy: {
+      name: 'Vikramjit Sahni (Owner)',
+      type: 'Owner',
+      phone: '+91 8383826205'
+    },
+    description: 'Pristine 4 BHK builder floor in South Delhi GK-2. Wide avenue, private high-speed lift, imported fixtures, and fully verified title deeds.',
+    createdAt: '2026-03-25'
+  },
+  {
+    id: 'prop-28',
+    title: '3 BHK High-Rise Flat with Eco-Park View in New Town',
+    category: 'buy',
+    propertyType: 'Apartment',
+    city: 'Kolkata',
+    locality: 'Action Area II, New Town',
+    address: 'Uniworld City Gardens, Action Area II, New Town, Kolkata - 700156',
+    price: 13500000,
+    priceDisplay: '₹ 1.35 Cr',
+    pricePerSqFt: 7500,
+    bedrooms: 3,
+    bathrooms: 3,
+    balconies: 2,
+    areaSqFt: 1800,
+    carpetAreaSqFt: 1520,
+    status: 'Ready to Move',
+    possession: 'Immediate Possession',
+    furnishing: 'Semi-Furnished',
+    facing: 'South-East',
+    floor: '12th of 24 Floors',
+    reraId: 'WBRERA/P/NOR/2026/000219',
+    isVerified: true,
+    isZeroBrokerage: true,
+    isFeatured: true,
+    images: [
+      'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=1000&q=80'
+    ],
+    amenities: [
+      'Eco Park Lake Vista',
+      'Olympic-Sized Swimming Pool',
+      'Tennis & Badminton Courts',
+      'Solar Power Lighting',
+      'Covered Basement Parking'
+    ],
+    localityHighlights: [
+      { title: 'Eco Park & Lake Expressway', distance: '800 m', type: 'highway' },
+      { title: 'Sector V Metro Corridor', distance: '2.5 km', type: 'metro' },
+      { title: 'Kolkata Airport (CCU)', distance: '8.5 km', type: 'airport' }
+    ],
+    postedBy: {
+      name: 'Subhashish Roy (Owner)',
+      type: 'Owner',
+      phone: '+91 8383826205'
+    },
+    description: 'Bright and airy 3 BHK apartment in New Town Action Area II. Peaceful green views, gated township with club facilities, and 100% zero brokerage.',
+    createdAt: '2026-03-25'
+  },
+  {
+    id: 'prop-29',
+    title: '4 BHK Luxury Bungalow on Sindhu Bhavan Main Road',
+    category: 'buy',
+    propertyType: 'Villa',
+    city: 'Ahmedabad',
+    locality: 'Sindhu Bhavan Road, Bodakdev',
+    address: 'Shilp Shaligram Enclave, Sindhu Bhavan Road, Ahmedabad - 380054',
+    price: 42000000,
+    priceDisplay: '₹ 4.20 Cr',
+    pricePerSqFt: 11052,
+    bedrooms: 4,
+    bathrooms: 5,
+    balconies: 3,
+    areaSqFt: 3800,
+    carpetAreaSqFt: 3300,
+    status: 'Ready to Move',
+    possession: 'Immediate Possession',
+    furnishing: 'Semi-Furnished',
+    facing: 'North-East',
+    floor: 'G+2 Independent Bungalow',
+    reraId: 'PR/GJ/AHMEDABAD/2026/092',
+    isVerified: true,
+    isZeroBrokerage: true,
+    isFeatured: true,
+    images: [
+      'https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1000&q=80'
+    ],
+    amenities: [
+      'Private Landscaped Lawn',
+      'Double Height Living Room',
+      'Bespoke Wooden Flooring',
+      '2 Dedicated Covered Car Parks',
+      '24/7 Security Enclave'
+    ],
+    localityHighlights: [
+      { title: 'Sindhu Bhavan Road Promenade', distance: '150 m', type: 'highway' },
+      { title: 'S.G. Highway Junction', distance: '1.2 km', type: 'highway' },
+      { title: 'Zydus Super Specialty Hospital', distance: '3.2 km', type: 'hospital' }
+    ],
+    postedBy: {
+      name: 'Pragnesh Patel (Owner)',
+      type: 'Owner',
+      phone: '+91 8383826205'
+    },
+    description: 'Prestigious 4 BHK independent luxury bungalow on prime Sindhu Bhavan Road. Elite neighborhood, private garden, top quality construction with clear title deeds.',
+    createdAt: '2026-03-25'
+  },
+  {
+    id: 'prop-30',
+    title: '3 BHK Seawoods Grand Palm Beach Coastal Residence',
+    category: 'buy',
+    propertyType: 'Luxury Apartment',
+    city: 'Navi Mumbai',
+    locality: 'Palm Beach Road, Seawoods',
+    address: 'Seawoods Grand Towers, Sector 40, Palm Beach Road, Navi Mumbai - 400706',
+    price: 21500000,
+    priceDisplay: '₹ 2.15 Cr',
+    pricePerSqFt: 12647,
+    bedrooms: 3,
+    bathrooms: 3,
+    balconies: 2,
+    areaSqFt: 1700,
+    carpetAreaSqFt: 1420,
+    status: 'Ready to Move',
+    possession: 'Immediate Possession',
+    furnishing: 'Semi-Furnished',
+    facing: 'West',
+    floor: '16th of 26 Floors with Sea View',
+    reraId: 'P52000021456/2026',
+    isVerified: true,
+    isZeroBrokerage: true,
+    isFeatured: true,
+    images: [
+      'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1000&q=80'
+    ],
+    amenities: [
+      'Flamingo Sanctuary & Sea View',
+      'Infinity Rooftop Pool',
+      'Direct Skywalk to Grand Central Mall',
+      'Covered Multi-Level Parking',
+      'Clubhouse with Gymnasium'
+    ],
+    localityHighlights: [
+      { title: 'Seawoods Railway Station & Mall', distance: '100 m', type: 'metro' },
+      { title: 'Palm Beach Coastal Highway', distance: '200 m', type: 'highway' },
+      { title: 'Apollo Hospital Navi Mumbai', distance: '3.5 km', type: 'hospital' }
+    ],
+    postedBy: {
+      name: 'Ashok Deshmukh (Owner)',
+      type: 'Owner',
+      phone: '+91 8383826205'
+    },
+    description: 'Iconic 3 BHK coastal apartment on Palm Beach Road, Seawoods. Direct sea view, integrated transit living, zero brokerage verification.',
+    createdAt: '2026-03-25'
+  },
+  {
+    id: 'prop-pry-1',
+    title: '4 BHK Luxury Independent Bungalow in Civil Lines',
+    category: 'buy',
+    propertyType: 'Villa',
+    city: 'Prayagraj',
+    locality: 'Civil Lines',
+    address: 'Near High Court & Elgin Road, Civil Lines, Prayagraj - 211001',
+    price: 26500000,
+    priceDisplay: '₹ 2.65 Cr',
+    pricePerSqFt: 7571,
+    bedrooms: 4,
+    bathrooms: 4,
+    balconies: 3,
+    areaSqFt: 3500,
+    carpetAreaSqFt: 2980,
+    status: 'Ready to Move',
+    possession: 'Immediate Possession',
+    furnishing: 'Semi-Furnished',
+    facing: 'North-East',
+    floor: 'G + 1 Independent Bungalow',
+    reraId: 'UPRERA/PRJ/2024/09121',
+    isVerified: true,
+    isZeroBrokerage: true,
+    isFeatured: true,
+    images: [
+      'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=80',
+      'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1000&q=80'
+    ],
+    amenities: [
+      'Private Landscaped Lawn & Courtyard',
+      '24x7 Ganga Water Supply & RO',
+      'Double Covered Car Porch',
+      '100% Power Inverter/DG Backup',
+      'Wide 40-ft Road Frontage'
+    ],
+    localityHighlights: [
+      { title: 'Allahabad High Court', distance: '800 m', type: 'mall' },
+      { title: 'Civil Lines Central Market', distance: '500 m', type: 'mall' },
+      { title: 'Prayagraj Junction Railway Station', distance: '1.8 km', type: 'metro' }
+    ],
+    postedBy: {
+      name: 'Advocate V. K. Srivastava (Owner)',
+      type: 'Owner',
+      phone: '+91 8383826205'
+    },
+    description: 'Rare heritage style modern 4 BHK bungalow in prime Civil Lines, Prayagraj. Fully clear title, freehold land, direct deal with owner without brokerage.',
+    createdAt: '2026-03-26'
+  },
+  {
+    id: 'prop-pry-2',
+    title: '3 BHK River-Facing Premium Flat in Sangam Vihar',
+    category: 'buy',
+    propertyType: 'Apartment',
+    city: 'Prayagraj',
+    locality: 'Sangam Vihar / Jhunsi',
+    address: 'Triveni Tower, New Yamuna Bridge Link Road, Prayagraj - 211019',
+    price: 8800000,
+    priceDisplay: '₹ 88.0 Lac',
+    pricePerSqFt: 5333,
+    bedrooms: 3,
+    bathrooms: 3,
+    balconies: 2,
+    areaSqFt: 1650,
+    carpetAreaSqFt: 1350,
+    status: 'Ready to Move',
+    possession: 'Immediate Possession',
+    furnishing: 'Semi-Furnished',
+    facing: 'East',
+    floor: '8th of 14 Floors',
+    reraId: 'UPRERA/PRJ/2023/04481',
+    isVerified: true,
+    isZeroBrokerage: true,
+    isFeatured: false,
+    images: [
+      'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1000&q=80'
+    ],
+    amenities: [
+      'Panoramic Triveni Sangam River View',
+      'Rooftop Clubhouse & Gym',
+      'Automatic High Speed Elevators',
+      'Reserved Basement Parking',
+      '24x7 Multi-tier Security'
+    ],
+    localityHighlights: [
+      { title: 'New Yamuna Cable Bridge', distance: '1.2 km', type: 'highway' },
+      { title: 'Triveni Sangam Ghat', distance: '2.5 km', type: 'highway' },
+      { title: 'IIIT Allahabad', distance: '4.0 km', type: 'school' }
+    ],
+    postedBy: {
+      name: 'Rameshwar Tripathi (Owner)',
+      type: 'Owner',
+      phone: '+91 8383826205'
+    },
+    description: 'Breathtaking sunrise river views overlooking Sangam. Modern 3 BHK apartment with modular fittings and verified RERA certificate.',
+    createdAt: '2026-03-24'
+  },
+  {
+    id: 'prop-pry-3',
+    title: 'Spacious 2 BHK Furnished Family Flat for Rent in Ashok Nagar',
+    category: 'rent',
+    propertyType: 'Apartment',
+    city: 'Prayagraj',
+    locality: 'Ashok Nagar',
+    address: 'Near Company Bagh & Allahabad University, Ashok Nagar, Prayagraj - 211002',
+    price: 24000,
+    priceDisplay: '₹ 24,000 / mo',
+    pricePerSqFt: 20,
+    bedrooms: 2,
+    bathrooms: 2,
+    balconies: 2,
+    areaSqFt: 1200,
+    carpetAreaSqFt: 1050,
+    status: 'Ready to Move',
+    possession: 'Immediate Possession',
+    furnishing: 'Furnished',
+    facing: 'North',
+    floor: '2nd of 4 Floors',
+    isVerified: true,
+    isZeroBrokerage: true,
+    isFeatured: false,
+    images: [
+      'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=1000&q=80'
+    ],
+    amenities: [
+      'Air Conditioners in All Rooms',
+      'Modular Kitchen with Chimney & RO',
+      'Geyser & High Speed Fiber Wi-Fi',
+      'Reserved Stilt Car Parking',
+      'Gated Colony with Guard'
+    ],
+    localityHighlights: [
+      { title: 'Chandrashekhar Azad Park (Company Bagh)', distance: '400 m', type: 'mall' },
+      { title: 'Allahabad University Central Campus', distance: '1.0 km', type: 'school' },
+      { title: 'Civil Lines Bus Terminus', distance: '1.5 km', type: 'metro' }
+    ],
+    postedBy: {
+      name: 'Sunil Pathak (Owner)',
+      type: 'Owner',
+      phone: '+91 8383826205'
+    },
+    description: 'Peaceful green locality close to Company Bagh. Ideal for families and professionals. Zero brokerage, transparent rent agreement.',
+    createdAt: '2026-03-25'
+  },
+  {
+    id: 'prop-lko-3',
+    title: '4 BHK Grand Villa in Gomti Nagar Extension',
+    category: 'buy',
+    propertyType: 'Villa',
+    city: 'Lucknow',
+    locality: 'Gomti Nagar Extension',
+    address: 'Sector 7, Near Shaheed Path & Ekana Stadium, Lucknow - 226010',
+    price: 21500000,
+    priceDisplay: '₹ 2.15 Cr',
+    pricePerSqFt: 7166,
+    bedrooms: 4,
+    bathrooms: 4,
+    balconies: 3,
+    areaSqFt: 3000,
+    carpetAreaSqFt: 2550,
+    status: 'Ready to Move',
+    possession: 'Immediate Possession',
+    furnishing: 'Semi-Furnished',
+    facing: 'North-East',
+    floor: 'G + 2 Independent Villa',
+    reraId: 'UPRERA/PRJ/2023/07812',
+    isVerified: true,
+    isZeroBrokerage: true,
+    isFeatured: true,
+    images: [
+      'https://images.unsplash.com/photo-1613977257363-707ba9348227?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=80'
+    ],
+    amenities: [
+      'Private Terrace Garden',
+      'Italian Marble Flooring',
+      'Double Car Covered Garage',
+      'Gated Community with 24x7 CCTV',
+      'Solar Water Heater System'
+    ],
+    localityHighlights: [
+      { title: 'Ekana International Cricket Stadium', distance: '1.2 km', type: 'mall' },
+      { title: 'Shaheed Path Expressway', distance: '600 m', type: 'highway' },
+      { title: 'Phoenix Palassio Mall', distance: '1.8 km', type: 'mall' }
+    ],
+    postedBy: {
+      name: 'Syed Tariq (Owner)',
+      type: 'Owner',
+      phone: '+91 8383826205'
+    },
+    description: 'Luxurious duplex villa in prime Gomti Nagar Extension. High ceilings, wide roads, and elite neighborhood. 100% verified Lucknow property.',
+    createdAt: '2026-03-26'
+  },
+  {
+    id: 'prop-vns-3',
+    title: '3 BHK Heritage Villa near Sigra & Kashi Vishwanath Corridor',
+    category: 'buy',
+    propertyType: 'Villa',
+    city: 'Varanasi',
+    locality: 'Sigra',
+    address: 'Near Vidyapeeth Road & Sigra Stadium, Varanasi - 221002',
+    price: 18500000,
+    priceDisplay: '₹ 1.85 Cr',
+    pricePerSqFt: 7708,
+    bedrooms: 3,
+    bathrooms: 3,
+    balconies: 2,
+    areaSqFt: 2400,
+    carpetAreaSqFt: 2050,
+    status: 'Ready to Move',
+    possession: 'Immediate Possession',
+    furnishing: 'Semi-Furnished',
+    facing: 'East',
+    floor: 'G + 1 Independent House',
+    reraId: 'UPRERA/PRJ/2024/01192',
+    isVerified: true,
+    isZeroBrokerage: true,
+    isFeatured: true,
+    images: [
+      'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&w=1000&q=80'
+    ],
+    amenities: [
+      'Private Puja Hall & Courtyard',
+      'Borewell & Municipal Water Line',
+      'Wide Paved Driveway for 2 Cars',
+      'Modular Teak Wood Kitchen',
+      'Surveillance Security Cameras'
+    ],
+    localityHighlights: [
+      { title: 'Sigra Sports Stadium', distance: '400 m', type: 'mall' },
+      { title: 'Kashi Vishwanath Temple', distance: '2.8 km', type: 'mall' },
+      { title: 'Varanasi Cantt Railway Station', distance: '1.5 km', type: 'metro' }
+    ],
+    postedBy: {
+      name: 'Pandit Ananda Mishra (Owner)',
+      type: 'Owner',
+      phone: '+91 8383826205'
+    },
+    description: 'Prestigious independent home in the cultural heart of Varanasi. Calm residential lane with quick access to Cantt and Godowlia.',
+    createdAt: '2026-03-25'
+  },
+  {
+    id: 'prop-noi-2',
+    title: '3 BHK High-Rise Penthouse with Golf Course View',
+    category: 'buy',
+    propertyType: 'Penthouse',
+    city: 'Noida',
+    locality: 'Sector 128 (Noida Expressway)',
+    address: 'Jaypee Greens Corridor, Sector 128, Noida Expressway - 201304',
+    price: 32000000,
+    priceDisplay: '₹ 3.20 Cr',
+    pricePerSqFt: 11428,
+    bedrooms: 3,
+    bathrooms: 4,
+    balconies: 3,
+    areaSqFt: 2800,
+    carpetAreaSqFt: 2350,
+    status: 'Ready to Move',
+    possession: 'Immediate Possession',
+    furnishing: 'Semi-Furnished',
+    facing: 'North-East',
+    floor: '26th of 28 Floors',
+    reraId: 'UPRERA/PRJ/2022/05934',
+    isVerified: true,
+    isZeroBrokerage: true,
+    isFeatured: true,
+    images: [
+      'https://images.unsplash.com/photo-1567496898669-ee935f5f647a?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1000&q=80'
+    ],
+    amenities: [
+      'Panoramic 18-Hole Golf Course View',
+      'Private Terrace Jacuzzi Provision',
+      '3 Dedicated Basement Parking Bays',
+      'Olympic Size Swimming Pool & Spa',
+      'Direct Expressway Connectivity'
+    ],
+    localityHighlights: [
+      { title: 'Noida-Greater Noida Expressway', distance: '200 m', type: 'highway' },
+      { title: 'Jaypee Hospital', distance: '1.0 km', type: 'hospital' },
+      { title: 'Sector 137 Metro Station', distance: '2.5 km', type: 'metro' }
+    ],
+    postedBy: {
+      name: 'Rajat Singhal (Owner)',
+      type: 'Owner',
+      phone: '+91 8383826205'
+    },
+    description: 'Iconic golf-facing luxury home on Noida Expressway. Double-height living room, floor-to-ceiling glass windows, and zero brokerage verified.',
+    createdAt: '2026-03-26'
   }
 ];
 

@@ -136,7 +136,7 @@ export const PropertyValuationView: React.FC<PropertyValuationViewProps> = ({
               <span>/</span>
               <span className="text-slate-900 font-bold">Housing Tools</span>
               <span>/</span>
-              <span className="text-purple-700 font-bold">Property Value Calculator</span>
+              <span className="text-blue-600 font-bold">Property Value Calculator</span>
             </div>
           </div>
 
@@ -157,7 +157,7 @@ export const PropertyValuationView: React.FC<PropertyValuationViewProps> = ({
             <span>AI Real Estate Valuation Model</span>
           </div>
           <h1 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
-            Instant <span className="text-purple-700">Property Value Calculator</span>
+            Instant <span className="text-blue-600">Property Value Calculator</span>
           </h1>
           <p className="text-xs sm:text-sm text-slate-600 mt-2 leading-relaxed">
             Get an instant, reliable market price estimation, rental yield, and per-sq.ft valuation index based on registry benchmarks and local market sales.
@@ -168,7 +168,7 @@ export const PropertyValuationView: React.FC<PropertyValuationViewProps> = ({
           {/* Left Column: Input Form (6 cols) */}
           <div className="lg:col-span-6 bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm">
             <h3 className="font-extrabold text-base text-slate-900 mb-5 flex items-center gap-2">
-              <SlidersHorizontal className="w-4 h-4 text-purple-700" />
+              <SlidersHorizontal className="w-4 h-4 text-blue-600" />
               <span>Enter Property Details</span>
             </h3>
 
@@ -195,7 +195,7 @@ export const PropertyValuationView: React.FC<PropertyValuationViewProps> = ({
                     value={locality}
                     onChange={(e) => setLocality(e.target.value)}
                     placeholder="e.g. Sarjapur, Bandra, Baner"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs font-bold text-slate-800 focus:outline-none focus:border-purple-600 focus:ring-2 focus:ring-purple-600/20 bg-white"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs font-bold text-slate-800 focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20 bg-white"
                   />
                 </div>
               </div>
@@ -243,7 +243,7 @@ export const PropertyValuationView: React.FC<PropertyValuationViewProps> = ({
               <div>
                 <div className="flex justify-between items-center mb-1.5">
                   <label className="text-xs font-bold text-slate-700">Super Built-up Area (Sq.Ft)</label>
-                  <span className="text-xs font-black text-purple-700">{areaSqFt.toLocaleString()} sq.ft</span>
+                  <span className="text-xs font-black text-blue-600">{areaSqFt.toLocaleString()} sq.ft</span>
                 </div>
                 <input
                   type="range"
@@ -252,7 +252,7 @@ export const PropertyValuationView: React.FC<PropertyValuationViewProps> = ({
                   step={50}
                   value={areaSqFt}
                   onChange={(e) => setAreaSqFt(Number(e.target.value))}
-                  className="w-full accent-purple-700 h-2 bg-slate-100 rounded-lg cursor-pointer"
+                  className="w-full accent-blue-600 h-2 bg-slate-100 rounded-lg cursor-pointer"
                 />
                 <div className="flex justify-between text-[10px] text-slate-400 mt-1">
                   <span>400 sq.ft</span>
@@ -300,7 +300,7 @@ export const PropertyValuationView: React.FC<PropertyValuationViewProps> = ({
               <button
                 type="submit"
                 disabled={isEvaluating}
-                className="w-full py-3.5 rounded-xl bg-purple-700 hover:bg-purple-800 disabled:opacity-50 text-white font-extrabold text-xs sm:text-sm shadow-md transition-all cursor-pointer flex items-center justify-center gap-2 mt-4"
+                className="w-full py-3.5 rounded-xl bg-blue-600 hover:bg-blue-800 disabled:opacity-50 text-white font-extrabold text-xs sm:text-sm shadow-md transition-all cursor-pointer flex items-center justify-center gap-2 mt-4"
               >
                 {isEvaluating ? (
                   <>
@@ -319,21 +319,21 @@ export const PropertyValuationView: React.FC<PropertyValuationViewProps> = ({
 
           {/* Right Column: Valuation Results Card (6 cols) */}
           <div className="lg:col-span-6 space-y-6">
-            <div className="bg-gradient-to-br from-[#2c0e52] via-[#3a136b] to-[#45187e] rounded-3xl p-6 sm:p-8 text-white shadow-xl relative overflow-hidden">
+            <div className="bg-gradient-to-br from-[#1b4a80] via-[#255e9c] to-[#2b568d] rounded-3xl p-6 sm:p-8 text-white shadow-xl relative overflow-hidden">
               <div className="absolute right-0 top-0 w-60 h-60 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
 
               <div className="flex items-center justify-between mb-4">
                 <span className="px-3 py-1 rounded-full bg-emerald-400 text-slate-950 font-black text-[10px] uppercase tracking-wider">
                   Estimated Valuation Range
                 </span>
-                <span className="text-xs text-purple-200 font-semibold">
+                <span className="text-xs text-blue-200 font-semibold">
                   📍 {locality}, {city}
                 </span>
               </div>
 
               {/* Big Valuation Display */}
               <div className="py-4 border-y border-white/10 my-2">
-                <span className="text-xs text-purple-200 font-medium block">Fair Market Selling Range:</span>
+                <span className="text-xs text-blue-200 font-medium block">Fair Market Selling Range:</span>
                 <div className="text-2xl sm:text-3xl font-black text-amber-300 tracking-tight mt-1">
                   {formatCurrency(valuation.lowRange)} - {formatCurrency(valuation.highRange)}
                 </div>
@@ -345,19 +345,19 @@ export const PropertyValuationView: React.FC<PropertyValuationViewProps> = ({
               {/* Key Valuation Stats */}
               <div className="grid grid-cols-2 gap-3 pt-3 text-xs">
                 <div className="p-3 rounded-2xl bg-white/10 backdrop-blur-xs border border-white/10">
-                  <span className="text-[11px] text-purple-200 block">Average Rate / Sq.Ft:</span>
+                  <span className="text-[11px] text-blue-200 block">Average Rate / Sq.Ft:</span>
                   <span className="text-base font-extrabold text-white">₹{valuation.ratePerSqFt.toLocaleString('en-IN')}/sq.ft</span>
                 </div>
 
                 <div className="p-3 rounded-2xl bg-white/10 backdrop-blur-xs border border-white/10">
-                  <span className="text-[11px] text-purple-200 block">Est. Monthly Rental Yield:</span>
+                  <span className="text-[11px] text-blue-200 block">Est. Monthly Rental Yield:</span>
                   <span className="text-base font-extrabold text-emerald-400">₹{valuation.monthlyRental.toLocaleString('en-IN')}/mo</span>
                 </div>
               </div>
 
               {/* Post Property CTA */}
               <div className="mt-6 pt-5 border-t border-white/10">
-                <p className="text-xs text-purple-100 mb-3 leading-relaxed">
+                <p className="text-xs text-blue-100 mb-3 leading-relaxed">
                   Want to sell or rent your property at this valuation? List directly with 0 broker commission on VillaSell.
                 </p>
                 <button

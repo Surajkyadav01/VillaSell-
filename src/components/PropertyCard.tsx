@@ -37,7 +37,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({
   const directWhatsAppLink = `https://wa.me/918383826205?text=${whatsappMessage}`;
 
   return (
-    <div className="bg-white rounded-2xl border border-slate-200/90 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col overflow-hidden group hover:border-purple-200">
+    <div className="bg-white rounded-2xl border border-slate-200/90 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col overflow-hidden group hover:border-blue-300">
       {/* Property Image Container */}
       <div className="relative aspect-[16/10] overflow-hidden bg-slate-100 cursor-pointer" onClick={() => onSelectProperty(property)}>
         <LazyImage
@@ -58,7 +58,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({
           )}
 
           {property.isZeroBrokerage && (
-            <span className="bg-purple-700/95 backdrop-blur-md text-white text-[11px] font-bold px-2 py-0.5 rounded-md shadow-xs">
+            <span className="bg-blue-600/95 backdrop-blur-md text-white text-[11px] font-bold px-2 py-0.5 rounded-md shadow-xs">
               Zero Brokerage
             </span>
           )}
@@ -90,7 +90,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({
         {/* Bottom Banner inside Image: Property Type & Status */}
         <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-white text-xs">
           <span className="bg-slate-950/70 backdrop-blur-sm px-2.5 py-1 rounded-md font-semibold text-[11px] flex items-center gap-1">
-            <Building className="w-3 h-3 text-purple-300" />
+            <Building className="w-3 h-3 text-sky-300" />
             {property.propertyType}
           </span>
           <span className="bg-emerald-500/90 text-slate-950 font-extrabold text-[10px] px-2 py-0.5 rounded-md uppercase tracking-wider">
@@ -114,7 +114,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({
                 </span>
               )}
             </div>
-            <span className="text-[11px] font-semibold text-purple-700 bg-purple-50 px-2 py-0.5 rounded">
+            <span className="text-[11px] font-semibold text-blue-700 bg-blue-50 px-2 py-0.5 rounded">
               {property.furnishing}
             </span>
           </div>
@@ -122,7 +122,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({
           {/* Title */}
           <h3
             onClick={() => onSelectProperty(property)}
-            className="font-bold text-slate-900 text-base line-clamp-1 hover:text-purple-700 transition-colors cursor-pointer mb-1.5"
+            className="font-bold text-slate-900 text-base line-clamp-1 hover:text-blue-600 transition-colors cursor-pointer mb-1.5"
             title={property.title}
           >
             {property.title}
@@ -130,7 +130,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({
 
           {/* Location */}
           <div className="flex items-center gap-1.5 text-xs text-slate-500 mb-3.5">
-            <MapPin className="w-3.5 h-3.5 text-purple-600 shrink-0" />
+            <MapPin className="w-3.5 h-3.5 text-blue-600 shrink-0" />
             <span className="line-clamp-1 font-medium">
               {property.locality}, {property.city}
             </span>
@@ -140,23 +140,23 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({
           <div className="grid grid-cols-3 gap-2 py-2.5 px-3 rounded-xl bg-slate-50 border border-slate-100 text-xs mb-4">
             {property.bedrooms > 0 ? (
               <div className="flex items-center gap-1.5 text-slate-700">
-                <BedDouble className="w-3.5 h-3.5 text-purple-600 shrink-0" />
+                <BedDouble className="w-3.5 h-3.5 text-blue-600 shrink-0" />
                 <span className="font-bold">{property.bedrooms} BHK</span>
               </div>
             ) : (
               <div className="flex items-center gap-1.5 text-slate-700">
-                <Sparkles className="w-3.5 h-3.5 text-purple-600 shrink-0" />
+                <Sparkles className="w-3.5 h-3.5 text-blue-600 shrink-0" />
                 <span className="font-bold">{property.propertyType}</span>
               </div>
             )}
 
             <div className="flex items-center gap-1.5 text-slate-700">
-              <Bath className="w-3.5 h-3.5 text-purple-600 shrink-0" />
+              <Bath className="w-3.5 h-3.5 text-blue-600 shrink-0" />
               <span className="font-bold">{property.bathrooms} Baths</span>
             </div>
 
             <div className="flex items-center gap-1.5 text-slate-700">
-              <Maximize2 className="w-3.5 h-3.5 text-purple-600 shrink-0" />
+              <Maximize2 className="w-3.5 h-3.5 text-blue-600 shrink-0" />
               <span className="font-bold">{property.areaSqFt} sq.ft</span>
             </div>
           </div>
@@ -188,7 +188,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({
           {/* Full Dedicated Page View Details */}
           <button
             onClick={() => onSelectProperty(property)}
-            className="flex-[1.3] flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-xl bg-purple-700 hover:bg-purple-800 text-white font-bold text-xs shadow-xs hover:shadow-md transition-all cursor-pointer"
+            className="flex-[1.3] flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-xs hover:shadow-md transition-all cursor-pointer transform active:scale-95"
           >
             <span>View Details</span>
             <ArrowRight className="w-3.5 h-3.5" />

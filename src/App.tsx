@@ -55,12 +55,15 @@ import { EmiCalculatorView } from './components/EmiCalculatorView';
 import { PropertyValuationView } from './components/PropertyValuationView';
 import { RentReceiptView } from './components/RentReceiptView';
 import { MobileBottomNav } from './components/MobileBottomNav';
+import { FindPropertyPreferredCity } from './components/FindPropertyPreferredCity';
+import { CityPropertiesView } from './components/CityPropertiesView';
 
 export default function App() {
   // Navigation & View State (NO MODALS: All views are full-page!)
   const [activeView, setActiveView] = useState<ActiveView>('home');
   const [selectedProperty, setSelectedProperty] = useState<Property | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [selectedCityForView, setSelectedCityForView] = useState<string>('Mumbai');
 
   // User Profile / Authentication State with localStorage
   const [currentUser, setCurrentUser] = useState<UserProfile | null>(() => {
@@ -190,11 +193,11 @@ export default function App() {
 
         // Delhi NCR / Noida / Gurgaon
         if (filterCity.includes('delhi') || filterCity.includes('ncr')) {
-          matches = propCity.includes('delhi') || propLoc.includes('gurugram') || propLoc.includes('noida');
+          matches = propCity.includes('delhi') || propCity.includes('ncr') || propLoc.includes('delhi') || propLoc.includes('gurugram') || propLoc.includes('noida');
         } else if (filterCity === 'noida') {
           matches = propCity.includes('noida') || propLoc.includes('noida') || propAddr.includes('noida');
         } else if (filterCity === 'gurgaon') {
-          matches = propCity.includes('gurgaon') || propLoc.includes('gurugram') || propAddr.includes('gurugram') || propAddr.includes('gurgaon');
+          matches = propCity.includes('gurgaon') || propCity.includes('gurugram') || propLoc.includes('gurugram') || propAddr.includes('gurugram') || propAddr.includes('gurgaon');
         }
 
         // Mumbai / Thane / Navi Mumbai
@@ -202,6 +205,21 @@ export default function App() {
           matches = propCity.includes('thane') || propLoc.includes('thane');
         } else if (filterCity === 'navi mumbai') {
           matches = propCity.includes('navi mumbai') || propLoc.includes('navi mumbai');
+        }
+
+        // Prayagraj / Allahabad
+        if (filterCity.includes('prayagraj') || filterCity.includes('allahabad')) {
+          matches = propCity.includes('prayagraj') || propCity.includes('allahabad') || propLoc.includes('civil lines') || propLoc.includes('sangam') || propLoc.includes('ashok nagar') || propAddr.includes('prayagraj');
+        }
+
+        // Lucknow
+        if (filterCity === 'lucknow') {
+          matches = propCity.includes('lucknow') || propLoc.includes('gomti') || propLoc.includes('hazratganj') || propAddr.includes('lucknow');
+        }
+
+        // Varanasi
+        if (filterCity === 'varanasi' || filterCity === 'kashi') {
+          matches = propCity.includes('varanasi') || propLoc.includes('sigra') || propLoc.includes('shivpur') || propAddr.includes('varanasi');
         }
 
         if (!matches) {
@@ -326,8 +344,14 @@ export default function App() {
     }
   };
 
+  const handleOpenCityPage = (cityName: string) => {
+    setSelectedCityForView(cityName);
+    setActiveView('city-properties');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col antialiased selection:bg-purple-100 selection:text-purple-900 pb-16 md:pb-0">
+    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col antialiased selection:bg-blue-100 selection:text-blue-900 pb-16 md:pb-0">
       {/* Toast Alert */}
       {toast && (
         <div className="fixed bottom-6 right-6 z-50 bg-slate-900 text-white text-xs font-bold px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2 border border-slate-700 animate-in slide-in-from-bottom-5">
@@ -480,7 +504,26 @@ export default function App() {
           />
         )}
 
-        {/* VIEW 11: HOMEPAGE */}
+        {/* VIEW 11: CITY PROPERTIES (Dedicated Full Internal Page for Selected City) */}
+        {activeView === 'city-properties' && (
+          <CityPropertiesView
+            cityName={selectedCityForView}
+            allProperties={properties}
+            onBack={() => {
+              setActiveView('home');
+              window.scrollTo({ top: 0, behavior: 'auto' });
+            }}
+            onSelectProperty={handleSelectProperty}
+            shortlistedIds={shortlist}
+            onToggleShortlist={handleToggleShortlist}
+            onSwitchCity={(newCityName) => {
+              setSelectedCityForView(newCityName);
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+          />
+        )}
+
+        {/* VIEW 12: HOMEPAGE */}
         {activeView === 'home' && (
           <div>
             {/* Hero Unified Search & Category Tabs */}
@@ -507,12 +550,12 @@ export default function App() {
                   }}
                   className={`p-3 sm:p-3.5 rounded-2xl border cursor-pointer select-none transition-all duration-300 active:scale-[0.97] ${
                     activeQuickCard === 'villa'
-                      ? 'bg-gradient-to-r from-purple-50 via-indigo-50/70 to-purple-100/60 animate-subtle-shimmer border-purple-500 ring-2 ring-purple-500/20 shadow-md'
-                      : 'bg-white border-slate-200 hover:border-purple-200 hover:shadow-md shadow-xs'
+                      ? 'bg-gradient-to-r from-blue-50 via-sky-50 to-blue-100/60 animate-subtle-shimmer border-blue-500 ring-2 ring-blue-500/20 shadow-md'
+                      : 'bg-white border-slate-200 hover:border-blue-200 hover:shadow-md shadow-xs'
                   }`}
                 >
                   <div className={`w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center mb-2.5 transition-colors ${
-                    activeQuickCard === 'villa' ? 'bg-purple-600 text-white shadow-xs' : 'bg-purple-50 text-purple-700'
+                    activeQuickCard === 'villa' ? 'bg-blue-600 text-white shadow-xs' : 'bg-blue-50 text-blue-700'
                   }`}>
                     <HomeIcon className="w-4 h-4 sm:w-5 sm:h-5" />
                   </div>
@@ -531,12 +574,12 @@ export default function App() {
                   }}
                   className={`p-3 sm:p-3.5 rounded-2xl border cursor-pointer select-none transition-all duration-300 active:scale-[0.97] ${
                     activeQuickCard === 'flats'
-                      ? 'bg-gradient-to-r from-purple-50 via-indigo-50/70 to-purple-100/60 animate-subtle-shimmer border-purple-500 ring-2 ring-purple-500/20 shadow-md'
-                      : 'bg-white border-slate-200 hover:border-purple-200 hover:shadow-md shadow-xs'
+                      ? 'bg-gradient-to-r from-blue-50 via-sky-50 to-blue-100/60 animate-subtle-shimmer border-blue-500 ring-2 ring-blue-500/20 shadow-md'
+                      : 'bg-white border-slate-200 hover:border-blue-200 hover:shadow-md shadow-xs'
                   }`}
                 >
                   <div className={`w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center mb-2.5 transition-colors ${
-                    activeQuickCard === 'flats' ? 'bg-purple-600 text-white shadow-xs' : 'bg-purple-50 text-purple-700'
+                    activeQuickCard === 'flats' ? 'bg-blue-600 text-white shadow-xs' : 'bg-blue-50 text-blue-700'
                   }`}>
                     <Building2 className="w-4 h-4 sm:w-5 sm:h-5" />
                   </div>
@@ -579,12 +622,12 @@ export default function App() {
                   }}
                   className={`p-3 sm:p-3.5 rounded-2xl border cursor-pointer select-none transition-all duration-300 active:scale-[0.97] ${
                     activeQuickCard === 'commercial'
-                      ? 'bg-gradient-to-r from-purple-50 via-indigo-50/70 to-purple-100/60 animate-subtle-shimmer border-purple-500 ring-2 ring-purple-500/20 shadow-md'
-                      : 'bg-white border-slate-200 hover:border-purple-200 hover:shadow-md shadow-xs'
+                      ? 'bg-gradient-to-r from-blue-50 via-sky-50 to-blue-100/60 animate-subtle-shimmer border-blue-500 ring-2 ring-blue-500/20 shadow-md'
+                      : 'bg-white border-slate-200 hover:border-blue-200 hover:shadow-md shadow-xs'
                   }`}
                 >
                   <div className={`w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center mb-2.5 transition-colors ${
-                    activeQuickCard === 'commercial' ? 'bg-purple-600 text-white shadow-xs' : 'bg-purple-50 text-purple-700'
+                    activeQuickCard === 'commercial' ? 'bg-blue-600 text-white shadow-xs' : 'bg-blue-50 text-blue-700'
                   }`}>
                     <Store className="w-4 h-4 sm:w-5 sm:h-5" />
                   </div>
@@ -603,12 +646,12 @@ export default function App() {
                   }}
                   className={`p-3 sm:p-3.5 rounded-2xl border cursor-pointer select-none transition-all duration-300 active:scale-[0.97] col-span-2 sm:col-span-1 ${
                     activeQuickCard === 'plots'
-                      ? 'bg-gradient-to-r from-purple-50 via-indigo-50/70 to-purple-100/60 animate-subtle-shimmer border-purple-500 ring-2 ring-purple-500/20 shadow-md'
-                      : 'bg-white border-slate-200 hover:border-purple-200 hover:shadow-md shadow-xs'
+                      ? 'bg-gradient-to-r from-blue-50 via-sky-50 to-blue-100/60 animate-subtle-shimmer border-blue-500 ring-2 ring-blue-500/20 shadow-md'
+                      : 'bg-white border-slate-200 hover:border-blue-200 hover:shadow-md shadow-xs'
                   }`}
                 >
                   <div className={`w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center mb-2.5 transition-colors ${
-                    activeQuickCard === 'plots' ? 'bg-purple-600 text-white shadow-xs' : 'bg-purple-50 text-purple-700'
+                    activeQuickCard === 'plots' ? 'bg-blue-600 text-white shadow-xs' : 'bg-blue-50 text-blue-700'
                   }`}>
                     <Trees className="w-4 h-4 sm:w-5 sm:h-5" />
                   </div>
@@ -618,6 +661,11 @@ export default function App() {
                   </p>
                 </div>
               </div>
+            </LazySection>
+
+            {/* Find Your Property in Your Preferred City (RealEstateIndia inspired feature with authentic landmark images) */}
+            <LazySection id="preferred-cities">
+              <FindPropertyPreferredCity onSelectCity={handleOpenCityPage} />
             </LazySection>
 
             {/* Featured & Verified Listings Grid (Progressive / Lazy Loaded) */}
@@ -635,7 +683,7 @@ export default function App() {
                     {filters.city !== 'All Cities' && (
                       <button
                         onClick={() => setFilters((prev) => ({ ...prev, city: 'All Cities' }))}
-                        className="text-[11px] text-purple-700 hover:text-purple-900 font-bold underline ml-1 cursor-pointer"
+                        className="text-[11px] text-blue-600 hover:text-blue-800 font-bold underline ml-1 cursor-pointer"
                       >
                         Show All Cities
                       </button>
@@ -643,7 +691,7 @@ export default function App() {
                   </div>
                   <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
                     {filters.city !== 'All Cities' ? (
-                      <span>Properties, Buildings & Rentals in <span className="text-purple-700">{filters.city}</span></span>
+                      <span>Properties, Buildings & Rentals in <span className="text-blue-600">{filters.city}</span></span>
                     ) : (
                       <>
                         {filters.category === 'all' && 'All Verified Properties & Rentals'}
@@ -663,7 +711,7 @@ export default function App() {
                         onClick={() => setFilters((prev) => ({ ...prev, category: 'all' }))}
                         className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
                           filters.category === 'all'
-                            ? 'bg-purple-700 text-white shadow-xs'
+                            ? 'bg-blue-600 text-white shadow-xs'
                             : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
                         }`}
                       >
@@ -673,7 +721,7 @@ export default function App() {
                         onClick={() => setFilters((prev) => ({ ...prev, category: 'buy' }))}
                         className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
                           filters.category === 'buy'
-                            ? 'bg-purple-700 text-white shadow-xs'
+                            ? 'bg-blue-600 text-white shadow-xs'
                             : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
                         }`}
                       >
@@ -683,7 +731,7 @@ export default function App() {
                         onClick={() => setFilters((prev) => ({ ...prev, category: 'rent' }))}
                         className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
                           filters.category === 'rent'
-                            ? 'bg-purple-700 text-white shadow-xs'
+                            ? 'bg-blue-600 text-white shadow-xs'
                             : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
                         }`}
                       >
@@ -693,7 +741,7 @@ export default function App() {
                         onClick={() => setFilters((prev) => ({ ...prev, category: 'commercial' }))}
                         className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
                           filters.category === 'commercial'
-                            ? 'bg-purple-700 text-white shadow-xs'
+                            ? 'bg-blue-600 text-white shadow-xs'
                             : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
                         }`}
                       >
@@ -770,7 +818,7 @@ export default function App() {
                   </p>
                   <button
                     onClick={resetFilters}
-                    className="px-5 py-2.5 rounded-xl bg-purple-700 text-white font-bold text-xs shadow-md cursor-pointer"
+                    className="px-5 py-2.5 rounded-xl bg-blue-600 text-white font-bold text-xs shadow-md cursor-pointer"
                   >
                     Clear All Filters
                   </button>
@@ -804,10 +852,10 @@ export default function App() {
                       {/* Invisible sentinel for scroll trigger */}
                       <div ref={loadMoreSentinelRef} className="h-4 w-full" />
 
-                      <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-purple-50 text-purple-800 text-xs font-bold border border-purple-100 shadow-xs">
+                      <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-blue-50 text-blue-800 text-xs font-bold border border-blue-100 shadow-xs">
                         {isLoadingMore ? (
                           <>
-                            <Loader2 className="w-4 h-4 animate-spin text-purple-700" />
+                            <Loader2 className="w-4 h-4 animate-spin text-blue-600" />
                             <span>Loading more properties...</span>
                           </>
                         ) : (
@@ -818,7 +866,7 @@ export default function App() {
                       <button
                         onClick={handleLoadMoreManually}
                         disabled={isLoadingMore}
-                        className="px-6 py-2.5 rounded-xl bg-purple-700 hover:bg-purple-800 disabled:opacity-60 text-white font-bold text-xs shadow-md cursor-pointer transition-all flex items-center gap-2 hover:scale-[1.02] active:scale-[0.98]"
+                        className="px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-800 disabled:opacity-60 text-white font-bold text-xs shadow-md cursor-pointer transition-all flex items-center gap-2 hover:scale-[1.02] active:scale-[0.98]"
                       >
                         {isLoadingMore ? (
                           <>
@@ -842,7 +890,7 @@ export default function App() {
                       <div className="mt-3">
                         <button
                           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-                          className="inline-flex items-center gap-1.5 text-xs font-bold text-purple-700 hover:text-purple-900 cursor-pointer"
+                          className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 hover:text-blue-900 cursor-pointer"
                         >
                           <ArrowUp className="w-3.5 h-3.5" />
                           <span>Back to top of listings</span>
@@ -858,7 +906,7 @@ export default function App() {
             <LazySection className="bg-gradient-to-b from-white to-slate-50 border-y border-slate-200 py-16 px-4 sm:px-6 lg:px-8">
               <div className="max-w-7xl mx-auto">
                 <div className="text-center max-w-2xl mx-auto mb-12">
-                  <span className="px-3 py-1 rounded-full bg-purple-100 text-purple-800 text-xs font-extrabold uppercase tracking-wider">
+                  <span className="px-3 py-1 rounded-full bg-blue-100 text-blue-800 text-xs font-extrabold uppercase tracking-wider">
                     The VillaSell Difference
                   </span>
                   <h2 className="text-3xl font-black text-slate-900 mt-2">
@@ -871,8 +919,8 @@ export default function App() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                   {/* Feature 1 */}
-                  <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs hover:border-purple-200 hover:shadow-md transition-all">
-                    <div className="w-12 h-12 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center mb-4">
+                  <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs hover:border-blue-200 hover:shadow-md transition-all">
+                    <div className="w-12 h-12 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center mb-4">
                       <ShieldCheck className="w-6 h-6" />
                     </div>
                     <h3 className="font-extrabold text-base text-slate-900 mb-1.5">100% Verified Owners</h3>
@@ -882,7 +930,7 @@ export default function App() {
                   </div>
 
                   {/* Feature 2 */}
-                  <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs hover:border-purple-200 hover:shadow-md transition-all">
+                  <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs hover:border-blue-200 hover:shadow-md transition-all">
                     <div className="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center mb-4">
                       <Award className="w-6 h-6" />
                     </div>
@@ -893,8 +941,8 @@ export default function App() {
                   </div>
 
                   {/* Feature 3 */}
-                  <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs hover:border-purple-200 hover:shadow-md transition-all">
-                    <div className="w-12 h-12 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center mb-4">
+                  <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs hover:border-blue-200 hover:shadow-md transition-all">
+                    <div className="w-12 h-12 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center mb-4">
                       <Gem className="w-6 h-6" />
                     </div>
                     <h3 className="font-extrabold text-base text-slate-900 mb-1.5">Zero Hidden Charges</h3>
@@ -904,7 +952,7 @@ export default function App() {
                   </div>
 
                   {/* Feature 4 */}
-                  <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs hover:border-purple-200 hover:shadow-md transition-all">
+                  <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs hover:border-blue-200 hover:shadow-md transition-all">
                     <div className="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center mb-4">
                       <Phone className="w-6 h-6" />
                     </div>
@@ -919,8 +967,8 @@ export default function App() {
 
             {/* Direct Owner Contact / Helpline Banner (Lazy Loaded on Scroll) */}
             <LazySection className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-              <div className="bg-gradient-to-r from-purple-900 via-indigo-900 to-slate-950 text-white rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden">
-                <div className="absolute right-0 top-0 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl pointer-events-none" />
+              <div className="bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-950 text-white rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden">
+                <div className="absolute right-0 top-0 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
 
                 <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                   <div className="lg:col-span-7">
@@ -953,7 +1001,7 @@ export default function App() {
                   <div className="lg:col-span-5 bg-white/10 backdrop-blur-md rounded-2xl p-5 border border-white/20 space-y-3">
                     <a
                       href={`tel:${BRAND_CONFIG.phoneClean}`}
-                      className="w-full py-3 px-4 rounded-xl bg-white text-purple-950 font-black text-sm flex items-center justify-center gap-2.5 hover:bg-slate-100 transition-colors shadow-lg"
+                      className="w-full py-3 px-4 rounded-xl bg-white text-slate-900 font-black text-sm flex items-center justify-center gap-2.5 hover:bg-slate-100 transition-colors shadow-lg"
                     >
                       <Phone className="w-4 h-4 text-emerald-600" />
                       <span>Call: {BRAND_CONFIG.phone}</span>
@@ -973,7 +1021,7 @@ export default function App() {
                       href={`mailto:${BRAND_CONFIG.email}`}
                       className="w-full py-2.5 px-4 rounded-xl bg-slate-900/80 hover:bg-slate-900 text-slate-200 font-semibold text-xs flex items-center justify-center gap-2 border border-slate-700 transition-colors"
                     >
-                      <Mail className="w-3.5 h-3.5 text-purple-400" />
+                      <Mail className="w-3.5 h-3.5 text-blue-400" />
                       <span>{BRAND_CONFIG.email}</span>
                     </a>
                   </div>
@@ -1027,7 +1075,7 @@ export default function App() {
                           alt={rev.author}
                           loading="lazy"
                           decoding="async"
-                          className="w-10 h-10 rounded-full object-cover border border-purple-200"
+                          className="w-10 h-10 rounded-full object-cover border border-blue-200"
                         />
                         <div>
                           <div className="flex items-center gap-1.5">
@@ -1036,7 +1084,7 @@ export default function App() {
                               <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
                             )}
                           </div>
-                          <span className="text-[11px] text-purple-700 font-medium block">
+                          <span className="text-[11px] text-blue-600 font-medium block">
                             {rev.propertyBought}
                           </span>
                         </div>

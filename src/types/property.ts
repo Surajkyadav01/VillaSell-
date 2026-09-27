@@ -99,4 +99,5 @@ export type ActiveView =
   | 'housing-premium'
   | 'emi-calculator'
   | 'property-valuation'
-  | 'rent-receipt-generator';
+  | 'rent-receipt-generator'
+  | 'city-properties';

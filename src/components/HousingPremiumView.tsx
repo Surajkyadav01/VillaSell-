@@ -265,7 +265,7 @@ export const HousingPremiumView: React.FC<HousingPremiumViewProps> = ({
               <span>/</span>
               <span className="text-slate-900 font-bold">Housing Edge</span>
               <span>/</span>
-              <span className="text-purple-700 font-bold">Housing Premium</span>
+              <span className="text-blue-600 font-bold">Housing Premium</span>
             </div>
           </div>
 
@@ -294,7 +294,7 @@ export const HousingPremiumView: React.FC<HousingPremiumViewProps> = ({
       </div>
 
       {/* Hero Header */}
-      <div className="bg-gradient-to-r from-purple-900 via-indigo-900 to-purple-950 text-white py-14 px-4 sm:px-6 lg:px-8 shadow-inner text-center relative overflow-hidden">
+      <div className="bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 text-white py-14 px-4 sm:px-6 lg:px-8 shadow-inner text-center relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_center,rgba(245,158,11,0.18),transparent_70%)] pointer-events-none" />
 
         <div className="max-w-3xl mx-auto relative z-10">
@@ -308,11 +308,11 @@ export const HousingPremiumView: React.FC<HousingPremiumViewProps> = ({
             <span className="text-amber-400">Direct & Verified Deals</span>
           </h1>
 
-          <p className="text-purple-100 text-xs sm:text-sm mt-3 leading-relaxed max-w-2xl mx-auto">
+          <p className="text-blue-100 text-xs sm:text-sm mt-3 leading-relaxed max-w-2xl mx-auto">
             Skip brokers and save up to ₹5 to 15 Lakhs in commissions. Get direct contact with verified property owners, dedicated relationship manager, and full legal documentation audit.
           </p>
 
-          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-8 mt-6 text-xs text-purple-200">
+          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-8 mt-6 text-xs text-blue-200">
             <div className="flex items-center gap-2">
               <ShieldCheck className="w-4 h-4 text-emerald-400" />
               <span>100% Verified Owners</span>
@@ -397,7 +397,7 @@ export const HousingPremiumView: React.FC<HousingPremiumViewProps> = ({
 
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-6">
-          <span className="text-xs font-extrabold uppercase tracking-wider text-purple-700 block mb-1">
+          <span className="text-xs font-extrabold uppercase tracking-wider text-blue-600 block mb-1">
             Choose Your Membership Tier
           </span>
           <h2 className="text-2xl sm:text-3xl font-black text-slate-900">
@@ -419,14 +419,14 @@ export const HousingPremiumView: React.FC<HousingPremiumViewProps> = ({
                   onClick={() => handleSelectPlan(p.id)}
                   className={`flex-1 min-w-[110px] py-2.5 px-3 rounded-xl font-black text-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
                     isSelected
-                      ? 'bg-purple-700 text-white shadow-md transform scale-[1.02]'
+                      ? 'bg-blue-600 text-white shadow-md transform scale-[1.02]'
                       : 'bg-white text-slate-700 hover:bg-slate-50 hover:text-slate-900'
                   }`}
                 >
                   <IconComp className={`w-3.5 h-3.5 ${isSelected ? 'text-amber-300' : 'text-slate-500'}`} />
                   <span>{p.name}</span>
                   <span className={`text-[10px] font-bold px-1.5 py-0.2 rounded-md ${
-                    isSelected ? 'bg-purple-800 text-purple-200' : 'bg-slate-100 text-slate-500'
+                    isSelected ? 'bg-blue-800 text-blue-200' : 'bg-slate-100 text-slate-500'
                   }`}>
                     {p.price}
                   </span>
@@ -461,8 +461,8 @@ export const HousingPremiumView: React.FC<HousingPremiumViewProps> = ({
                 onClick={() => handleSelectPlan(plan.id)}
                 className={`rounded-3xl p-6 sm:p-8 flex flex-col justify-between transition-all duration-200 relative cursor-pointer ${
                   isSelected
-                    ? 'bg-gradient-to-b from-purple-50/70 via-white to-white border-2 border-purple-600 ring-4 ring-purple-600/20 shadow-xl scale-[1.02] z-20'
-                    : 'bg-white border border-slate-200 hover:border-purple-300 hover:shadow-md shadow-xs z-10'
+                    ? 'bg-gradient-to-b from-blue-50/70 via-white to-white border-2 border-blue-600 ring-4 ring-blue-600/20 shadow-xl scale-[1.02] z-20'
+                    : 'bg-white border border-slate-200 hover:border-blue-300 hover:shadow-md shadow-xs z-10'
                 }`}
               >
                 {/* Popular or Selected Ribbon */}
@@ -472,7 +472,7 @@ export const HousingPremiumView: React.FC<HousingPremiumViewProps> = ({
                     <span>Currently Selected Plan</span>
                   </div>
                 ) : plan.popular ? (
-                  <div className="absolute -top-3.5 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-purple-700 to-indigo-700 text-white font-black text-[11px] uppercase tracking-wider px-4 py-1 rounded-full shadow-md flex items-center gap-1">
+                  <div className="absolute -top-3.5 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-blue-600 to-indigo-700 text-white font-black text-[11px] uppercase tracking-wider px-4 py-1 rounded-full shadow-md flex items-center gap-1">
                     <Star className="w-3 h-3 fill-amber-300 text-amber-300" />
                     <span>Most Popular Choice</span>
                   </div>
@@ -483,11 +483,11 @@ export const HousingPremiumView: React.FC<HousingPremiumViewProps> = ({
                   <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center gap-2">
                       <div className={`w-8 h-8 rounded-xl flex items-center justify-center ${
-                        isSelected ? 'bg-purple-700 text-amber-300' : 'bg-slate-100 text-slate-700'
+                        isSelected ? 'bg-blue-600 text-amber-300' : 'bg-slate-100 text-slate-700'
                       }`}>
                         <PlanIcon className="w-4 h-4" />
                       </div>
-                      <span className="text-xs font-bold text-purple-700 uppercase tracking-wider">
+                      <span className="text-xs font-bold text-blue-600 uppercase tracking-wider">
                         {plan.badge}
                       </span>
                     </div>
@@ -495,7 +495,7 @@ export const HousingPremiumView: React.FC<HousingPremiumViewProps> = ({
                     {/* Radio Indicator */}
                     <div className={`w-6 h-6 rounded-full flex items-center justify-center transition-all ${
                       isSelected
-                        ? 'bg-purple-700 text-white ring-2 ring-purple-300'
+                        ? 'bg-blue-600 text-white ring-2 ring-blue-300'
                         : 'border-2 border-slate-300 hover:border-slate-400 bg-white'
                     }`}>
                       {isSelected ? <Check className="w-3.5 h-3.5 stroke-[3]" /> : null}
@@ -525,7 +525,7 @@ export const HousingPremiumView: React.FC<HousingPremiumViewProps> = ({
                     {plan.features.map((feat, i) => (
                       <div key={i} className="flex items-start gap-2.5 text-xs text-slate-700 leading-relaxed">
                         <div className={`w-4 h-4 rounded-full flex items-center justify-center shrink-0 mt-0.5 ${
-                          isSelected ? 'bg-purple-100 text-purple-700' : 'bg-emerald-100 text-emerald-700'
+                          isSelected ? 'bg-blue-100 text-blue-600' : 'bg-emerald-100 text-emerald-700'
                         }`}>
                           <Check className="w-2.5 h-2.5 stroke-[3]" />
                         </div>
@@ -545,7 +545,7 @@ export const HousingPremiumView: React.FC<HousingPremiumViewProps> = ({
                           e.stopPropagation();
                           handleOpenCheckout(plan.id);
                         }}
-                        className="w-full py-3.5 rounded-xl font-black text-xs sm:text-sm shadow-md transition-all cursor-pointer flex items-center justify-center gap-2 bg-purple-700 hover:bg-purple-800 text-white transform hover:scale-[1.01] active:scale-[0.99]"
+                        className="w-full py-3.5 rounded-xl font-black text-xs sm:text-sm shadow-md transition-all cursor-pointer flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-800 text-white transform hover:scale-[1.01] active:scale-[0.99]"
                       >
                         <Lock className="w-4 h-4" />
                         <span>Proceed to Activate {plan.name}</span>
@@ -572,7 +572,7 @@ export const HousingPremiumView: React.FC<HousingPremiumViewProps> = ({
                         e.stopPropagation();
                         handleSelectPlan(plan.id);
                       }}
-                      className="w-full py-3.5 rounded-xl font-extrabold text-xs sm:text-sm border border-slate-300 hover:border-purple-600 bg-white hover:bg-purple-50/50 text-slate-800 hover:text-purple-700 shadow-xs transition-all cursor-pointer flex items-center justify-center gap-2"
+                      className="w-full py-3.5 rounded-xl font-extrabold text-xs sm:text-sm border border-slate-300 hover:border-blue-600 bg-white hover:bg-blue-50/50 text-slate-800 hover:text-blue-600 shadow-xs transition-all cursor-pointer flex items-center justify-center gap-2"
                     >
                       <span>Choose {plan.name} ({plan.price})</span>
                     </button>
@@ -584,22 +584,22 @@ export const HousingPremiumView: React.FC<HousingPremiumViewProps> = ({
         </div>
 
         {/* ACTIVE SELECTION SUMMARY BANNER WITH DELETE BUTTON */}
-        <div className="mt-12 bg-white rounded-3xl p-5 sm:p-7 border-2 border-purple-200 shadow-sm flex flex-col md:flex-row items-center justify-between gap-5">
+        <div className="mt-12 bg-white rounded-3xl p-5 sm:p-7 border-2 border-blue-200 shadow-sm flex flex-col md:flex-row items-center justify-between gap-5">
           {currentPlanData ? (
             <>
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-2xl bg-purple-100 text-purple-700 flex items-center justify-center shrink-0">
-                  <Crown className="w-6 h-6 text-purple-700" />
+                <div className="w-12 h-12 rounded-2xl bg-blue-100 text-blue-600 flex items-center justify-center shrink-0">
+                  <Crown className="w-6 h-6 text-blue-600" />
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="text-[10px] font-black uppercase tracking-wider bg-purple-100 text-purple-800 px-2.5 py-0.5 rounded-full">
+                    <span className="text-[10px] font-black uppercase tracking-wider bg-blue-100 text-blue-800 px-2.5 py-0.5 rounded-full">
                       Active Selection
                     </span>
                     <span className="text-xs text-slate-500 font-semibold">{currentPlanData.badge}</span>
                   </div>
                   <h4 className="text-lg sm:text-xl font-black text-slate-900 mt-0.5">
-                    {currentPlanData.name} — <span className="text-purple-700">{currentPlanData.price}</span>
+                    {currentPlanData.name} — <span className="text-blue-600">{currentPlanData.price}</span>
                   </h4>
                   <p className="text-xs text-slate-600">
                     {currentPlanData.duration} • Money-back guarantee included
@@ -623,7 +623,7 @@ export const HousingPremiumView: React.FC<HousingPremiumViewProps> = ({
                 <button
                   type="button"
                   onClick={() => handleOpenCheckout()}
-                  className="flex-1 md:flex-none px-8 py-3.5 rounded-xl bg-purple-700 hover:bg-purple-800 text-white font-black text-xs sm:text-sm shadow-md transition-all cursor-pointer flex items-center justify-center gap-2 hover:scale-105 active:scale-95"
+                  className="flex-1 md:flex-none px-8 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-800 text-white font-black text-xs sm:text-sm shadow-md transition-all cursor-pointer flex items-center justify-center gap-2 hover:scale-105 active:scale-95"
                 >
                   <span>Activate {currentPlanData.name}</span>
                   <ArrowRight className="w-4 h-4" />
@@ -648,7 +648,7 @@ export const HousingPremiumView: React.FC<HousingPremiumViewProps> = ({
                 <button
                   type="button"
                   onClick={() => handleSelectPlan('Gold')}
-                  className="px-5 py-2.5 rounded-xl bg-purple-700 hover:bg-purple-800 text-white font-bold text-xs shadow-xs cursor-pointer"
+                  className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-800 text-white font-bold text-xs shadow-xs cursor-pointer"
                 >
                   Select Gold (Most Popular)
                 </button>
@@ -674,7 +674,7 @@ export const HousingPremiumView: React.FC<HousingPremiumViewProps> = ({
               </p>
 
               <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs font-semibold text-slate-700">
-                Membership Code: <span className="font-mono text-purple-700">{activeSubscription.code}</span>
+                Membership Code: <span className="font-mono text-blue-600">{activeSubscription.code}</span>
               </div>
 
               <div className="grid grid-cols-2 gap-3 pt-2">
@@ -705,7 +705,7 @@ export const HousingPremiumView: React.FC<HousingPremiumViewProps> = ({
             <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl space-y-5 border border-slate-200 max-h-[92vh] overflow-y-auto">
               <div className="flex items-center justify-between pb-3 border-b border-slate-100">
                 <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center">
+                  <div className="w-8 h-8 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center">
                     <Crown className="w-4 h-4" />
                   </div>
                   <div>
@@ -734,12 +734,12 @@ export const HousingPremiumView: React.FC<HousingPremiumViewProps> = ({
                       onClick={() => setSelectedPlan(p.id)}
                       className={`p-2.5 rounded-xl border text-center transition-all cursor-pointer ${
                         selectedPlan === p.id
-                          ? 'border-purple-600 bg-purple-50 text-purple-900 ring-2 ring-purple-600/30 font-black'
+                          ? 'border-blue-600 bg-blue-50 text-blue-900 ring-2 ring-blue-600/30 font-black'
                           : 'border-slate-200 bg-white hover:bg-slate-50 text-slate-600 font-bold'
                       }`}
                     >
                       <div className="text-xs">{p.name}</div>
-                      <div className="text-[11px] font-extrabold text-purple-700 mt-0.5">{p.price}</div>
+                      <div className="text-[11px] font-extrabold text-blue-600 mt-0.5">{p.price}</div>
                     </button>
                   ))}
                 </div>
@@ -747,10 +747,10 @@ export const HousingPremiumView: React.FC<HousingPremiumViewProps> = ({
 
               {/* Selected Plan Details Card */}
               {currentPlanData && (
-                <div className="p-4 rounded-2xl bg-gradient-to-br from-purple-50 to-indigo-50/50 border border-purple-100 space-y-2 text-xs">
+                <div className="p-4 rounded-2xl bg-gradient-to-br from-blue-50 to-indigo-50/50 border border-blue-100 space-y-2 text-xs">
                   <div className="flex justify-between items-center">
                     <span className="text-slate-600 font-medium">Selected Tier:</span>
-                    <span className="font-extrabold text-purple-900">{currentPlanData.name} ({currentPlanData.badge})</span>
+                    <span className="font-extrabold text-blue-900">{currentPlanData.name} ({currentPlanData.badge})</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-slate-600 font-medium">Package Cost:</span>
@@ -760,7 +760,7 @@ export const HousingPremiumView: React.FC<HousingPremiumViewProps> = ({
                     <span className="text-slate-600 font-medium">Validity Period:</span>
                     <span className="font-bold text-emerald-700">{currentPlanData.duration}</span>
                   </div>
-                  <div className="pt-2 border-t border-purple-200/60 text-[11px] text-slate-500 leading-relaxed">
+                  <div className="pt-2 border-t border-blue-200/60 text-[11px] text-slate-500 leading-relaxed">
                     ✓ Includes direct verified owner access & money-back guarantee if no site visits arranged.
                   </div>
                 </div>
@@ -784,7 +784,7 @@ export const HousingPremiumView: React.FC<HousingPremiumViewProps> = ({
                     value={formName}
                     onChange={(e) => setFormName(e.target.value)}
                     placeholder="e.g. Rahul Sharma"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-purple-600 focus:outline-none bg-white font-medium"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-blue-600 focus:outline-none bg-white font-medium"
                   />
                 </div>
 
@@ -792,7 +792,7 @@ export const HousingPremiumView: React.FC<HousingPremiumViewProps> = ({
                   <label className="text-xs font-extrabold text-slate-800 block mb-1">
                     Mobile Number (For WhatsApp RM Updates) *
                   </label>
-                  <div className="flex rounded-xl border border-slate-200 overflow-hidden focus-within:ring-2 focus-within:ring-purple-600">
+                  <div className="flex rounded-xl border border-slate-200 overflow-hidden focus-within:ring-2 focus-within:ring-blue-600">
                     <span className="px-3 py-2.5 bg-slate-50 text-xs font-bold text-slate-600 border-r border-slate-200">
                       +91
                     </span>
@@ -844,7 +844,7 @@ export const HousingPremiumView: React.FC<HousingPremiumViewProps> = ({
 
                 <button
                   type="submit"
-                  className="w-full py-3.5 rounded-xl bg-purple-700 hover:bg-purple-800 text-white font-black text-xs sm:text-sm shadow-md transition-all cursor-pointer flex items-center justify-center gap-2 transform hover:scale-[1.01] active:scale-[0.99] mt-2"
+                  className="w-full py-3.5 rounded-xl bg-blue-600 hover:bg-blue-800 text-white font-black text-xs sm:text-sm shadow-md transition-all cursor-pointer flex items-center justify-center gap-2 transform hover:scale-[1.01] active:scale-[0.99] mt-2"
                 >
                   <Lock className="w-3.5 h-3.5" />
                   <span>Confirm & Activate {currentPlanData?.name || 'Gold'} ({currentPlanData?.price || '₹4,499'})</span>

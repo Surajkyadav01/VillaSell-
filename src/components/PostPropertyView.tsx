@@ -190,7 +190,7 @@ export const PostPropertyView: React.FC<PostPropertyViewProps> = ({
         {currentStep <= 4 && (
           <div className="mb-8">
             <div className="text-center mb-6">
-              <span className="px-3 py-1 rounded-full bg-purple-100 text-purple-800 text-xs font-extrabold uppercase tracking-wider">
+              <span className="px-3 py-1 rounded-full bg-blue-100 text-blue-800 text-xs font-extrabold uppercase tracking-wider">
                 Step {currentStep} of 4
               </span>
               <h1 className="text-2xl sm:text-3xl font-black text-slate-900 mt-2">
@@ -208,7 +208,7 @@ export const PostPropertyView: React.FC<PostPropertyViewProps> = ({
             <div className="flex items-center justify-between relative max-w-md mx-auto">
               <div className="absolute top-1/2 left-0 right-0 h-1 bg-slate-200 -translate-y-1/2 z-0" />
               <div
-                className="absolute top-1/2 left-0 h-1 bg-purple-700 -translate-y-1/2 z-0 transition-all duration-300"
+                className="absolute top-1/2 left-0 h-1 bg-blue-600 -translate-y-1/2 z-0 transition-all duration-300"
                 style={{ width: `${((currentStep - 1) / 3) * 100}%` }}
               />
 
@@ -217,7 +217,7 @@ export const PostPropertyView: React.FC<PostPropertyViewProps> = ({
                   key={step}
                   className={`relative z-10 w-9 h-9 rounded-full flex items-center justify-center font-bold text-xs transition-all ${
                     currentStep === step
-                      ? 'bg-purple-700 text-white ring-4 ring-purple-100 shadow-md'
+                      ? 'bg-blue-600 text-white ring-4 ring-blue-100 shadow-md'
                       : currentStep > step
                       ? 'bg-emerald-600 text-white'
                       : 'bg-white border-2 border-slate-300 text-slate-500'
@@ -247,7 +247,7 @@ export const PostPropertyView: React.FC<PostPropertyViewProps> = ({
                       onClick={() => setUserRole(role)}
                       className={`py-3 rounded-xl border text-xs sm:text-sm font-bold transition-all cursor-pointer ${
                         userRole === role
-                          ? 'border-purple-600 bg-purple-50 text-purple-700 shadow-xs'
+                          ? 'border-blue-600 bg-blue-50 text-blue-600 shadow-xs'
                           : 'border-slate-200 text-slate-700 hover:bg-slate-50'
                       }`}
                     >
@@ -276,7 +276,7 @@ export const PostPropertyView: React.FC<PostPropertyViewProps> = ({
                       onClick={() => setListingPurpose(cat.key)}
                       className={`py-3 rounded-xl border text-xs font-bold transition-all cursor-pointer ${
                         listingPurpose === cat.key
-                          ? 'border-purple-600 bg-purple-50 text-purple-700 shadow-xs'
+                          ? 'border-blue-600 bg-blue-50 text-blue-600 shadow-xs'
                           : 'border-slate-200 text-slate-700 hover:bg-slate-50'
                       }`}
                     >
@@ -308,7 +308,7 @@ export const PostPropertyView: React.FC<PostPropertyViewProps> = ({
                       onClick={() => setPropertyType(type)}
                       className={`p-3 rounded-xl border text-xs font-bold transition-all cursor-pointer text-left ${
                         propertyType === type
-                          ? 'border-purple-600 bg-purple-50 text-purple-700 shadow-xs'
+                          ? 'border-blue-600 bg-blue-50 text-blue-600 shadow-xs'
                           : 'border-slate-200 text-slate-700 hover:bg-slate-50'
                       }`}
                     >
@@ -364,7 +364,7 @@ export const PostPropertyView: React.FC<PostPropertyViewProps> = ({
                 <button
                   type="button"
                   onClick={() => setCurrentStep(2)}
-                  className="px-6 py-3 rounded-xl bg-purple-700 hover:bg-purple-800 text-white font-bold text-sm flex items-center gap-2 cursor-pointer shadow-md transition-all"
+                  className="px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-800 text-white font-bold text-sm flex items-center gap-2 cursor-pointer shadow-md transition-all"
                 >
                   <span>Continue to Location</span>
                   <ArrowRight className="w-4 h-4" />
@@ -399,7 +399,7 @@ export const PostPropertyView: React.FC<PostPropertyViewProps> = ({
                   required
                   value={locality}
                   onChange={(e) => setLocality(e.target.value)}
-                  className="w-full p-3 rounded-xl border border-slate-200 text-sm font-semibold focus:outline-none focus:border-purple-600"
+                  className="w-full p-3 rounded-xl border border-slate-200 text-sm font-semibold focus:outline-none focus:border-blue-600"
                 />
               </div>
 
@@ -412,7 +412,7 @@ export const PostPropertyView: React.FC<PostPropertyViewProps> = ({
                   placeholder="e.g. Prestige Palms, DLF Enclave, Kashi Royal Villas"
                   value={projectName}
                   onChange={(e) => setProjectName(e.target.value)}
-                  className="w-full p-3 rounded-xl border border-slate-200 text-sm font-semibold focus:outline-none focus:border-purple-600"
+                  className="w-full p-3 rounded-xl border border-slate-200 text-sm font-semibold focus:outline-none focus:border-blue-600"
                 />
               </div>
 
@@ -425,7 +425,7 @@ export const PostPropertyView: React.FC<PostPropertyViewProps> = ({
                   placeholder="e.g. Villa 14, Emerald Phase 2, Ring Road Corridor"
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}
-                  className="w-full p-3 rounded-xl border border-slate-200 text-sm font-semibold focus:outline-none focus:border-purple-600 resize-none"
+                  className="w-full p-3 rounded-xl border border-slate-200 text-sm font-semibold focus:outline-none focus:border-blue-600 resize-none"
                 />
               </div>
 
@@ -440,7 +440,7 @@ export const PostPropertyView: React.FC<PostPropertyViewProps> = ({
                 <button
                   type="button"
                   onClick={() => setCurrentStep(3)}
-                  className="px-6 py-3 rounded-xl bg-purple-700 hover:bg-purple-800 text-white font-bold text-sm flex items-center gap-2 cursor-pointer shadow-md transition-all"
+                  className="px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-800 text-white font-bold text-sm flex items-center gap-2 cursor-pointer shadow-md transition-all"
                 >
                   <span>Continue to Pricing</span>
                   <ArrowRight className="w-4 h-4" />
@@ -466,10 +466,10 @@ export const PostPropertyView: React.FC<PostPropertyViewProps> = ({
                     step={10000}
                     value={priceNumber}
                     onChange={(e) => setPriceNumber(Number(e.target.value))}
-                    className="w-full pl-8 pr-4 py-3 rounded-xl border border-slate-200 text-sm font-bold focus:outline-none focus:border-purple-600"
+                    className="w-full pl-8 pr-4 py-3 rounded-xl border border-slate-200 text-sm font-bold focus:outline-none focus:border-blue-600"
                   />
                 </div>
-                <p className="text-xs text-purple-700 font-bold mt-1">
+                <p className="text-xs text-blue-600 font-bold mt-1">
                   Preview: {formatPrice(priceNumber, listingPurpose)}
                 </p>
               </div>
@@ -484,7 +484,7 @@ export const PostPropertyView: React.FC<PostPropertyViewProps> = ({
                     min={100}
                     value={carpetArea}
                     onChange={(e) => setCarpetArea(Number(e.target.value))}
-                    className="w-full p-3 rounded-xl border border-slate-200 text-sm font-semibold focus:outline-none focus:border-purple-600"
+                    className="w-full p-3 rounded-xl border border-slate-200 text-sm font-semibold focus:outline-none focus:border-blue-600"
                   />
                 </div>
 
@@ -555,7 +555,7 @@ export const PostPropertyView: React.FC<PostPropertyViewProps> = ({
                 <button
                   type="button"
                   onClick={() => setCurrentStep(4)}
-                  className="px-6 py-3 rounded-xl bg-purple-700 hover:bg-purple-800 text-white font-bold text-sm flex items-center gap-2 cursor-pointer shadow-md transition-all"
+                  className="px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-800 text-white font-bold text-sm flex items-center gap-2 cursor-pointer shadow-md transition-all"
                 >
                   <span>Continue to Amenities</span>
                   <ArrowRight className="w-4 h-4" />
@@ -581,13 +581,13 @@ export const PostPropertyView: React.FC<PostPropertyViewProps> = ({
                         onClick={() => toggleAmenity(amenity)}
                         className={`p-2.5 rounded-xl text-left text-xs font-semibold border flex items-center gap-2 cursor-pointer transition-all ${
                           isChecked
-                            ? 'bg-purple-50 border-purple-600 text-purple-900 font-bold'
+                            ? 'bg-blue-50 border-blue-600 text-blue-900 font-bold'
                             : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'
                         }`}
                       >
                         <div
                           className={`w-4 h-4 rounded flex items-center justify-center ${
-                            isChecked ? 'bg-purple-700 text-white' : 'border border-slate-300'
+                            isChecked ? 'bg-blue-600 text-white' : 'border border-slate-300'
                           }`}
                         >
                           {isChecked && <Check className="w-3 h-3" />}
@@ -610,13 +610,13 @@ export const PostPropertyView: React.FC<PostPropertyViewProps> = ({
                       onClick={() => setSelectedImagePreset(idx)}
                       className={`relative aspect-[16/10] rounded-xl overflow-hidden cursor-pointer border-2 transition-all ${
                         selectedImagePreset === idx
-                          ? 'border-purple-600 ring-2 ring-purple-600/30'
+                          ? 'border-blue-600 ring-2 ring-blue-600/30'
                           : 'border-transparent opacity-75 hover:opacity-100'
                       }`}
                     >
                       <img src={img} alt="Preset" className="w-full h-full object-cover" />
                       {selectedImagePreset === idx && (
-                        <div className="absolute top-1 right-1 bg-purple-700 text-white rounded-full p-0.5">
+                        <div className="absolute top-1 right-1 bg-blue-600 text-white rounded-full p-0.5">
                           <Check className="w-3 h-3" />
                         </div>
                       )}
@@ -636,7 +636,7 @@ export const PostPropertyView: React.FC<PostPropertyViewProps> = ({
                     placeholder="e.g. Kamlesh Kumar"
                     value={contactName}
                     onChange={(e) => setContactName(e.target.value)}
-                    className="w-full p-3 rounded-xl border border-slate-200 text-sm font-semibold focus:outline-none focus:border-purple-600"
+                    className="w-full p-3 rounded-xl border border-slate-200 text-sm font-semibold focus:outline-none focus:border-blue-600"
                   />
                 </div>
 
@@ -650,7 +650,7 @@ export const PostPropertyView: React.FC<PostPropertyViewProps> = ({
                     placeholder="+91 8383826205"
                     value={contactPhone}
                     onChange={(e) => setContactPhone(e.target.value)}
-                    className="w-full p-3 rounded-xl border border-slate-200 text-sm font-semibold focus:outline-none focus:border-purple-600"
+                    className="w-full p-3 rounded-xl border border-slate-200 text-sm font-semibold focus:outline-none focus:border-blue-600"
                   />
                 </div>
               </div>
@@ -664,7 +664,7 @@ export const PostPropertyView: React.FC<PostPropertyViewProps> = ({
                   placeholder="Highlight key advantages, nearby landmarks, and legal clear titles..."
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  className="w-full p-3 rounded-xl border border-slate-200 text-sm font-medium focus:outline-none focus:border-purple-600 resize-none"
+                  className="w-full p-3 rounded-xl border border-slate-200 text-sm font-medium focus:outline-none focus:border-blue-600 resize-none"
                 />
               </div>
 
@@ -714,7 +714,7 @@ export const PostPropertyView: React.FC<PostPropertyViewProps> = ({
                   className="w-20 h-20 rounded-xl object-cover"
                 />
                 <div>
-                  <span className="text-xs font-bold text-purple-700">{createdProperty.priceDisplay}</span>
+                  <span className="text-xs font-bold text-blue-600">{createdProperty.priceDisplay}</span>
                   <h4 className="font-bold text-sm text-slate-900 line-clamp-1">{createdProperty.title}</h4>
                   <p className="text-xs text-slate-500">{createdProperty.locality}, {createdProperty.city}</p>
                 </div>
@@ -723,7 +723,7 @@ export const PostPropertyView: React.FC<PostPropertyViewProps> = ({
               <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
                 <button
                   onClick={() => onViewProperty(createdProperty)}
-                  className="w-full sm:w-auto px-6 py-3 rounded-xl bg-purple-700 hover:bg-purple-800 text-white font-bold text-sm shadow-md transition-all cursor-pointer"
+                  className="w-full sm:w-auto px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-800 text-white font-bold text-sm shadow-md transition-all cursor-pointer"
                 >
                   View My Live Listing
                 </button>

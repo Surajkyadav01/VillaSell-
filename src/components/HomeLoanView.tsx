@@ -110,23 +110,23 @@ export const HomeLoanView: React.FC<HomeLoanViewProps> = ({
               <span>/</span>
               <span className="text-slate-900 font-bold">Housing Edge</span>
               <span>/</span>
-              <span className="text-purple-700 font-bold">Home Loan</span>
+              <span className="text-blue-600 font-bold">Home Loan</span>
             </div>
           </div>
 
           <button
             onClick={onNavigateToEmi}
-            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg border border-purple-200 bg-purple-50 hover:bg-purple-100 text-purple-900 font-bold text-xs transition-colors cursor-pointer"
+            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg border border-blue-200 bg-blue-50 hover:bg-blue-100 text-blue-900 font-bold text-xs transition-colors cursor-pointer"
           >
-            <Calculator className="w-3.5 h-3.5 text-purple-700" />
+            <Calculator className="w-3.5 h-3.5 text-blue-600" />
             <span>Open EMI Calculator</span>
           </button>
         </div>
       </div>
 
       {/* Hero Banner */}
-      <div className="bg-gradient-to-r from-[#2c0e52] via-[#3a136b] to-[#45187e] text-white py-12 px-4 sm:px-6 lg:px-8 shadow-inner relative overflow-hidden">
-        <div className="absolute right-0 top-0 w-96 h-96 bg-purple-400/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="bg-gradient-to-r from-[#1b4a80] via-[#255e9c] to-[#2b568d] text-white py-12 px-4 sm:px-6 lg:px-8 shadow-inner relative overflow-hidden">
+        <div className="absolute right-0 top-0 w-96 h-96 bg-blue-400/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="max-w-7xl mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           <div className="lg:col-span-8">
@@ -137,11 +137,11 @@ export const HomeLoanView: React.FC<HomeLoanViewProps> = ({
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight">
               Best Home Loans at <span className="text-amber-400">8.35%* p.a.</span>
             </h1>
-            <p className="text-purple-100 text-xs sm:text-sm mt-3 max-w-2xl leading-relaxed">
+            <p className="text-blue-100 text-xs sm:text-sm mt-3 max-w-2xl leading-relaxed">
               Compare offers across 15+ premier Indian banks. Enjoy zero brokerage, pre-approved digital sanctions within 48 hours, and doorstep legal verification support.
             </p>
 
-            <div className="flex flex-wrap items-center gap-4 sm:gap-6 mt-6 text-xs text-purple-200">
+            <div className="flex flex-wrap items-center gap-4 sm:gap-6 mt-6 text-xs text-blue-200">
               <div className="flex items-center gap-1.5">
                 <Check className="w-4 h-4 text-emerald-400" />
                 <span>Zero Broker Commission</span>
@@ -162,12 +162,12 @@ export const HomeLoanView: React.FC<HomeLoanViewProps> = ({
               Special Festive Offer
             </span>
             <div className="text-3xl font-black text-white mt-1 mb-2">0% Processing Fee*</div>
-            <p className="text-xs text-purple-200 leading-relaxed mb-4">
+            <p className="text-xs text-blue-200 leading-relaxed mb-4">
               Save up to ₹25,000 on processing fees with our partner banks this month.
             </p>
             <a
               href={`tel:${BRAND_CONFIG.phoneClean}`}
-              className="w-full py-2.5 rounded-xl bg-white text-purple-950 font-black text-xs flex items-center justify-center gap-2 hover:bg-slate-100 transition-colors shadow-md"
+              className="w-full py-2.5 rounded-xl bg-white text-slate-900 font-black text-xs flex items-center justify-center gap-2 hover:bg-slate-100 transition-colors shadow-md"
             >
               <Phone className="w-4 h-4 text-emerald-600" />
               <span>Call Helpline: {BRAND_CONFIG.phone}</span>
@@ -192,7 +192,7 @@ export const HomeLoanView: React.FC<HomeLoanViewProps> = ({
                     Check how much home loan you can easily borrow
                   </p>
                 </div>
-                <div className="p-2.5 rounded-xl bg-purple-100 text-purple-700">
+                <div className="p-2.5 rounded-xl bg-blue-100 text-blue-600">
                   <Calculator className="w-5 h-5" />
                 </div>
               </div>
@@ -201,7 +201,7 @@ export const HomeLoanView: React.FC<HomeLoanViewProps> = ({
                 <div>
                   <div className="flex justify-between text-xs mb-1">
                     <span className="font-bold text-slate-700">Monthly In-Hand Salary</span>
-                    <span className="font-extrabold text-purple-700">₹{monthlyIncome.toLocaleString('en-IN')}</span>
+                    <span className="font-extrabold text-blue-600">₹{monthlyIncome.toLocaleString('en-IN')}</span>
                   </div>
                   <input
                     type="range"
@@ -210,7 +210,7 @@ export const HomeLoanView: React.FC<HomeLoanViewProps> = ({
                     step={5000}
                     value={monthlyIncome}
                     onChange={(e) => setMonthlyIncome(Number(e.target.value))}
-                    className="w-full accent-purple-700 h-2 bg-slate-100 rounded-lg cursor-pointer"
+                    className="w-full accent-blue-600 h-2 bg-slate-100 rounded-lg cursor-pointer"
                   />
                 </div>
 
@@ -226,17 +226,17 @@ export const HomeLoanView: React.FC<HomeLoanViewProps> = ({
                     step={2000}
                     value={existingEmi}
                     onChange={(e) => setExistingEmi(Number(e.target.value))}
-                    className="w-full accent-purple-700 h-2 bg-slate-100 rounded-lg cursor-pointer"
+                    className="w-full accent-blue-600 h-2 bg-slate-100 rounded-lg cursor-pointer"
                   />
                 </div>
               </div>
 
-              <div className="p-4 rounded-2xl bg-gradient-to-r from-purple-50 to-indigo-50 border border-purple-200 flex items-center justify-between">
+              <div className="p-4 rounded-2xl bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 flex items-center justify-between">
                 <div>
                   <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">
                     Estimated Maximum Loan Eligibility:
                   </span>
-                  <div className="text-2xl font-black text-purple-900 mt-0.5">
+                  <div className="text-2xl font-black text-blue-900 mt-0.5">
                     ₹ {(estimatedMaxLoan / 100000).toFixed(1)} Lakhs
                   </div>
                 </div>
@@ -258,7 +258,7 @@ export const HomeLoanView: React.FC<HomeLoanViewProps> = ({
               {banks.map((bank, idx) => (
                 <div
                   key={idx}
-                  className="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs hover:border-purple-200 hover:shadow-md transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+                  className="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs hover:border-blue-200 hover:shadow-md transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4"
                 >
                   <div className="flex items-start gap-3.5">
                     <div className={`w-12 h-12 rounded-xl ${bank.color} text-white font-black text-sm flex items-center justify-center shrink-0 shadow-xs`}>
@@ -285,7 +285,7 @@ export const HomeLoanView: React.FC<HomeLoanViewProps> = ({
                     onClick={() => {
                       document.getElementById('loan-apply-form')?.scrollIntoView({ behavior: 'smooth' });
                     }}
-                    className="px-4 py-2 rounded-xl bg-purple-700 hover:bg-purple-800 text-white font-bold text-xs shadow-xs transition-colors shrink-0 cursor-pointer text-center"
+                    className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-800 text-white font-bold text-xs shadow-xs transition-colors shrink-0 cursor-pointer text-center"
                   >
                     Apply Now
                   </button>
@@ -319,7 +319,7 @@ export const HomeLoanView: React.FC<HomeLoanViewProps> = ({
                       value={applicantName}
                       onChange={(e) => setApplicantName(e.target.value)}
                       placeholder="e.g. Suraj Yadav"
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs font-bold text-slate-800 focus:outline-none focus:border-purple-600 focus:ring-2 focus:ring-purple-600/20"
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs font-bold text-slate-800 focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20"
                     />
                   </div>
 
@@ -336,7 +336,7 @@ export const HomeLoanView: React.FC<HomeLoanViewProps> = ({
                         value={applicantPhone}
                         onChange={(e) => setApplicantPhone(e.target.value.replace(/\D/g, ''))}
                         placeholder="98765 43210"
-                        className="w-full px-3.5 py-2.5 rounded-r-xl border border-slate-300 text-xs font-bold text-slate-800 focus:outline-none focus:border-purple-600 focus:ring-2 focus:ring-purple-600/20"
+                        className="w-full px-3.5 py-2.5 rounded-r-xl border border-slate-300 text-xs font-bold text-slate-800 focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20"
                       />
                     </div>
                   </div>
@@ -377,14 +377,14 @@ export const HomeLoanView: React.FC<HomeLoanViewProps> = ({
                       value={loanAmount}
                       onChange={(e) => setLoanAmount(e.target.value)}
                       placeholder="e.g. 5000000"
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs font-bold text-slate-800 focus:outline-none focus:border-purple-600 focus:ring-2 focus:ring-purple-600/20"
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs font-bold text-slate-800 focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20"
                     />
                   </div>
 
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full py-3.5 rounded-xl bg-purple-700 hover:bg-purple-800 disabled:opacity-50 text-white font-extrabold text-xs sm:text-sm shadow-md transition-all cursor-pointer flex items-center justify-center gap-2 mt-4"
+                    className="w-full py-3.5 rounded-xl bg-blue-600 hover:bg-blue-800 disabled:opacity-50 text-white font-extrabold text-xs sm:text-sm shadow-md transition-all cursor-pointer flex items-center justify-center gap-2 mt-4"
                   >
                     <span>{isSubmitting ? 'Submitting Application...' : 'Get Instant Pre-Approval Quotes'}</span>
                     <ArrowRight className="w-4 h-4" />
@@ -407,13 +407,13 @@ export const HomeLoanView: React.FC<HomeLoanViewProps> = ({
                 <p className="text-xs text-slate-600 max-w-sm mx-auto leading-relaxed">
                   Thank you, <strong>{applicantName || 'Applicant'}</strong>. Our senior loan relationship manager from <strong>{applicantCity}</strong> will contact you on <strong>+91 {applicantPhone}</strong> within 2 business hours with pre-approved rates from SBI, HDFC & ICICI.
                 </p>
-                <div className="p-3 bg-purple-50 rounded-xl text-purple-900 text-xs font-bold border border-purple-200">
+                <div className="p-3 bg-blue-50 rounded-xl text-blue-900 text-xs font-bold border border-blue-200">
                   Application ID: VL-{Math.floor(100000 + Math.random() * 900000)}
                 </div>
                 <button
                   type="button"
                   onClick={() => setIsSubmitted(false)}
-                  className="px-5 py-2.5 rounded-xl bg-purple-700 text-white text-xs font-bold shadow-md cursor-pointer hover:bg-purple-800"
+                  className="px-5 py-2.5 rounded-xl bg-blue-600 text-white text-xs font-bold shadow-md cursor-pointer hover:bg-blue-800"
                 >
                   Submit Another Inquiry
                 </button>

@@ -37,7 +37,7 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
             window.scrollTo({ top: 0, behavior: 'smooth' });
           }}
           className={`flex flex-col items-center justify-center py-1 rounded-xl transition-all cursor-pointer active:scale-90 ${
-            activeView === 'home' ? 'text-purple-700 font-extrabold' : 'text-slate-500 hover:text-slate-800'
+            activeView === 'home' ? 'text-blue-600 font-extrabold' : 'text-slate-500 hover:text-slate-800'
           }`}
         >
           <Home className={`w-5 h-5 ${activeView === 'home' ? 'stroke-[2.5]' : 'stroke-2'}`} />
@@ -51,7 +51,7 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
             if (activeView !== 'home') setActiveView('home');
             onSearchClick();
           }}
-          className="flex flex-col items-center justify-center py-1 rounded-xl text-slate-500 hover:text-purple-700 transition-all cursor-pointer active:scale-90"
+          className="flex flex-col items-center justify-center py-1 rounded-xl text-slate-500 hover:text-blue-600 transition-all cursor-pointer active:scale-90"
         >
           <Search className="w-5 h-5 stroke-2" />
           <span className="text-[10px] tracking-tight mt-0.5">Search</span>
@@ -63,10 +63,10 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
           onClick={onPostPropertyClick}
           className="flex flex-col items-center justify-center -mt-3.5 group cursor-pointer active:scale-90 transition-transform"
         >
-          <div className="w-11 h-11 rounded-full bg-gradient-to-tr from-purple-700 to-indigo-800 text-white flex items-center justify-center shadow-lg shadow-purple-900/40 border-2 border-white group-hover:scale-105 transition-transform">
+          <div className="w-11 h-11 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-800 text-white flex items-center justify-center shadow-lg shadow-blue-900/40 border-2 border-white group-hover:scale-105 transition-transform">
             <PlusCircle className="w-6 h-6 stroke-2" />
           </div>
-          <span className="text-[9px] font-black uppercase text-purple-800 tracking-tight mt-0.5">Post Free</span>
+          <span className="text-[9px] font-black uppercase text-blue-800 tracking-tight mt-0.5">Post Free</span>
         </button>
 
         {/* 4. Saved Shortlist with Badge */}
@@ -77,7 +77,7 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
             window.scrollTo({ top: 0, behavior: 'smooth' });
           }}
           className={`relative flex flex-col items-center justify-center py-1 rounded-xl transition-all cursor-pointer active:scale-90 ${
-            activeView === 'shortlist' ? 'text-purple-700 font-extrabold' : 'text-slate-500 hover:text-slate-800'
+            activeView === 'shortlist' ? 'text-blue-600 font-extrabold' : 'text-slate-500 hover:text-slate-800'
           }`}
         >
           <div className="relative">
@@ -95,7 +95,7 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
         <button
           type="button"
           onClick={onOpenMenu}
-          className="flex flex-col items-center justify-center py-1 rounded-xl text-slate-500 hover:text-purple-700 transition-all cursor-pointer active:scale-90"
+          className="flex flex-col items-center justify-center py-1 rounded-xl text-slate-500 hover:text-blue-600 transition-all cursor-pointer active:scale-90"
         >
           <Sparkles className="w-5 h-5 text-amber-500 stroke-2" />
           <span className="text-[10px] tracking-tight mt-0.5">Services</span>

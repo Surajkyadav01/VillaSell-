@@ -71,7 +71,7 @@ export const ContactView: React.FC<ContactViewProps> = ({ onBack }) => {
           </div>
 
           <div className="flex items-center gap-2 text-xs font-semibold text-slate-600">
-            <Clock className="w-3.5 h-3.5 text-purple-600" />
+            <Clock className="w-3.5 h-3.5 text-blue-600" />
             <span>Support: {BRAND_CONFIG.workingHours}</span>
           </div>
         </div>
@@ -80,7 +80,7 @@ export const ContactView: React.FC<ContactViewProps> = ({ onBack }) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
         {/* Header Title */}
         <div className="text-center max-w-2xl mx-auto mb-12">
-          <span className="px-3 py-1 rounded-full bg-purple-100 text-purple-800 text-xs font-extrabold uppercase tracking-wider">
+          <span className="px-3 py-1 rounded-full bg-blue-100 text-blue-800 text-xs font-extrabold uppercase tracking-wider">
             24x7 Customer Advisory
           </span>
           <h1 className="text-3xl sm:text-4xl font-black text-slate-900 mt-3">
@@ -132,7 +132,7 @@ export const ContactView: React.FC<ContactViewProps> = ({ onBack }) => {
 
           {/* Email */}
           <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition-shadow text-center flex flex-col items-center">
-            <div className="w-14 h-14 rounded-2xl bg-purple-50 text-purple-700 flex items-center justify-center mb-4">
+            <div className="w-14 h-14 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center mb-4">
               <Mail className="w-7 h-7" />
             </div>
             <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Official Email</span>
@@ -142,7 +142,7 @@ export const ContactView: React.FC<ContactViewProps> = ({ onBack }) => {
             <p className="text-xs text-slate-500 mt-1 mb-5">For partnership and property listings</p>
             <a
               href={`mailto:${BRAND_CONFIG.email}`}
-              className="w-full py-2.5 px-4 rounded-xl bg-purple-700 hover:bg-purple-800 text-white font-bold text-xs transition-colors"
+              className="w-full py-2.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-800 text-white font-bold text-xs transition-colors"
             >
               Send Email
             </a>
@@ -188,7 +188,7 @@ export const ContactView: React.FC<ContactViewProps> = ({ onBack }) => {
                       placeholder="e.g. Rahul Sharma"
                       value={name}
                       onChange={(e) => setName(e.target.value)}
-                      className="w-full p-3 rounded-xl border border-slate-200 text-xs font-semibold focus:outline-none focus:border-purple-600"
+                      className="w-full p-3 rounded-xl border border-slate-200 text-xs font-semibold focus:outline-none focus:border-blue-600"
                     />
                   </div>
 
@@ -202,7 +202,7 @@ export const ContactView: React.FC<ContactViewProps> = ({ onBack }) => {
                       placeholder="+91 8383826205"
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
-                      className="w-full p-3 rounded-xl border border-slate-200 text-xs font-semibold focus:outline-none focus:border-purple-600"
+                      className="w-full p-3 rounded-xl border border-slate-200 text-xs font-semibold focus:outline-none focus:border-blue-600"
                     />
                   </div>
                 </div>
@@ -217,7 +217,7 @@ export const ContactView: React.FC<ContactViewProps> = ({ onBack }) => {
                       placeholder="you@example.com"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="w-full p-3 rounded-xl border border-slate-200 text-xs font-semibold focus:outline-none focus:border-purple-600"
+                      className="w-full p-3 rounded-xl border border-slate-200 text-xs font-semibold focus:outline-none focus:border-blue-600"
                     />
                   </div>
 
@@ -245,13 +245,13 @@ export const ContactView: React.FC<ContactViewProps> = ({ onBack }) => {
                     placeholder="Tell us what kind of villa, luxury apartment or commercial property you are looking for..."
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
-                    className="w-full p-3 rounded-xl border border-slate-200 text-xs font-medium focus:outline-none focus:border-purple-600 resize-none"
+                    className="w-full p-3 rounded-xl border border-slate-200 text-xs font-medium focus:outline-none focus:border-blue-600 resize-none"
                   />
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full py-3.5 rounded-xl bg-purple-700 hover:bg-purple-800 text-white font-extrabold text-xs flex items-center justify-center gap-2 cursor-pointer shadow-md transition-all"
+                  className="w-full py-3.5 rounded-xl bg-blue-600 hover:bg-blue-800 text-white font-extrabold text-xs flex items-center justify-center gap-2 cursor-pointer shadow-md transition-all"
                 >
                   <Send className="w-4 h-4" />
                   <span>Submit Consultation Request</span>
@@ -264,7 +264,7 @@ export const ContactView: React.FC<ContactViewProps> = ({ onBack }) => {
           <div className="lg:col-span-5 space-y-6">
             <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm">
               <h3 className="text-base font-extrabold text-slate-900 mb-4 flex items-center gap-2">
-                <Building className="w-4 h-4 text-purple-700" />
+                <Building className="w-4 h-4 text-blue-600" />
                 <span>Regional Advisory Hubs</span>
               </h3>
 
@@ -272,7 +272,7 @@ export const ContactView: React.FC<ContactViewProps> = ({ onBack }) => {
                 <div className="border-b border-slate-100 pb-3">
                   <h4 className="font-bold text-slate-900 text-xs mb-1">Corporate Headquarters</h4>
                   <p className="flex items-start gap-1.5">
-                    <MapPin className="w-3.5 h-3.5 text-purple-600 shrink-0 mt-0.5" />
+                    <MapPin className="w-3.5 h-3.5 text-blue-600 shrink-0 mt-0.5" />
                     <span>DLF Cyber City, Sector 25A, Gurugram, Delhi NCR - 122002</span>
                   </p>
                 </div>
@@ -280,7 +280,7 @@ export const ContactView: React.FC<ContactViewProps> = ({ onBack }) => {
                 <div className="border-b border-slate-100 pb-3">
                   <h4 className="font-bold text-slate-900 text-xs mb-1">Eastern UP & Heritage Hub</h4>
                   <p className="flex items-start gap-1.5">
-                    <MapPin className="w-3.5 h-3.5 text-purple-600 shrink-0 mt-0.5" />
+                    <MapPin className="w-3.5 h-3.5 text-blue-600 shrink-0 mt-0.5" />
                     <span>Shivpur Ring Road Corridor, Varanasi, UP - 221003</span>
                   </p>
                 </div>
@@ -288,7 +288,7 @@ export const ContactView: React.FC<ContactViewProps> = ({ onBack }) => {
                 <div>
                   <h4 className="font-bold text-slate-900 text-xs mb-1">South India Operations</h4>
                   <p className="flex items-start gap-1.5">
-                    <MapPin className="w-3.5 h-3.5 text-purple-600 shrink-0 mt-0.5" />
+                    <MapPin className="w-3.5 h-3.5 text-blue-600 shrink-0 mt-0.5" />
                     <span>Indiranagar 100 Feet Road, Bangalore, Karnataka - 560038</span>
                   </p>
                 </div>
@@ -296,7 +296,7 @@ export const ContactView: React.FC<ContactViewProps> = ({ onBack }) => {
             </div>
 
             {/* Direct Connect Box */}
-            <div className="bg-gradient-to-br from-purple-900 to-indigo-950 text-white rounded-3xl p-6 shadow-md">
+            <div className="bg-gradient-to-br from-blue-900 to-indigo-950 text-white rounded-3xl p-6 shadow-md">
               <span className="text-emerald-400 text-xs font-bold uppercase tracking-wider block mb-1">
                 Priority Owner Desk
               </span>
@@ -306,9 +306,9 @@ export const ContactView: React.FC<ContactViewProps> = ({ onBack }) => {
               </p>
               <a
                 href={`tel:${BRAND_CONFIG.phoneClean}`}
-                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white text-purple-950 font-black text-xs hover:bg-slate-100 transition-colors"
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white text-slate-900 font-black text-xs hover:bg-slate-100 transition-colors"
               >
-                <Phone className="w-3.5 h-3.5 text-purple-700" />
+                <Phone className="w-3.5 h-3.5 text-blue-600" />
                 <span>Call Kamlesh: {BRAND_CONFIG.phone}</span>
               </a>
             </div>
@@ -318,7 +318,7 @@ export const ContactView: React.FC<ContactViewProps> = ({ onBack }) => {
         {/* FAQs */}
         <div className="bg-white rounded-3xl border border-slate-200 p-8 shadow-sm">
           <div className="flex items-center gap-2 mb-6">
-            <div className="w-8 h-8 rounded-lg bg-purple-100 text-purple-700 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center">
               <HelpCircle className="w-5 h-5" />
             </div>
             <h3 className="text-xl font-black text-slate-900">Frequently Asked Questions</h3>

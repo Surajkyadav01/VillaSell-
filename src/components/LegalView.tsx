@@ -15,25 +15,25 @@ export const LegalView: React.FC<LegalViewProps> = ({ viewType, onBack, onSelect
       case 'privacy-policy':
         return {
           title: 'Privacy Policy',
-          icon: <Shield className="w-5 h-5 text-purple-600" />,
+          icon: <Shield className="w-5 h-5 text-blue-600" />,
           subtitle: 'Last updated: March 2026'
         };
       case 'terms':
         return {
           title: 'Terms of Service',
-          icon: <FileText className="w-5 h-5 text-purple-600" />,
+          icon: <FileText className="w-5 h-5 text-blue-600" />,
           subtitle: 'Effective from January 2026'
         };
       case 'rera-disclaimer':
         return {
           title: 'RERA Compliance & Disclaimer',
-          icon: <Scale className="w-5 h-5 text-purple-600" />,
+          icon: <Scale className="w-5 h-5 text-blue-600" />,
           subtitle: 'Real Estate (Regulation and Development) Act compliance'
         };
       case 'cookie-policy':
         return {
           title: 'Cookie & Tracking Policy',
-          icon: <Cookie className="w-5 h-5 text-purple-600" />,
+          icon: <Cookie className="w-5 h-5 text-blue-600" />,
           subtitle: 'Transparency regarding user preferences & local storage'
         };
     }
@@ -64,7 +64,7 @@ export const LegalView: React.FC<LegalViewProps> = ({ viewType, onBack, onSelect
             <button
               onClick={() => onSelectView('privacy-policy')}
               className={`px-2.5 py-1 rounded-md font-semibold ${
-                viewType === 'privacy-policy' ? 'bg-purple-100 text-purple-800' : 'text-slate-600 hover:bg-slate-100'
+                viewType === 'privacy-policy' ? 'bg-blue-100 text-blue-800' : 'text-slate-600 hover:bg-slate-100'
               }`}
             >
               Privacy
@@ -72,7 +72,7 @@ export const LegalView: React.FC<LegalViewProps> = ({ viewType, onBack, onSelect
             <button
               onClick={() => onSelectView('terms')}
               className={`px-2.5 py-1 rounded-md font-semibold ${
-                viewType === 'terms' ? 'bg-purple-100 text-purple-800' : 'text-slate-600 hover:bg-slate-100'
+                viewType === 'terms' ? 'bg-blue-100 text-blue-800' : 'text-slate-600 hover:bg-slate-100'
               }`}
             >
               Terms
@@ -80,7 +80,7 @@ export const LegalView: React.FC<LegalViewProps> = ({ viewType, onBack, onSelect
             <button
               onClick={() => onSelectView('rera-disclaimer')}
               className={`px-2.5 py-1 rounded-md font-semibold ${
-                viewType === 'rera-disclaimer' ? 'bg-purple-100 text-purple-800' : 'text-slate-600 hover:bg-slate-100'
+                viewType === 'rera-disclaimer' ? 'bg-blue-100 text-blue-800' : 'text-slate-600 hover:bg-slate-100'
               }`}
             >
               RERA
@@ -88,7 +88,7 @@ export const LegalView: React.FC<LegalViewProps> = ({ viewType, onBack, onSelect
             <button
               onClick={() => onSelectView('cookie-policy')}
               className={`px-2.5 py-1 rounded-md font-semibold ${
-                viewType === 'cookie-policy' ? 'bg-purple-100 text-purple-800' : 'text-slate-600 hover:bg-slate-100'
+                viewType === 'cookie-policy' ? 'bg-blue-100 text-blue-800' : 'text-slate-600 hover:bg-slate-100'
               }`}
             >
               Cookies
@@ -101,7 +101,7 @@ export const LegalView: React.FC<LegalViewProps> = ({ viewType, onBack, onSelect
         <div className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-10 shadow-sm">
           {/* Header */}
           <div className="border-b border-slate-100 pb-6 mb-8 flex items-center gap-4">
-            <div className="w-12 h-12 rounded-2xl bg-purple-100 flex items-center justify-center shrink-0">
+            <div className="w-12 h-12 rounded-2xl bg-blue-100 flex items-center justify-center shrink-0">
               {meta.icon}
             </div>
             <div>
@@ -230,7 +230,7 @@ export const LegalView: React.FC<LegalViewProps> = ({ viewType, onBack, onSelect
 
             <a
               href={`tel:${BRAND_CONFIG.phoneClean}`}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-purple-50 text-purple-800 font-bold hover:bg-purple-100 transition-colors"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-blue-50 text-blue-800 font-bold hover:bg-blue-100 transition-colors"
             >
               <Phone className="w-3.5 h-3.5" />
               <span>Call Helpline {BRAND_CONFIG.phone}</span>

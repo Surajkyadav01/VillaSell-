@@ -46,17 +46,17 @@ export const ServicesDropdown: React.FC<ServicesDropdownProps> = ({
         onClick={() => setIsOpen((prev) => !prev)}
         className={`flex items-center gap-1 px-3 py-2 rounded-xl font-bold text-sm transition-all cursor-pointer select-none ${
           isOpen || isServicesActive
-            ? 'text-white bg-purple-700/80 shadow-inner border border-purple-400/30'
-            : 'text-purple-100 hover:text-white hover:bg-white/10'
+            ? 'text-white bg-blue-500/80 shadow-inner border border-blue-300/40'
+            : 'text-sky-100 hover:text-white hover:bg-white/10'
         }`}
         title="Housing Services & Tools"
         aria-expanded={isOpen}
       >
         <span>Services</span>
         {isOpen ? (
-          <ChevronUp className="w-4 h-4 text-purple-200 transition-transform duration-200" />
+          <ChevronUp className="w-4 h-4 text-sky-200 transition-transform duration-200" />
         ) : (
-          <ChevronDown className="w-4 h-4 text-purple-200 transition-transform duration-200" />
+          <ChevronDown className="w-4 h-4 text-sky-200 transition-transform duration-200" />
         )}
       </button>
 
@@ -80,8 +80,8 @@ export const ServicesDropdown: React.FC<ServicesDropdownProps> = ({
                   onClick={() => handleSelect('home-loan')}
                   className={`block w-full text-left text-sm font-semibold transition-colors cursor-pointer ${
                     activeView === 'home-loan'
-                      ? 'text-purple-700 font-bold'
-                      : 'text-slate-800 hover:text-purple-700'
+                      ? 'text-blue-600 font-bold'
+                      : 'text-slate-800 hover:text-blue-600'
                   }`}
                 >
                   Home Loan
@@ -92,8 +92,8 @@ export const ServicesDropdown: React.FC<ServicesDropdownProps> = ({
                   onClick={() => handleSelect('housing-premium')}
                   className={`block w-full text-left text-sm font-semibold transition-colors cursor-pointer ${
                     activeView === 'housing-premium'
-                      ? 'text-purple-700 font-bold'
-                      : 'text-slate-800 hover:text-purple-700'
+                      ? 'text-blue-600 font-bold'
+                      : 'text-slate-800 hover:text-blue-600'
                   }`}
                 >
                   Housing Premium
@@ -113,8 +113,8 @@ export const ServicesDropdown: React.FC<ServicesDropdownProps> = ({
                   onClick={() => handleSelect('emi-calculator')}
                   className={`block w-full text-left text-sm font-semibold transition-colors cursor-pointer ${
                     activeView === 'emi-calculator'
-                      ? 'text-purple-700 font-bold'
-                      : 'text-slate-800 hover:text-purple-700'
+                      ? 'text-blue-600 font-bold'
+                      : 'text-slate-800 hover:text-blue-600'
                   }`}
                 >
                   EMI calculator
@@ -125,8 +125,8 @@ export const ServicesDropdown: React.FC<ServicesDropdownProps> = ({
                   onClick={() => handleSelect('property-valuation')}
                   className={`block w-full text-left text-sm font-semibold transition-colors cursor-pointer ${
                     activeView === 'property-valuation'
-                      ? 'text-purple-700 font-bold'
-                      : 'text-slate-800 hover:text-purple-700'
+                      ? 'text-blue-600 font-bold'
+                      : 'text-slate-800 hover:text-blue-600'
                   }`}
                 >
                   Property value calculator
@@ -137,8 +137,8 @@ export const ServicesDropdown: React.FC<ServicesDropdownProps> = ({
                   onClick={() => handleSelect('rent-receipt-generator')}
                   className={`block w-full text-left text-sm font-semibold transition-colors cursor-pointer ${
                     activeView === 'rent-receipt-generator'
-                      ? 'text-purple-700 font-bold'
-                      : 'text-slate-800 hover:text-purple-700'
+                      ? 'text-blue-600 font-bold'
+                      : 'text-slate-800 hover:text-blue-600'
                   }`}
                 >
                   Rent receipt generator

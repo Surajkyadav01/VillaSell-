@@ -95,7 +95,7 @@ const POPULAR_CITIES: CityItem[] = [
     id: 'gurgaon',
     name: 'Gurgaon',
     icon: (
-      <svg viewBox="0 0 24 24" className="w-5 h-5 text-purple-600" fill="currentColor">
+      <svg viewBox="0 0 24 24" className="w-5 h-5 text-blue-600" fill="currentColor">
         {/* DLF Cyber Hub Skyscraper */}
         <path d="M6 21h12v-2H6v2zm1-4h10V4l-3-2H7v15zm2-11h2v2H9V6zm0 4h2v2H9v-2zm0 4h2v2H9v-2zm4-8h2v2h-2V6zm0 4h2v2h-2v-2zm0 4h2v2h-2v-2z" />
       </svg>
@@ -145,9 +145,19 @@ const POPULAR_CITIES: CityItem[] = [
     id: 'lucknow',
     name: 'Lucknow',
     icon: (
-      <svg viewBox="0 0 24 24" className="w-5 h-5 text-purple-500" fill="currentColor">
+      <svg viewBox="0 0 24 24" className="w-5 h-5 text-blue-500" fill="currentColor">
         {/* Rumi Darwaza Royal Arch */}
         <path d="M4 21h16v-2H4v2zm2-4h2v-4c0-2.2 1.8-4 4-4s4 1.8 4 4v4h2V7l-6-3-6 3v10zm5-4c0-.6.4-1 1-1s1 .4 1 1v4h-2v-4z" />
+      </svg>
+    )
+  },
+  {
+    id: 'prayagraj',
+    name: 'Prayagraj',
+    icon: (
+      <svg viewBox="0 0 24 24" className="w-5 h-5 text-rose-600" fill="currentColor">
+        {/* Triveni Sangam Confluence & Holy Temple Spire */}
+        <path d="M12 2l-2 3h4l-2-3zm-3 4l-1 3h8l-1-3H9zm-2 4l-1 4h12l-1-4H7zm-2 5l-1 4h16l-1-4H5zm-1 5h16v2H4v-2zm7-3h2v2h-2v-2z" />
       </svg>
     )
   }
@@ -234,7 +244,7 @@ export const CityMegaDropdown: React.FC<CityMegaDropdownProps> = ({
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-1.5 px-2 py-1 text-white hover:text-purple-200 font-semibold text-sm hover:bg-white/10 rounded-lg transition-colors cursor-pointer select-none focus:outline-none"
+        className="flex items-center gap-1.5 px-2 py-1 text-white hover:text-blue-200 font-semibold text-sm hover:bg-white/10 rounded-lg transition-colors cursor-pointer select-none focus:outline-none"
         aria-haspopup="dialog"
         aria-expanded={isOpen}
       >
@@ -254,7 +264,7 @@ export const CityMegaDropdown: React.FC<CityMegaDropdownProps> = ({
             onClick={() => setIsOpen(false)}
           />
           <div
-            className="fixed left-3 right-3 sm:left-0 sm:right-auto top-[70px] sm:absolute sm:top-full sm:mt-2.5 z-50 w-auto sm:w-[480px] bg-white rounded-2xl border border-slate-200/90 shadow-2xl shadow-purple-950/25 p-4 sm:p-5 text-slate-800 animate-in fade-in zoom-in-95 duration-150"
+            className="fixed left-3 right-3 sm:left-0 sm:right-auto top-[70px] sm:absolute sm:top-full sm:mt-2.5 z-50 w-auto sm:w-[480px] bg-white rounded-2xl border border-slate-200/90 shadow-2xl shadow-slate-900/25 p-4 sm:p-5 text-slate-800 animate-in fade-in zoom-in-95 duration-150"
             style={{
               filter: 'drop-shadow(0 20px 30px rgba(0,0,0,0.18))'
             }}
@@ -268,7 +278,7 @@ export const CityMegaDropdown: React.FC<CityMegaDropdownProps> = ({
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search for city"
-              className="w-full pl-10 pr-8 py-2 text-sm font-medium bg-slate-50 border border-slate-200/90 rounded-xl text-slate-900 placeholder:text-slate-400 focus:bg-white focus:border-purple-600 focus:ring-2 focus:ring-purple-600/20 outline-none transition-all"
+              className="w-full pl-10 pr-8 py-2 text-sm font-medium bg-slate-50 border border-slate-200/90 rounded-xl text-slate-900 placeholder:text-slate-400 focus:bg-white focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20 outline-none transition-all"
             />
             {searchQuery && (
               <button
@@ -287,7 +297,7 @@ export const CityMegaDropdown: React.FC<CityMegaDropdownProps> = ({
               Popular cities
             </span>
             {searchQuery && (
-              <span className="text-[11px] text-purple-600 font-semibold">
+              <span className="text-[11px] text-blue-600 font-semibold">
                 {filteredCities.length} {filteredCities.length === 1 ? 'city' : 'cities'} found
               </span>
             )}
@@ -308,8 +318,8 @@ export const CityMegaDropdown: React.FC<CityMegaDropdownProps> = ({
                   onClick={() => handleSelect(city.name)}
                   className={`flex items-center gap-2 p-2 sm:p-2.5 rounded-xl border text-left transition-all cursor-pointer group ${
                     isSelected
-                      ? 'border-purple-600 bg-purple-50/90 text-purple-700 font-bold ring-1 ring-purple-600 shadow-xs'
-                      : 'border-slate-200/80 bg-white hover:border-purple-400 hover:bg-purple-50/40 hover:shadow-xs text-slate-700'
+                      ? 'border-blue-600 bg-blue-50/90 text-blue-600 font-bold ring-1 ring-blue-600 shadow-xs'
+                      : 'border-slate-200/80 bg-white hover:border-blue-400 hover:bg-blue-50/40 hover:shadow-xs text-slate-700'
                   }`}
                 >
                   <div className="w-7 h-7 rounded-lg bg-slate-100/90 group-hover:bg-white flex items-center justify-center shrink-0 border border-slate-200/50 transition-colors">
@@ -317,7 +327,7 @@ export const CityMegaDropdown: React.FC<CityMegaDropdownProps> = ({
                   </div>
                   <span
                     className={`text-xs truncate ${
-                      isSelected ? 'font-bold text-purple-700' : 'font-semibold text-slate-800 group-hover:text-purple-700'
+                      isSelected ? 'font-bold text-blue-600' : 'font-semibold text-slate-800 group-hover:text-blue-600'
                     }`}
                   >
                     {city.name}
@@ -341,8 +351,8 @@ export const CityMegaDropdown: React.FC<CityMegaDropdownProps> = ({
                 onClick={() => handleSelect('All Cities')}
                 className={`font-bold transition-colors cursor-pointer ${
                   selectedCity === 'All Cities'
-                    ? 'text-purple-700 underline'
-                    : 'text-slate-600 hover:text-purple-700'
+                    ? 'text-blue-600 underline'
+                    : 'text-slate-600 hover:text-blue-600'
                 }`}
               >
                 All India / All Cities
@@ -354,7 +364,7 @@ export const CityMegaDropdown: React.FC<CityMegaDropdownProps> = ({
             <button
               type="button"
               onClick={() => handleSelect('All Cities')}
-              className="text-purple-600 hover:text-purple-800 font-bold flex items-center gap-0.5 cursor-pointer transition-colors"
+              className="text-blue-600 hover:text-blue-800 font-bold flex items-center gap-0.5 cursor-pointer transition-colors"
             >
               <span>View all cities</span>
               <ChevronRight className="w-3.5 h-3.5" />

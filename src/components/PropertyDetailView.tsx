@@ -113,17 +113,17 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({
   const getLocalityIcon = (type: string) => {
     switch (type) {
       case 'metro':
-        return <Train className="w-4 h-4 text-purple-600" />;
+        return <Train className="w-4 h-4 text-blue-600" />;
       case 'airport':
-        return <Plane className="w-4 h-4 text-purple-600" />;
+        return <Plane className="w-4 h-4 text-blue-600" />;
       case 'hospital':
-        return <Building2 className="w-4 h-4 text-purple-600" />;
+        return <Building2 className="w-4 h-4 text-blue-600" />;
       case 'school':
-        return <School className="w-4 h-4 text-purple-600" />;
+        return <School className="w-4 h-4 text-blue-600" />;
       case 'mall':
-        return <Store className="w-4 h-4 text-purple-600" />;
+        return <Store className="w-4 h-4 text-blue-600" />;
       default:
-        return <MapPin className="w-4 h-4 text-purple-600" />;
+        return <MapPin className="w-4 h-4 text-blue-600" />;
     }
   };
 
@@ -210,7 +210,7 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute top-4 left-4 flex gap-2">
-                  <span className="px-3 py-1 rounded-md bg-purple-700/90 backdrop-blur-md text-white font-bold text-xs shadow-md">
+                  <span className="px-3 py-1 rounded-md bg-blue-600/90 backdrop-blur-md text-white font-bold text-xs shadow-md">
                     {property.propertyType}
                   </span>
                   {property.isZeroBrokerage && (
@@ -234,7 +234,7 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({
                       onClick={() => setActiveImageIndex(idx)}
                       className={`relative w-24 h-16 rounded-lg overflow-hidden shrink-0 border-2 transition-all cursor-pointer ${
                         activeImageIndex === idx
-                          ? 'border-purple-600 ring-2 ring-purple-600/20'
+                          ? 'border-blue-600 ring-2 ring-blue-600/20'
                           : 'border-transparent opacity-70 hover:opacity-100'
                       }`}
                     >
@@ -266,13 +266,13 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({
                   </h1>
 
                   <div className="flex items-center gap-2 text-slate-600 text-sm mt-2">
-                    <MapPin className="w-4 h-4 text-purple-600 shrink-0" />
+                    <MapPin className="w-4 h-4 text-blue-600 shrink-0" />
                     <span>{property.address}</span>
                   </div>
                 </div>
 
                 <div className="text-left sm:text-right">
-                  <div className="text-3xl font-black text-purple-900 tracking-tight">
+                  <div className="text-3xl font-black text-blue-900 tracking-tight">
                     {property.priceDisplay}
                   </div>
                   {property.pricePerSqFt > 0 && (
@@ -291,7 +291,7 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({
                 <div className="bg-slate-50 p-3.5 rounded-xl border border-slate-100">
                   <span className="text-xs text-slate-500 font-medium block mb-1">Configuration</span>
                   <div className="flex items-center gap-1.5 font-bold text-slate-900 text-sm">
-                    <BedDouble className="w-4 h-4 text-purple-600" />
+                    <BedDouble className="w-4 h-4 text-blue-600" />
                     <span>{property.bedrooms > 0 ? `${property.bedrooms} BHK` : property.propertyType}</span>
                   </div>
                 </div>
@@ -299,7 +299,7 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({
                 <div className="bg-slate-50 p-3.5 rounded-xl border border-slate-100">
                   <span className="text-xs text-slate-500 font-medium block mb-1">Carpet Area</span>
                   <div className="flex items-center gap-1.5 font-bold text-slate-900 text-sm">
-                    <Maximize2 className="w-4 h-4 text-purple-600" />
+                    <Maximize2 className="w-4 h-4 text-blue-600" />
                     <span>{property.carpetAreaSqFt} sq.ft</span>
                   </div>
                 </div>
@@ -307,7 +307,7 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({
                 <div className="bg-slate-50 p-3.5 rounded-xl border border-slate-100">
                   <span className="text-xs text-slate-500 font-medium block mb-1">Facing</span>
                   <div className="flex items-center gap-1.5 font-bold text-slate-900 text-sm">
-                    <Compass className="w-4 h-4 text-purple-600" />
+                    <Compass className="w-4 h-4 text-blue-600" />
                     <span>{property.facing} Facing</span>
                   </div>
                 </div>
@@ -315,7 +315,7 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({
                 <div className="bg-slate-50 p-3.5 rounded-xl border border-slate-100">
                   <span className="text-xs text-slate-500 font-medium block mb-1">Furnishing</span>
                   <div className="flex items-center gap-1.5 font-bold text-slate-900 text-sm">
-                    <Sparkles className="w-4 h-4 text-purple-600" />
+                    <Sparkles className="w-4 h-4 text-blue-600" />
                     <span>{property.furnishing}</span>
                   </div>
                 </div>
@@ -323,7 +323,7 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({
                 <div className="bg-slate-50 p-3.5 rounded-xl border border-slate-100">
                   <span className="text-xs text-slate-500 font-medium block mb-1">Floor Details</span>
                   <div className="flex items-center gap-1.5 font-bold text-slate-900 text-sm">
-                    <Building className="w-4 h-4 text-purple-600" />
+                    <Building className="w-4 h-4 text-blue-600" />
                     <span className="truncate">{property.floor}</span>
                   </div>
                 </div>
@@ -331,7 +331,7 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({
                 <div className="bg-slate-50 p-3.5 rounded-xl border border-slate-100">
                   <span className="text-xs text-slate-500 font-medium block mb-1">Bathrooms</span>
                   <div className="flex items-center gap-1.5 font-bold text-slate-900 text-sm">
-                    <Bath className="w-4 h-4 text-purple-600" />
+                    <Bath className="w-4 h-4 text-blue-600" />
                     <span>{property.bathrooms} Bathrooms</span>
                   </div>
                 </div>
@@ -339,7 +339,7 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({
                 <div className="bg-slate-50 p-3.5 rounded-xl border border-slate-100">
                   <span className="text-xs text-slate-500 font-medium block mb-1">Possession</span>
                   <div className="flex items-center gap-1.5 font-bold text-slate-900 text-sm">
-                    <Calendar className="w-4 h-4 text-purple-600" />
+                    <Calendar className="w-4 h-4 text-blue-600" />
                     <span className="truncate">{property.possession}</span>
                   </div>
                 </div>
@@ -368,7 +368,7 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({
             <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs">
               <h2 className="text-lg font-bold text-slate-900 mb-4 flex items-center justify-between">
                 <span>Exclusive Amenities & Facilities</span>
-                <span className="text-xs font-semibold text-purple-700 bg-purple-50 px-2.5 py-1 rounded-full">
+                <span className="text-xs font-semibold text-blue-600 bg-blue-50 px-2.5 py-1 rounded-full">
                   {property.amenities.length} Features Included
                 </span>
               </h2>
@@ -379,7 +379,7 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({
                     key={idx}
                     className="flex items-center gap-2.5 p-3 rounded-xl bg-slate-50 border border-slate-100 text-slate-800 text-xs font-semibold"
                   >
-                    <div className="w-6 h-6 rounded-lg bg-purple-100 text-purple-700 flex items-center justify-center shrink-0">
+                    <div className="w-6 h-6 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center shrink-0">
                       <Check className="w-3.5 h-3.5" />
                     </div>
                     <span>{amenity}</span>
@@ -402,12 +402,12 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({
                       className="flex items-center justify-between p-3.5 rounded-xl bg-slate-50 border border-slate-100"
                     >
                       <div className="flex items-center gap-2.5">
-                        <div className="w-8 h-8 rounded-lg bg-purple-100 flex items-center justify-center">
+                        <div className="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center">
                           {getLocalityIcon(item.type)}
                         </div>
                         <span className="font-semibold text-slate-800 text-xs">{item.title}</span>
                       </div>
-                      <span className="text-xs font-bold text-purple-800 bg-purple-100/70 px-2 py-0.5 rounded-md">
+                      <span className="text-xs font-bold text-blue-800 bg-blue-100/70 px-2 py-0.5 rounded-md">
                         {item.distance}
                       </span>
                     </div>
@@ -417,10 +417,10 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({
             )}
 
             {/* Interactive EMI Calculator Widget */}
-            <div className="bg-white rounded-2xl border border-purple-200 p-6 shadow-md relative overflow-hidden">
+            <div className="bg-white rounded-2xl border border-blue-200 p-6 shadow-md relative overflow-hidden">
               <div className="flex items-center justify-between mb-4 border-b border-slate-100 pb-3">
                 <div className="flex items-center gap-2.5">
-                  <div className="w-10 h-10 rounded-xl bg-purple-700 text-white flex items-center justify-center shadow-md shadow-purple-900/20">
+                  <div className="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow-md shadow-blue-900/20">
                     <Calculator className="w-5 h-5" />
                   </div>
                   <div>
@@ -430,7 +430,7 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({
                 </div>
 
                 <div className="text-right">
-                  <span className="text-xs font-bold text-purple-700 uppercase tracking-wider block">Estimated EMI</span>
+                  <span className="text-xs font-bold text-blue-600 uppercase tracking-wider block">Estimated EMI</span>
                   <span className="text-2xl font-black text-slate-900">
                     ₹{emiCalculation.monthlyEmi.toLocaleString('en-IN')}<span className="text-xs font-medium text-slate-500">/mo</span>
                   </span>
@@ -442,7 +442,7 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({
                 <div>
                   <div className="flex justify-between text-xs font-bold mb-2">
                     <span className="text-slate-600">Loan Amount:</span>
-                    <span className="text-purple-700">₹{(loanAmount / 100000).toFixed(1)} Lacs</span>
+                    <span className="text-blue-600">₹{(loanAmount / 100000).toFixed(1)} Lacs</span>
                   </div>
                   <input
                     type="range"
@@ -451,7 +451,7 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({
                     step={100000}
                     value={loanAmount}
                     onChange={(e) => setLoanAmount(Number(e.target.value))}
-                    className="w-full accent-purple-700 cursor-pointer"
+                    className="w-full accent-blue-600 cursor-pointer"
                   />
                   <div className="flex justify-between text-[10px] text-slate-400 mt-1">
                     <span>₹5 Lacs</span>
@@ -463,7 +463,7 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({
                 <div>
                   <div className="flex justify-between text-xs font-bold mb-2">
                     <span className="text-slate-600">Interest Rate:</span>
-                    <span className="text-purple-700">{interestRate}% p.a.</span>
+                    <span className="text-blue-600">{interestRate}% p.a.</span>
                   </div>
                   <input
                     type="range"
@@ -472,7 +472,7 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({
                     step={0.1}
                     value={interestRate}
                     onChange={(e) => setInterestRate(Number(e.target.value))}
-                    className="w-full accent-purple-700 cursor-pointer"
+                    className="w-full accent-blue-600 cursor-pointer"
                   />
                   <div className="flex justify-between text-[10px] text-slate-400 mt-1">
                     <span>6.5%</span>
@@ -484,7 +484,7 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({
                 <div>
                   <div className="flex justify-between text-xs font-bold mb-2">
                     <span className="text-slate-600">Tenure:</span>
-                    <span className="text-purple-700">{tenureYears} Years</span>
+                    <span className="text-blue-600">{tenureYears} Years</span>
                   </div>
                   <input
                     type="range"
@@ -493,7 +493,7 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({
                     step={1}
                     value={tenureYears}
                     onChange={(e) => setTenureYears(Number(e.target.value))}
-                    className="w-full accent-purple-700 cursor-pointer"
+                    className="w-full accent-blue-600 cursor-pointer"
                   />
                   <div className="flex justify-between text-[10px] text-slate-400 mt-1">
                     <span>5 Yrs</span>
@@ -511,7 +511,7 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({
 
                 <div className="p-3 bg-slate-50 rounded-xl">
                   <span className="text-slate-500 block mb-0.5">Total Interest Payable</span>
-                  <span className="font-bold text-purple-700">₹{emiCalculation.totalInterest.toLocaleString('en-IN')}</span>
+                  <span className="font-bold text-blue-600">₹{emiCalculation.totalInterest.toLocaleString('en-IN')}</span>
                 </div>
 
                 <div className="p-3 bg-slate-50 rounded-xl col-span-2 sm:col-span-1">
@@ -524,13 +524,13 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({
 
           {/* Right Column (4 cols): Sticky Contact Seller & Owner Card */}
           <div className="lg:col-span-4 space-y-6 lg:sticky lg:top-36">
-            <div className="bg-white rounded-2xl border-2 border-purple-200/80 p-6 shadow-xl relative overflow-hidden">
-              <div className="absolute top-0 right-0 bg-gradient-to-l from-purple-700 to-indigo-600 text-white text-[10px] uppercase font-black px-4 py-1 rounded-bl-xl tracking-wider">
+            <div className="bg-white rounded-2xl border-2 border-blue-200/80 p-6 shadow-xl relative overflow-hidden">
+              <div className="absolute top-0 right-0 bg-gradient-to-l from-blue-600 to-indigo-600 text-white text-[10px] uppercase font-black px-4 py-1 rounded-bl-xl tracking-wider">
                 Direct Connect
               </div>
 
               <div className="mb-5">
-                <span className="text-xs font-bold text-purple-700 uppercase tracking-wider block mb-1">
+                <span className="text-xs font-bold text-blue-600 uppercase tracking-wider block mb-1">
                   Posted by Verified {property.postedBy.type}
                 </span>
                 <h3 className="text-lg font-bold text-slate-900">{property.postedBy.name}</h3>
@@ -589,7 +589,7 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({
                         required
                         value={inquiryName}
                         onChange={(e) => setInquiryName(e.target.value)}
-                        className="w-full p-2.5 rounded-lg border border-slate-200 text-xs font-semibold focus:outline-none focus:border-purple-600"
+                        className="w-full p-2.5 rounded-lg border border-slate-200 text-xs font-semibold focus:outline-none focus:border-blue-600"
                       />
                     </div>
 
@@ -600,7 +600,7 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({
                         required
                         value={inquiryPhone}
                         onChange={(e) => setInquiryPhone(e.target.value)}
-                        className="w-full p-2.5 rounded-lg border border-slate-200 text-xs font-semibold focus:outline-none focus:border-purple-600"
+                        className="w-full p-2.5 rounded-lg border border-slate-200 text-xs font-semibold focus:outline-none focus:border-blue-600"
                       />
                     </div>
 
@@ -610,7 +610,7 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({
                         placeholder="Preferred Visit Date"
                         value={inquiryDate}
                         onChange={(e) => setInquiryDate(e.target.value)}
-                        className="w-full p-2.5 rounded-lg border border-slate-200 text-xs font-medium text-slate-700 focus:outline-none focus:border-purple-600"
+                        className="w-full p-2.5 rounded-lg border border-slate-200 text-xs font-medium text-slate-700 focus:outline-none focus:border-blue-600"
                       />
                     </div>
 
@@ -619,13 +619,13 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({
                         rows={2}
                         value={inquiryMessage}
                         onChange={(e) => setInquiryMessage(e.target.value)}
-                        className="w-full p-2.5 rounded-lg border border-slate-200 text-xs font-medium text-slate-700 focus:outline-none focus:border-purple-600 resize-none"
+                        className="w-full p-2.5 rounded-lg border border-slate-200 text-xs font-medium text-slate-700 focus:outline-none focus:border-blue-600 resize-none"
                       />
                     </div>
 
                     <button
                       type="submit"
-                      className="w-full py-2.5 rounded-xl bg-purple-700 hover:bg-purple-800 text-white font-bold text-xs flex items-center justify-center gap-2 cursor-pointer shadow-md transition-all"
+                      className="w-full py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs flex items-center justify-center gap-2 cursor-pointer shadow-md transition-all"
                     >
                       <Send className="w-3.5 h-3.5" />
                       <span>Send Instant Inquiry</span>
@@ -653,7 +653,7 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({
               </div>
               <button
                 onClick={onBack}
-                className="text-xs font-bold text-purple-700 hover:text-purple-900 cursor-pointer"
+                className="text-xs font-bold text-blue-600 hover:text-blue-900 cursor-pointer"
               >
                 Browse All Properties →
               </button>
@@ -681,7 +681,7 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({
                   </div>
                   <div className="p-4">
                     <div className="text-lg font-black text-slate-900 mb-1">{simProp.priceDisplay}</div>
-                    <h4 className="font-bold text-xs text-slate-800 line-clamp-1 group-hover:text-purple-700 mb-1">
+                    <h4 className="font-bold text-xs text-slate-800 line-clamp-1 group-hover:text-blue-600 mb-1">
                       {simProp.title}
                     </h4>
                     <p className="text-[11px] text-slate-500 line-clamp-1">{simProp.locality}, {simProp.city}</p>
@@ -704,7 +704,7 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({
           </a>
           <a
             href={`tel:${BRAND_CONFIG.phoneClean}`}
-            className="flex-1 py-2.5 px-3 rounded-xl bg-purple-700 hover:bg-purple-800 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-sm transition-transform active:scale-95"
+            className="flex-1 py-2.5 px-3 rounded-xl bg-blue-600 hover:bg-blue-800 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-sm transition-transform active:scale-95"
           >
             <Phone className="w-4 h-4" />
             <span>Call Agent</span>

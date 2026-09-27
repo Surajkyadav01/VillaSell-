@@ -97,13 +97,13 @@ export const RentReceiptView: React.FC<RentReceiptViewProps> = ({ onBack }) => {
               <span>/</span>
               <span className="text-slate-900 font-bold">Housing Tools</span>
               <span>/</span>
-              <span className="text-purple-700 font-bold">Rent Receipt Generator</span>
+              <span className="text-blue-600 font-bold">Rent Receipt Generator</span>
             </div>
           </div>
 
           <button
             onClick={handlePrint}
-            className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-purple-700 hover:bg-purple-800 text-white font-bold text-xs shadow-md transition-all cursor-pointer"
+            className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-800 text-white font-bold text-xs shadow-md transition-all cursor-pointer"
           >
             <Printer className="w-4 h-4" />
             <span>Print / Save PDF</span>
@@ -113,12 +113,12 @@ export const RentReceiptView: React.FC<RentReceiptViewProps> = ({ onBack }) => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
         <div className="text-center max-w-3xl mx-auto mb-8 print:hidden">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-100 text-purple-800 text-xs font-extrabold uppercase tracking-wider mb-2">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-100 text-blue-800 text-xs font-extrabold uppercase tracking-wider mb-2">
             <FileText className="w-3.5 h-3.5" />
             <span>Income Tax & HRA Exemption Tool</span>
           </div>
           <h1 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
-            Free <span className="text-purple-700">Rent Receipt Generator</span>
+            Free <span className="text-blue-600">Rent Receipt Generator</span>
           </h1>
           <p className="text-xs sm:text-sm text-slate-600 mt-2 leading-relaxed">
             Generate and download valid, Income Tax compliant rent receipts with revenue stamp formatting to claim House Rent Allowance (HRA) tax deductions.
@@ -129,7 +129,7 @@ export const RentReceiptView: React.FC<RentReceiptViewProps> = ({ onBack }) => {
           {/* Left Column: Form Details (5 cols, hidden when printing) */}
           <div className="lg:col-span-5 bg-white rounded-3xl p-6 sm:p-7 border border-slate-200 shadow-sm space-y-4 print:hidden">
             <h3 className="font-extrabold text-sm text-slate-900 flex items-center gap-2 pb-2 border-b border-slate-100">
-              <User className="w-4 h-4 text-purple-700" />
+              <User className="w-4 h-4 text-blue-600" />
               <span>Tenant & Landlord Details</span>
             </h3>
 
@@ -141,7 +141,7 @@ export const RentReceiptView: React.FC<RentReceiptViewProps> = ({ onBack }) => {
                 value={tenantName}
                 onChange={(e) => setTenantName(e.target.value)}
                 placeholder="Your full name"
-                className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs font-bold text-slate-800 focus:outline-none focus:border-purple-600 focus:ring-2 focus:ring-purple-600/20"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs font-bold text-slate-800 focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20"
               />
             </div>
 
@@ -153,7 +153,7 @@ export const RentReceiptView: React.FC<RentReceiptViewProps> = ({ onBack }) => {
                 value={landlordName}
                 onChange={(e) => setLandlordName(e.target.value)}
                 placeholder="Property owner's name"
-                className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs font-bold text-slate-800 focus:outline-none focus:border-purple-600 focus:ring-2 focus:ring-purple-600/20"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs font-bold text-slate-800 focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20"
               />
             </div>
 
@@ -169,7 +169,7 @@ export const RentReceiptView: React.FC<RentReceiptViewProps> = ({ onBack }) => {
                 value={landlordPan}
                 onChange={(e) => setLandlordPan(e.target.value.toUpperCase())}
                 placeholder="ABCDE1234F"
-                className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs font-bold text-slate-800 uppercase focus:outline-none focus:border-purple-600 focus:ring-2 focus:ring-purple-600/20"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs font-bold text-slate-800 uppercase focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20"
               />
             </div>
 
@@ -182,7 +182,7 @@ export const RentReceiptView: React.FC<RentReceiptViewProps> = ({ onBack }) => {
                 onChange={(e) => setMonthlyRent(Number(e.target.value))}
                 min={1000}
                 step={500}
-                className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs font-bold text-slate-800 focus:outline-none focus:border-purple-600 focus:ring-2 focus:ring-purple-600/20"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs font-bold text-slate-800 focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20"
               />
             </div>
 
@@ -194,7 +194,7 @@ export const RentReceiptView: React.FC<RentReceiptViewProps> = ({ onBack }) => {
                 value={propertyAddress}
                 onChange={(e) => setPropertyAddress(e.target.value)}
                 placeholder="Full address of the rented flat/villa"
-                className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs font-medium text-slate-800 focus:outline-none focus:border-purple-600 focus:ring-2 focus:ring-purple-600/20"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs font-medium text-slate-800 focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20"
               />
             </div>
 
@@ -231,7 +231,7 @@ export const RentReceiptView: React.FC<RentReceiptViewProps> = ({ onBack }) => {
               <button
                 type="button"
                 onClick={handlePrint}
-                className="w-full py-3 rounded-xl bg-purple-700 hover:bg-purple-800 text-white font-bold text-xs shadow-md transition-all cursor-pointer flex items-center justify-center gap-2"
+                className="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-800 text-white font-bold text-xs shadow-md transition-all cursor-pointer flex items-center justify-center gap-2"
               >
                 <Printer className="w-4 h-4" />
                 <span>Print or Save this Receipt as PDF</span>

@@ -18,7 +18,7 @@ interface CustomDropdownProps {
   className?: string;
   buttonClassName?: string;
   menuClassName?: string;
-  theme?: 'light' | 'purple' | 'subtle' | 'housing';
+  theme?: 'light' | 'blue' | 'subtle' | 'housing';
   size?: 'sm' | 'md' | 'lg';
   align?: 'left' | 'right';
   disabled?: boolean;
@@ -100,14 +100,14 @@ export const CustomDropdown: React.FC<CustomDropdownProps> = ({
   if (theme === 'housing') {
     // Housing.com style: pure text with chevron, no border/pill
     baseButtonStyles = `bg-transparent hover:bg-white/10 text-white font-medium focus:outline-none rounded-lg transition-colors`;
-    menuStyles = `bg-[#280c4c] border border-purple-700/60 shadow-2xl text-white divide-y divide-purple-900/40`;
-  } else if (theme === 'purple') {
-    // For Topbar or Purple backgrounds
-    baseButtonStyles = `bg-purple-950/70 hover:bg-purple-900/90 text-white border border-purple-800/60 focus:border-purple-400`;
-    menuStyles = `bg-[#280c4c] border border-purple-700/60 shadow-2xl text-white divide-y divide-purple-900/40`;
+    menuStyles = `bg-[#132c4d] border border-blue-500/40 shadow-2xl text-white divide-y divide-blue-800/40`;
+  } else if (theme === 'blue') {
+    // For Topbar or Blue backgrounds
+    baseButtonStyles = `bg-slate-900/70 hover:bg-blue-900/90 text-white border border-blue-800/60 focus:border-blue-400`;
+    menuStyles = `bg-[#132c4d] border border-blue-500/40 shadow-2xl text-white divide-y divide-blue-800/40`;
   } else if (theme === 'subtle') {
     // For light gray compact inputs
-    baseButtonStyles = `bg-white hover:bg-slate-50 text-slate-800 border border-slate-200 focus:border-purple-600 focus:ring-1 focus:ring-purple-600`;
+    baseButtonStyles = `bg-white hover:bg-slate-50 text-slate-800 border border-slate-200 focus:border-blue-600 focus:ring-1 focus:ring-blue-600`;
     menuStyles = `bg-white border border-slate-200 shadow-xl text-slate-900 divide-y divide-slate-100`;
   } else {
     // Default Light theme for Search Bar & Forms
@@ -142,7 +142,7 @@ export const CustomDropdown: React.FC<CustomDropdownProps> = ({
             {selectedOption ? selectedOption.label : placeholder}
           </span>
           {selectedOption?.badge && (
-            <span className="text-[10px] bg-purple-100 text-purple-700 font-black px-1.5 py-0.2 rounded">
+            <span className="text-[10px] bg-blue-100 text-blue-600 font-black px-1.5 py-0.2 rounded">
               {selectedOption.badge}
             </span>
           )}
@@ -151,7 +151,7 @@ export const CustomDropdown: React.FC<CustomDropdownProps> = ({
           className={`w-3.5 h-3.5 shrink-0 transition-transform duration-200 ${
             theme === 'housing'
               ? (isOpen ? 'rotate-180 text-white' : 'text-white/80')
-              : (isOpen ? 'rotate-180 text-purple-600' : 'opacity-70')
+              : (isOpen ? 'rotate-180 text-blue-600' : 'opacity-70')
           }`}
         />
       </button>
@@ -172,13 +172,13 @@ export const CustomDropdown: React.FC<CustomDropdownProps> = ({
             const isSelected = String(opt.value) === String(value);
 
             let itemClass = '';
-            if (theme === 'purple') {
+            if (theme === 'blue') {
               itemClass = isSelected
-                ? 'bg-purple-700 text-white font-extrabold shadow-sm'
-                : 'text-purple-100 hover:bg-purple-800/80 hover:text-white font-medium';
+                ? 'bg-blue-600 text-white font-extrabold shadow-sm'
+                : 'text-blue-100 hover:bg-blue-800/80 hover:text-white font-medium';
             } else {
               itemClass = isSelected
-                ? 'bg-purple-50 text-purple-700 font-extrabold'
+                ? 'bg-blue-50 text-blue-600 font-extrabold'
                 : 'text-slate-700 hover:bg-slate-100 hover:text-slate-900 font-semibold';
             }
 
@@ -205,7 +205,7 @@ export const CustomDropdown: React.FC<CustomDropdownProps> = ({
                 {isSelected && (
                   <Check
                     className={`w-4 h-4 shrink-0 ${
-                      theme === 'purple' ? 'text-amber-300' : 'text-purple-700'
+                      theme === 'blue' ? 'text-amber-300' : 'text-blue-600'
                     }`}
                   />
                 )}

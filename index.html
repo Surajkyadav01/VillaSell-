@@ -41,6 +41,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
+    <!-- High-Priority Preload for City Skyline Hero Background (Instant zero-delay load) -->
+    <link rel="preload" as="image" href="/images/header_bg_final.webp" type="image/webp" fetchpriority="high">
+
     <!-- Schema.org Structured Data (JSON-LD) for Google Rich Snippets & Sitelinks -->
     <script type="application/ld+json">
     {
@@ -81,7 +84,7 @@
     }
     </script>
   </head>
-  <body class="font-sans antialiased bg-slate-50 text-slate-900 selection:bg-purple-100 selection:text-purple-900">
+  <body class="font-sans antialiased bg-slate-50 text-slate-900 selection:bg-blue-100 selection:text-blue-900">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
