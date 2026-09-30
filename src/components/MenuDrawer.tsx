@@ -28,6 +28,7 @@ interface MenuDrawerProps {
   onClose: () => void;
   currentUser: UserProfile | null;
   onOpenLogin: () => void;
+  onOpenLoginWithMode?: (mode: 'login' | 'signup' | 'admin') => void;
   onLogout: () => void;
   activeView: ActiveView;
   setActiveView: (view: ActiveView) => void;
@@ -43,6 +44,7 @@ export const MenuDrawer: React.FC<MenuDrawerProps> = ({
   onClose,
   currentUser,
   onOpenLogin,
+  onOpenLoginWithMode,
   onLogout,
   activeView,
   setActiveView,
@@ -106,55 +108,98 @@ export const MenuDrawer: React.FC<MenuDrawerProps> = ({
             {/* User Profile / Login Banner */}
             <div className="p-4 rounded-2xl bg-gradient-to-br from-blue-50 via-indigo-50/50 to-slate-50 border border-blue-100 shadow-xs">
               {currentUser ? (
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <img
-                      src={currentUser.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80'}
-                      alt={currentUser.name}
-                      className="w-12 h-12 rounded-full object-cover border-2 border-blue-300 shadow-xs"
-                    />
-                    <div>
-                      <div className="flex items-center gap-1.5">
-                        <h4 className="font-extrabold text-sm text-slate-900">{currentUser.name}</h4>
-                        <span className="px-1.5 py-0.5 rounded text-[9px] font-black uppercase bg-emerald-100 text-emerald-800">
-                          {currentUser.role}
+                <>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <img
+                        src={currentUser.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80'}
+                        alt={currentUser.name}
+                        className="w-12 h-12 rounded-full object-cover border-2 border-blue-300 shadow-xs"
+                      />
+                      <div>
+                        <div className="flex items-center gap-1.5">
+                          <h4 className="font-extrabold text-sm text-slate-900">{currentUser.name}</h4>
+                          <span className="px-1.5 py-0.5 rounded text-[9px] font-black uppercase bg-emerald-100 text-emerald-800">
+                            {currentUser.role}
+                          </span>
+                        </div>
+                        <span className="text-xs text-slate-500 font-medium block">
+                          {currentUser.phone || currentUser.email}
                         </span>
                       </div>
-                      <span className="text-xs text-slate-500 font-medium block">
-                        {currentUser.phone || currentUser.email}
-                      </span>
+                    </div>
+
+                    <button
+                      onClick={() => {
+                        onLogout();
+                        onClose();
+                      }}
+                      className="p-2 rounded-xl text-rose-600 hover:bg-rose-50 border border-rose-100 transition-colors cursor-pointer"
+                      title="Sign Out"
+                    >
+                      <LogOut className="w-4 h-4" />
+                    </button>
+                  </div>
+                  
+                  {/* Dedicated Full Dashboard Action Button */}
+                  <div className="mt-3 pt-3 border-t border-blue-100/80">
+                    {currentUser.role === 'Admin' ? (
+                      <button
+                        onClick={() => {
+                          onClose();
+                          navigateTo('admin-panel');
+                        }}
+                        className="w-full py-2.5 px-3 rounded-xl bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 text-slate-950 font-black text-xs shadow-md flex items-center justify-between transition-all cursor-pointer hover:shadow-lg"
+                      >
+                        <span className="flex items-center gap-2">
+                          <ShieldCheck className="w-4 h-4 text-slate-950" />
+                          <span>Admin Control Panel</span>
+                        </span>
+                        <span className="px-2 py-0.5 rounded-full text-[9px] font-black uppercase bg-slate-950 text-amber-300">
+                          Super Admin
+                        </span>
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => {
+                          onClose();
+                          navigateTo('dashboard');
+                        }}
+                        className="w-full py-2.5 px-3 rounded-xl bg-gradient-to-r from-blue-700 via-indigo-700 to-blue-900 text-white font-black text-xs shadow-md flex items-center justify-between transition-all cursor-pointer hover:shadow-lg"
+                      >
+                        <span className="flex items-center gap-2">
+                          <Sparkles className="w-4 h-4 text-amber-300" />
+                          <span>Go to Dedicated Dashboard</span>
+                        </span>
+                        <span className="px-2 py-0.5 rounded-full text-[9px] font-black uppercase bg-amber-400 text-slate-950">
+                          {currentUser.role === 'Owner' ? 'Owner Portal' : currentUser.role === 'Agent' ? 'Agent Hub' : 'Buyer Space'}
+                        </span>
+                      </button>
+                    )}
+                  </div>
+                </>
+              ) : (
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between gap-3">
+                    <div>
+                      <h4 className="font-bold text-sm text-slate-900">Welcome to VillaSell</h4>
+                      <p className="text-xs text-slate-500 mt-0.5">
+                        Sign in to view saved properties & post listings
+                      </p>
                     </div>
                   </div>
-
-                  <button
-                    onClick={() => {
-                      onLogout();
-                      onClose();
-                    }}
-                    className="p-2 rounded-xl text-rose-600 hover:bg-rose-50 border border-rose-100 transition-colors cursor-pointer"
-                    title="Sign Out"
-                  >
-                    <LogOut className="w-4 h-4" />
-                  </button>
-                </div>
-              ) : (
-                <div className="flex items-center justify-between gap-3">
-                  <div>
-                    <h4 className="font-bold text-sm text-slate-900">Welcome to VillaSell</h4>
-                    <p className="text-xs text-slate-500 mt-0.5">
-                      Sign in to view saved properties & post listings
-                    </p>
+                  <div className="pt-1">
+                    <button
+                      onClick={() => {
+                        onClose();
+                        onOpenLogin();
+                      }}
+                      className="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 text-white font-extrabold text-xs sm:text-sm shadow-md transition-all cursor-pointer flex items-center justify-center gap-2"
+                    >
+                      <LogIn className="w-4 h-4" />
+                      <span>Sign In / Register</span>
+                    </button>
                   </div>
-                  <button
-                    onClick={() => {
-                      onClose();
-                      onOpenLogin();
-                    }}
-                    className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-800 text-white font-extrabold text-xs shadow-md transition-all cursor-pointer flex items-center gap-1.5 shrink-0"
-                  >
-                    <LogIn className="w-3.5 h-3.5" />
-                    <span>Login</span>
-                  </button>
                 </div>
               )}
             </div>

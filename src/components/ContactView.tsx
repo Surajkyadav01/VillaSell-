@@ -309,7 +309,7 @@ export const ContactView: React.FC<ContactViewProps> = ({ onBack }) => {
                 className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white text-slate-900 font-black text-xs hover:bg-slate-100 transition-colors"
               >
                 <Phone className="w-3.5 h-3.5 text-blue-600" />
-                <span>Call Kamlesh: {BRAND_CONFIG.phone}</span>
+                <span>Call Helpline: {BRAND_CONFIG.phone}</span>
               </a>
             </div>
           </div>

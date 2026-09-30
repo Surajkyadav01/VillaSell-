@@ -42,6 +42,7 @@ export interface Property {
   isZeroBrokerage: boolean;
   isFeatured: boolean;
   images: string[];
+  videos?: string[];
   amenities: string[];
   localityHighlights: LocalityHighlight[];
   postedBy: {
@@ -51,6 +52,11 @@ export interface Property {
   };
   description: string;
   createdAt: string;
+  approvalStatus?: 'approved' | 'pending' | 'rejected';
+  viewsCount?: number;
+  inquiriesCount?: number;
+  isSoldOrRented?: boolean;
+  postedByEmail?: string;
 }
 
 export interface SearchFilterState {
@@ -76,13 +82,95 @@ export interface CustomerReview {
   verifiedBuyer: boolean;
 }
 
+export type UserRole = 'Buyer' | 'Agent' | 'Owner' | 'Admin';
+
 export interface UserProfile {
   name: string;
   phone: string;
   email: string;
-  role: 'Buyer' | 'Owner' | 'Agent';
+  role: 'Buyer' | 'Owner' | 'Agent' | 'Admin';
   avatar?: string;
   city?: string;
+  agencyName?: string;
+  licenseNumber?: string;
+  pendingRoleSelection?: boolean;
+}
+
+export interface PropertyInquiry {
+  id: string;
+  propertyId: string;
+  propertyTitle: string;
+  propertyImage?: string;
+  propertyPrice?: string;
+  propertyCity?: string;
+  userName: string;
+  userEmail: string;
+  userPhone: string;
+  message: string;
+  date: string;
+  status: 'New' | 'Contacted' | 'Closed';
+  type: 'Site Visit' | 'Price Inquiry' | 'General';
+  targetAgentEmail?: string;
+  targetRole?: 'Agent' | 'Owner' | 'Admin';
+}
+
+export interface SiteVisit {
+  id: string;
+  propertyId: string;
+  propertyTitle: string;
+  propertyLocation: string;
+  propertyImage?: string;
+  visitDate: string;
+  timeSlot: string;
+  agentName: string;
+  agentPhone: string;
+  status: 'Scheduled' | 'Completed' | 'Cancelled';
+  notes?: string;
+}
+
+export interface SearchAlert {
+  id: string;
+  city: string;
+  bhk: string;
+  maxBudget: string;
+  propertyType: string;
+  createdDate: string;
+  matchCount: number;
+}
+
+export interface BuyerRequirement {
+  id: string;
+  userId?: string;
+  userName: string;
+  userPhone: string;
+  userEmail: string;
+  city: string;
+  locality: string;
+  propertyType: string;
+  bhk: string;
+  budgetRange: string;
+  timeline: string;
+  notes: string;
+  postedDate: string;
+  status: 'Active' | 'Fulfilled';
+}
+
+export interface AdminEmailNotification {
+  id: string;
+  propertyId: string;
+  propertyTitle: string;
+  propertyCity: string;
+  propertyLocality: string;
+  propertyPrice: string;
+  submittedBy: {
+    name: string;
+    phone: string;
+    role: string;
+  };
+  adminEmail: string;
+  timestamp: string;
+  status: 'pending' | 'approved' | 'rejected';
+  propertyThumbnail?: string;
 }
 
 export type ActiveView = 
@@ -100,4 +188,6 @@ export type ActiveView =
   | 'emi-calculator'
   | 'property-valuation'
   | 'rent-receipt-generator'
-  | 'city-properties';
+  | 'city-properties'
+  | 'dashboard'
+  | 'admin-panel';

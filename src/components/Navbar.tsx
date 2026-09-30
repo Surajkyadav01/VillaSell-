@@ -14,7 +14,11 @@ import {
   User,
   LogIn,
   LogOut,
-  ChevronDown
+  ChevronDown,
+  LayoutDashboard,
+  ShieldCheck,
+  Briefcase,
+  ShoppingBag
 } from 'lucide-react';
 import { BRAND_CONFIG, CITIES } from '../data/mockProperties';
 import { ActiveView, PropertyCategory, UserProfile } from '../types/property';
@@ -33,9 +37,11 @@ interface NavbarProps {
   onSelectCity: (city: string) => void;
   currentUser: UserProfile | null;
   onOpenLogin: () => void;
+  onOpenLoginWithMode?: (mode: 'login' | 'signup' | 'admin') => void;
   onLogout: () => void;
   menuDrawerOpen?: boolean;
   setMenuDrawerOpen?: (open: boolean) => void;
+  pendingCount?: number;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -48,9 +54,11 @@ export const Navbar: React.FC<NavbarProps> = ({
   onSelectCity,
   currentUser,
   onOpenLogin,
+  onOpenLoginWithMode,
   onLogout,
   menuDrawerOpen,
   setMenuDrawerOpen,
+  pendingCount = 0,
 }) => {
   const [internalMenuOpen, setInternalMenuOpen] = useState(false);
   const isDrawerOpen = menuDrawerOpen !== undefined ? menuDrawerOpen : internalMenuOpen;
@@ -93,8 +101,8 @@ export const Navbar: React.FC<NavbarProps> = ({
                 title="VillaSell Home"
               >
                 {/* Luxury Architectural Villa Emblem */}
-                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-800 to-slate-900 border border-blue-300/35 flex items-center justify-center shadow-lg shadow-slate-900/60 group-hover:scale-105 group-hover:border-amber-400/50 transition-all shrink-0">
-                  <svg viewBox="0 0 32 32" className="w-6 h-6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-tr from-blue-600 via-indigo-800 to-slate-900 border border-blue-300/40 flex items-center justify-center shadow-lg shadow-slate-900/60 group-hover:scale-105 group-hover:border-amber-400/60 transition-all shrink-0">
+                  <svg viewBox="0 0 32 32" className="w-7.5 h-7.5 sm:w-8 sm:h-8" fill="none" xmlns="http://www.w3.org/2000/svg">
                     {/* Villa Structure & Roof */}
                     <path
                       d="M16 4L4 14.5H8.5V26.5H23.5V14.5H28L16 4Z"
@@ -248,7 +256,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 </span>
               </button>
 
-              {/* LOGIN / USER ACCOUNT FEATURE */}
+              {/* LOGIN / USER ACCOUNT */}
               {!currentUser ? (
                 <button
                   onClick={onOpenLogin}
@@ -259,79 +267,177 @@ export const Navbar: React.FC<NavbarProps> = ({
                   <span>Login</span>
                 </button>
               ) : (
-                <div className="relative shrink-0" ref={userMenuRef}>
-                  <button
-                    onClick={() => setUserDropdownOpen(!userDropdownOpen)}
-                    className="flex items-center gap-1.5 sm:gap-2 p-1 sm:px-2.5 sm:py-1.5 rounded-xl bg-slate-900/70 hover:bg-blue-900 border border-blue-400/40 text-white transition-all cursor-pointer"
-                    title="User Account Menu"
-                  >
-                    <img
-                      src={currentUser.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80'}
-                      alt={currentUser.name}
-                      className="w-7 h-7 rounded-lg object-cover border border-amber-400/50"
-                    />
-                    <span className="hidden md:inline-block font-extrabold text-xs max-w-[85px] truncate">
-                      {currentUser.name.split(' ')[0]}
-                    </span>
-                    <ChevronDown className="w-3.5 h-3.5 text-blue-200" />
-                  </button>
+                <div className="flex items-center gap-2 shrink-0">
+                  {/* Role Badge in Navbar */}
+                  <div className="hidden lg:flex items-center">
+                    {(currentUser.role === 'Owner' || currentUser.role === 'Admin') && (
+                      <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-indigo-950/85 border border-amber-400/50 text-amber-300 font-black text-[10px] uppercase tracking-wider shadow-xs">
+                        <ShieldCheck className="w-3 h-3 text-amber-400" />
+                        <span>[Owner/Admin Portal]</span>
+                      </span>
+                    )}
 
-                  {/* User Profile Dropdown Menu */}
-                  {userDropdownOpen && (
-                    <div className="absolute right-0 mt-2 w-56 rounded-2xl bg-white text-slate-800 shadow-2xl border border-slate-200 p-2 z-50 animate-in fade-in zoom-in-95">
-                      <div className="p-2.5 border-b border-slate-100">
-                        <div className="font-extrabold text-xs text-slate-900 line-clamp-1">{currentUser.name}</div>
-                        <div className="text-[11px] text-slate-500 line-clamp-1">{currentUser.phone || currentUser.email}</div>
-                        <span className="inline-block mt-1 px-1.5 py-0.5 rounded text-[9px] font-black uppercase bg-emerald-100 text-emerald-800">
-                          Verified {currentUser.role}
+                    {currentUser.role === 'Agent' && (
+                      <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-blue-950/85 border border-sky-400/50 text-sky-200 font-black text-[10px] uppercase tracking-wider shadow-xs">
+                        <Briefcase className="w-3 h-3 text-sky-300" />
+                        <span>[Agent Dashboard]</span>
+                      </span>
+                    )}
+
+                    {currentUser.role === 'Buyer' && (
+                      <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-emerald-950/85 border border-emerald-400/50 text-emerald-300 font-black text-[10px] uppercase tracking-wider shadow-xs">
+                        <ShoppingBag className="w-3 h-3 text-emerald-300" />
+                        <span>[Buyer Space]</span>
+                      </span>
+                    )}
+                  </div>
+
+                  {/* PROMINENT GO TO DASHBOARD / ADMIN PANEL BUTTON */}
+                  {currentUser.role === 'Admin' ? (
+                    <button
+                      onClick={() => navigateTo('admin-panel')}
+                      className={`flex items-center gap-1.5 px-3 py-2 sm:px-3.5 sm:py-2 rounded-xl font-black text-xs sm:text-sm shadow-md transition-all cursor-pointer transform active:scale-95 ${
+                        activeView === 'admin-panel'
+                          ? 'bg-amber-400 text-slate-950 ring-2 ring-white/50'
+                          : 'bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 hover:brightness-105 border border-amber-300'
+                      }`}
+                      title="Open Admin Moderation Panel"
+                    >
+                      <ShieldCheck className="w-4 h-4 text-slate-950" />
+                      <span>Admin Panel</span>
+                      {pendingCount > 0 && (
+                        <span className="px-1.5 py-0.2 rounded-full bg-slate-950 text-amber-300 text-[10px] font-black animate-pulse">
+                          {pendingCount}
                         </span>
-                      </div>
-
-                      <div className="py-1">
-                        <button
-                          onClick={() => {
-                            navigateTo('shortlist');
-                            setUserDropdownOpen(false);
-                          }}
-                          className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold hover:bg-blue-50 text-slate-700 cursor-pointer"
-                        >
-                          <span className="flex items-center gap-2">
-                            <Heart className="w-4 h-4 text-blue-600" />
-                            Saved Shortlist
-                          </span>
-                          {shortlistCount > 0 && (
-                            <span className="px-1.5 py-0.2 rounded-full bg-rose-500 text-white text-[10px]">
-                              {shortlistCount}
-                            </span>
-                          )}
-                        </button>
-
-                        <button
-                          onClick={() => {
-                            navigateTo('post-property');
-                            setUserDropdownOpen(false);
-                          }}
-                          className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold hover:bg-blue-50 text-slate-700 cursor-pointer"
-                        >
-                          <PlusCircle className="w-4 h-4 text-blue-600" />
-                          Post Property FREE
-                        </button>
-                      </div>
-
-                      <div className="pt-1 border-t border-slate-100">
-                        <button
-                          onClick={() => {
-                            onLogout();
-                            setUserDropdownOpen(false);
-                          }}
-                          className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold text-rose-600 hover:bg-rose-50 cursor-pointer"
-                        >
-                          <LogOut className="w-4 h-4" />
-                          Sign Out
-                        </button>
-                      </div>
-                    </div>
+                      )}
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => navigateTo('dashboard')}
+                      className={`flex items-center gap-1.5 px-3 py-2 sm:px-3.5 sm:py-2 rounded-xl font-extrabold text-xs sm:text-sm shadow-md transition-all cursor-pointer transform active:scale-95 ${
+                        activeView === 'dashboard'
+                          ? 'bg-amber-400 text-slate-950 ring-2 ring-white/40'
+                          : 'bg-white/15 hover:bg-white/25 text-white border border-sky-300/40 hover:border-amber-400/60'
+                      }`}
+                      title="Open Full-Page Dedicated Dashboard"
+                    >
+                      <LayoutDashboard className="w-4 h-4 text-amber-300" />
+                      <span className="hidden sm:inline">Go to Dashboard</span>
+                      <span className="sm:hidden">Dashboard</span>
+                    </button>
                   )}
+
+                  {/* User Profile Chip with Quick Access */}
+                  <div className="relative shrink-0" ref={userMenuRef}>
+                    <button
+                      onClick={() => setUserDropdownOpen(!userDropdownOpen)}
+                      className="flex items-center gap-1.5 p-1 sm:px-2 sm:py-1 rounded-xl bg-slate-900/60 hover:bg-blue-900/80 border border-blue-400/40 text-white transition-all cursor-pointer"
+                      title="User Account Menu"
+                    >
+                      <img
+                        src={currentUser.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80'}
+                        alt={currentUser.name}
+                        className="w-7 h-7 rounded-lg object-cover border border-amber-400/50"
+                      />
+                      <ChevronDown className="w-3.5 h-3.5 text-blue-200" />
+                    </button>
+
+                    {/* Quick Access Menu with Direct Link to Dedicated Full Dashboard */}
+                    {userDropdownOpen && (
+                      <div className="absolute right-0 mt-2 w-64 rounded-2xl bg-white text-slate-800 shadow-2xl border border-slate-200 p-2 z-50 animate-in fade-in zoom-in-95">
+                        <div className="p-2.5 border-b border-slate-100">
+                          <div className="font-extrabold text-xs text-slate-900 line-clamp-1">{currentUser.name}</div>
+                          <div className="text-[11px] text-slate-500 line-clamp-1">{currentUser.phone || currentUser.email}</div>
+                          <span className={`inline-block mt-1 px-1.5 py-0.5 rounded text-[9px] font-black uppercase ${
+                            currentUser.role === 'Admin'
+                              ? 'bg-amber-100 text-amber-900 border border-amber-300'
+                              : 'bg-emerald-100 text-emerald-800'
+                          }`}>
+                            Verified {currentUser.role}
+                          </span>
+                        </div>
+
+                        <div className="py-1">
+                          {currentUser.role === 'Admin' && (
+                            <button
+                              onClick={() => {
+                                navigateTo('admin-panel');
+                                setUserDropdownOpen(false);
+                              }}
+                              className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-black bg-amber-50 text-amber-900 hover:bg-amber-100 cursor-pointer mb-1 border border-amber-200"
+                            >
+                              <span className="flex items-center gap-2">
+                                <ShieldCheck className="w-4 h-4 text-amber-700" />
+                                <span>Admin Control Panel</span>
+                              </span>
+                              <span className="text-[10px] uppercase font-black px-1.5 py-0.5 bg-amber-500 text-slate-950 rounded">
+                                Admin
+                              </span>
+                            </button>
+                          )}
+
+                          {/* Dedicated Dashboard Link */}
+                          <button
+                            onClick={() => {
+                              navigateTo('dashboard');
+                              setUserDropdownOpen(false);
+                            }}
+                            className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-extrabold bg-blue-50 text-blue-700 hover:bg-blue-100 cursor-pointer mb-1"
+                          >
+                            <span className="flex items-center gap-2">
+                              <LayoutDashboard className="w-4 h-4 text-blue-700" />
+                              <span>Open User Dashboard</span>
+                            </span>
+                            <span className="text-[10px] uppercase font-black px-1.5 py-0.5 bg-blue-600 text-white rounded">
+                              Open
+                            </span>
+                          </button>
+
+                          <button
+                            onClick={() => {
+                              navigateTo('shortlist');
+                              setUserDropdownOpen(false);
+                            }}
+                            className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold hover:bg-slate-50 text-slate-700 cursor-pointer"
+                          >
+                            <span className="flex items-center gap-2">
+                              <Heart className="w-4 h-4 text-rose-500" />
+                              Saved Shortlist
+                            </span>
+                            {shortlistCount > 0 && (
+                              <span className="px-1.5 py-0.2 rounded-full bg-rose-500 text-white text-[10px]">
+                                {shortlistCount}
+                              </span>
+                            )}
+                          </button>
+
+                          <button
+                            onClick={() => {
+                              navigateTo('post-property');
+                              setUserDropdownOpen(false);
+                            }}
+                            className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold hover:bg-slate-50 text-slate-700 cursor-pointer"
+                          >
+                            <PlusCircle className="w-4 h-4 text-blue-600" />
+                            Post Property FREE
+                          </button>
+                        </div>
+
+                        <div className="pt-1 border-t border-slate-100">
+                          <button
+                            onClick={() => {
+                              onLogout();
+                              setUserDropdownOpen(false);
+                            }}
+                            className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold text-rose-600 hover:bg-rose-50 cursor-pointer"
+                          >
+                            <LogOut className="w-4 h-4" />
+                            Sign Out
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </div>
               )}
 

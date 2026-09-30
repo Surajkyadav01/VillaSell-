@@ -57,6 +57,15 @@ import { RentReceiptView } from './components/RentReceiptView';
 import { MobileBottomNav } from './components/MobileBottomNav';
 import { FindPropertyPreferredCity } from './components/FindPropertyPreferredCity';
 import { CityPropertiesView } from './components/CityPropertiesView';
+import { AdminDashboardView } from './components/AdminDashboardView';
+import { DashboardView } from './components/dashboard/DashboardView';
+import { 
+  onAuthStatusChanged, 
+  logoutFromFirebase, 
+  subscribeToFirestoreProperties, 
+  savePropertyToFirestore,
+  deduplicatePropertyList
+} from './services/firebase';
 
 export default function App() {
   // Navigation & View State (NO MODALS: All views are full-page!)
@@ -69,15 +78,66 @@ export default function App() {
   const [currentUser, setCurrentUser] = useState<UserProfile | null>(() => {
     try {
       const saved = localStorage.getItem('villasell_user');
-      return saved ? JSON.parse(saved) : null;
+      if (!saved) return null;
+      const parsed: UserProfile = JSON.parse(saved);
+      // Strict Security: Only official authorized admin email can have Admin privileges
+      if (parsed.role === 'Admin' && parsed.email?.toLowerCase() !== 'supportvillasell@gmail.com') {
+        parsed.role = 'Buyer';
+        localStorage.setItem('villasell_user', JSON.stringify(parsed));
+      }
+      return parsed;
     } catch {
       return null;
     }
   });
   const [authModalOpen, setAuthModalOpen] = useState(false);
+  const [authModalMode, setAuthModalMode] = useState<'login' | 'signup' | 'admin'>('login');
 
-  // Core Properties State
+  const handleOpenLogin = (mode: 'login' | 'signup' | 'admin' = 'login') => {
+    setAuthModalMode(mode);
+    setAuthModalOpen(true);
+  };
+
+  // Core Properties State (Live synchronized with Firestore)
   const [properties, setProperties] = useState<Property[]>(INITIAL_PROPERTIES);
+  const [isFirestoreLive, setIsFirestoreLive] = useState(false);
+
+  // Live Firebase Auth sync
+  useEffect(() => {
+    const unsub = onAuthStatusChanged((user) => {
+      if (user) {
+        setCurrentUser(user);
+        try {
+          localStorage.setItem('villasell_user', JSON.stringify(user));
+        } catch (e) {
+          console.error(e);
+        }
+      }
+    });
+    return () => unsub();
+  }, []);
+
+  // Live Firestore Properties sync with fallback to mock data if collection is empty
+  useEffect(() => {
+    const unsub = subscribeToFirestoreProperties(
+      (firestoreList) => {
+        setIsFirestoreLive(true);
+        if (firestoreList && firestoreList.length > 0) {
+          // Merge Firestore properties with INITIAL_PROPERTIES & deduplicate
+          const firestoreIds = new Set(firestoreList.map((p) => p.id));
+          const remainingInitials = INITIAL_PROPERTIES.filter((p) => !firestoreIds.has(p.id));
+          setProperties(deduplicatePropertyList([...firestoreList, ...remainingInitials]));
+        } else {
+          setProperties(deduplicatePropertyList(INITIAL_PROPERTIES));
+        }
+      },
+      () => {
+        // Fallback cleanly to verified properties
+        setProperties((current) => deduplicatePropertyList(current.length > 0 ? current : INITIAL_PROPERTIES));
+      }
+    );
+    return () => unsub();
+  }, []);
 
   // Shortlist State with localStorage
   const [shortlist, setShortlist] = useState<string[]>(() => {
@@ -104,7 +164,15 @@ export default function App() {
     setTimeout(() => setToast(null), 3000);
   };
 
+  const pendingCount = useMemo(() => {
+    return properties.filter((p) => p.approvalStatus === 'pending').length;
+  }, [properties]);
+
   const handleLoginSuccess = (user: UserProfile) => {
+    // Strict Security: Only official authorized admin email can hold the Admin role
+    if (user.role === 'Admin' && user.email?.toLowerCase() !== 'supportvillasell@gmail.com') {
+      user.role = 'Buyer';
+    }
     setCurrentUser(user);
     try {
       localStorage.setItem('villasell_user', JSON.stringify(user));
@@ -112,15 +180,39 @@ export default function App() {
       console.error(e);
     }
     setAuthModalOpen(false);
-    showToast(`Welcome back, ${user.name}!`);
+
+    if (user.role === 'Admin') {
+      setActiveView('admin-panel');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      showToast(`Welcome Administrator ${user.name}! Admin Control Panel loaded.`);
+    } else {
+      showToast(`Welcome back, ${user.name}!`);
+    }
   };
 
-  const handleLogout = () => {
+  // Route protection for admin-panel
+  useEffect(() => {
+    if (activeView === 'admin-panel') {
+      if (!currentUser || currentUser.role !== 'Admin' || currentUser.email?.toLowerCase() !== 'supportvillasell@gmail.com') {
+        setActiveView('home');
+      }
+    }
+  }, [activeView, currentUser]);
+
+  const handleLogout = async () => {
+    try {
+      await logoutFromFirebase();
+    } catch (e) {
+      console.warn('Firebase logout notice:', e);
+    }
     setCurrentUser(null);
     try {
       localStorage.removeItem('villasell_user');
     } catch (e) {
       console.error(e);
+    }
+    if (activeView === 'admin-panel' || activeView === 'dashboard') {
+      setActiveView('home');
     }
     showToast('You have been logged out.');
   };
@@ -165,13 +257,19 @@ export default function App() {
 
   // New property added via Post Property form
   const handlePropertyAdded = (newProp: Property) => {
-    setProperties((prev) => [newProp, ...prev]);
-    showToast('Your property was successfully posted!');
+    setProperties((prev) => deduplicatePropertyList([newProp, ...prev.filter(p => p.id !== newProp.id)]));
+    showToast(`Property submitted! Awaiting Admin verification (Alert sent to ${BRAND_CONFIG.email}).`);
   };
 
   // Filter and Sort properties
   const filteredProperties = useMemo(() => {
     return properties.filter((prop) => {
+      // 1. Restriction: Only approved properties appear on the public website search and catalog
+      const status = prop.approvalStatus || 'approved';
+      if (status === 'pending' || status === 'rejected') {
+        return false;
+      }
+
       // Category filter
       if (filters.category && filters.category !== 'all' && prop.category !== filters.category) {
         return false;
@@ -360,35 +458,111 @@ export default function App() {
         </div>
       )}
 
-      {/* Main Navbar */}
-      <Navbar
-        activeView={activeView}
-        setActiveView={setActiveView}
-        selectedCategory={filters.category}
-        onSelectCategory={(cat) => setFilters((prev) => ({ ...prev, category: cat }))}
-        shortlistCount={shortlist.length}
-        selectedCity={filters.city}
-        onSelectCity={(c) => {
-          setFilters((prev) => ({
-            ...prev,
-            city: c,
-            category: 'all',
-            keyword: '',
-          }));
-          setActiveView('home');
-          setTimeout(() => {
-            scrollToProperties();
-          }, 120);
-        }}
-        currentUser={currentUser}
-        onOpenLogin={() => setAuthModalOpen(true)}
-        onLogout={handleLogout}
-        menuDrawerOpen={mobileMenuOpen}
-        setMenuDrawerOpen={setMobileMenuOpen}
-      />
+      {/* Main Navbar (Hidden in dedicated Admin Panel) */}
+      {activeView !== 'admin-panel' && (
+        <Navbar
+          activeView={activeView}
+          setActiveView={setActiveView}
+          selectedCategory={filters.category}
+          onSelectCategory={(cat) => setFilters((prev) => ({ ...prev, category: cat }))}
+          shortlistCount={shortlist.length}
+          selectedCity={filters.city}
+          onSelectCity={(c) => {
+            setFilters((prev) => ({
+              ...prev,
+              city: c,
+              category: 'all',
+              keyword: '',
+            }));
+            setActiveView('home');
+            setTimeout(() => {
+              scrollToProperties();
+            }, 120);
+          }}
+          currentUser={currentUser}
+          onOpenLogin={() => handleOpenLogin('login')}
+          onOpenLoginWithMode={handleOpenLogin}
+          onLogout={handleLogout}
+          menuDrawerOpen={mobileMenuOpen}
+          setMenuDrawerOpen={setMobileMenuOpen}
+          pendingCount={pendingCount}
+        />
+      )}
 
       {/* ROUTING VIEWS (Full Page, No Popups) */}
       <main className="flex-1">
+        {/* VIEW: DEDICATED ADMIN CONTROL PANEL */}
+        {activeView === 'admin-panel' && (
+          <AdminDashboardView
+            user={currentUser || {
+              name: 'VillaSell Admin (Super Admin)',
+              email: BRAND_CONFIG.email,
+              phone: BRAND_CONFIG.phone,
+              role: 'Admin',
+              city: 'Varanasi',
+            }}
+            properties={properties}
+            onUpdateProperty={(updatedProp) => {
+              setProperties((prev) => prev.map((p) => p.id === updatedProp.id ? updatedProp : p));
+            }}
+            onDeleteProperty={(id) => {
+              setProperties((prev) => prev.filter((p) => p.id !== id));
+            }}
+            onSelectProperty={handleSelectProperty}
+            onBackToWebsite={() => {
+              setActiveView('home');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            onNavigateToPostProperty={() => {
+              setActiveView('post-property');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            onLogout={handleLogout}
+            showToast={showToast}
+          />
+        )}
+
+        {/* VIEW: USER DEDICATED DASHBOARD (Buyer, Agent, Owner) */}
+        {activeView === 'dashboard' && currentUser && (
+          <DashboardView
+            user={currentUser}
+            onUpdateUserRole={(newRole) => {
+              setCurrentUser((prev) => prev ? { ...prev, role: newRole } : null);
+            }}
+            onBackToMarketplace={() => {
+              setActiveView('home');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            properties={properties}
+            onAddProperty={handlePropertyAdded}
+            onUpdateProperty={(updatedProp) => {
+              setProperties((prev) => prev.map((p) => p.id === updatedProp.id ? updatedProp : p));
+            }}
+            onDeleteProperty={(id) => {
+              setProperties((prev) => prev.filter((p) => p.id !== id));
+            }}
+            onSelectProperty={handleSelectProperty}
+            shortlist={shortlist}
+            onToggleShortlist={handleToggleShortlist}
+            inquiries={[]}
+            onUpdateInquiryStatus={() => {}}
+            siteVisits={[]}
+            onAddSiteVisit={() => {}}
+            onCancelSiteVisit={() => {}}
+            searchAlerts={[]}
+            onAddSearchAlert={() => {}}
+            onDeleteSearchAlert={() => {}}
+            buyerRequirements={[]}
+            onAddBuyerRequirement={() => {}}
+            onLogout={handleLogout}
+            onNavigateToPostProperty={() => {
+              setActiveView('post-property');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            showToast={showToast}
+          />
+        )}
+
         {/* VIEW 1: PROPERTY DETAIL */}
         {activeView === 'property-detail' && selectedProperty && (
           <PropertyDetailView
@@ -407,6 +581,14 @@ export default function App() {
             onBack={() => setActiveView('home')}
             onPropertyAdded={handlePropertyAdded}
             onViewProperty={handleSelectProperty}
+            onNavigateToAdminPanel={() => {
+              if (currentUser?.role === 'Admin') {
+                setActiveView('admin-panel');
+              } else {
+                handleOpenLogin('admin');
+              }
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
           />
         )}
 
@@ -979,7 +1161,7 @@ export default function App() {
                       Have a Question or Need Guided Assistance?
                     </h3>
                     <p className="text-slate-300 text-xs sm:text-sm max-w-xl leading-relaxed">
-                      Speak directly with Kamlesh and the VillaSell advisory team. We help with site visits, loan pre-approvals, and registry documentation.
+                      Speak directly with the VillaSell official advisory team. We help with site visits, loan pre-approvals, and registry documentation.
                     </p>
 
                     <div className="flex flex-wrap items-center gap-4 mt-6 text-xs text-slate-200">
@@ -1098,36 +1280,41 @@ export default function App() {
         )}
       </main>
 
-      {/* Mobile Bottom Navigation Bar (Fast Thumb Access on Phones) */}
-      <MobileBottomNav
-        activeView={activeView}
-        setActiveView={setActiveView}
-        shortlistCount={shortlist.length}
-        onPostPropertyClick={() => {
-          setActiveView('post-property');
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }}
-        onSearchClick={() => {
-          if (activeView !== 'home') setActiveView('home');
-          setTimeout(() => {
-            scrollToProperties();
-          }, 60);
-        }}
-        onOpenMenu={() => setMobileMenuOpen(true)}
-      />
+      {/* Mobile Bottom Navigation Bar (Hidden in dedicated Admin Panel) */}
+      {activeView !== 'admin-panel' && (
+        <MobileBottomNav
+          activeView={activeView}
+          setActiveView={setActiveView}
+          shortlistCount={shortlist.length}
+          onPostPropertyClick={() => {
+            setActiveView('post-property');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+          onSearchClick={() => {
+            if (activeView !== 'home') setActiveView('home');
+            setTimeout(() => {
+              scrollToProperties();
+            }, 60);
+          }}
+          onOpenMenu={() => setMobileMenuOpen(true)}
+        />
+      )}
 
-      {/* Professional Housing.com Style Footer */}
-      <Footer
-        onSelectView={setActiveView}
-        onSelectCategory={(cat) => setFilters((prev) => ({ ...prev, category: cat }))}
-        onSelectCity={(city) => setFilters((prev) => ({ ...prev, city }))}
-      />
+      {/* Professional Housing.com Style Footer (Hidden in dedicated Admin Panel) */}
+      {activeView !== 'admin-panel' && (
+        <Footer
+          onSelectView={setActiveView}
+          onSelectCategory={(cat) => setFilters((prev) => ({ ...prev, category: cat }))}
+          onSelectCity={(city) => setFilters((prev) => ({ ...prev, city }))}
+        />
+      )}
 
       {/* User Login & Authentication Modal */}
       <AuthModal
         isOpen={authModalOpen}
         onClose={() => setAuthModalOpen(false)}
         onLoginSuccess={handleLoginSuccess}
+        initialMode={authModalMode}
       />
     </div>
   );

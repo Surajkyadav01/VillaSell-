@@ -18,7 +18,7 @@ interface CustomDropdownProps {
   className?: string;
   buttonClassName?: string;
   menuClassName?: string;
-  theme?: 'light' | 'blue' | 'subtle' | 'housing';
+  theme?: 'light' | 'blue' | 'subtle' | 'housing' | 'dark';
   size?: 'sm' | 'md' | 'lg';
   align?: 'left' | 'right';
   disabled?: boolean;
@@ -105,6 +105,10 @@ export const CustomDropdown: React.FC<CustomDropdownProps> = ({
     // For Topbar or Blue backgrounds
     baseButtonStyles = `bg-slate-900/70 hover:bg-blue-900/90 text-white border border-blue-800/60 focus:border-blue-400`;
     menuStyles = `bg-[#132c4d] border border-blue-500/40 shadow-2xl text-white divide-y divide-blue-800/40`;
+  } else if (theme === 'dark') {
+    // For Admin Panel or Dark backgrounds
+    baseButtonStyles = `bg-slate-900 hover:bg-slate-800 text-white border border-slate-700 focus:border-blue-500`;
+    menuStyles = `bg-slate-900 border border-slate-700 shadow-2xl text-white divide-y divide-slate-800`;
   } else if (theme === 'subtle') {
     // For light gray compact inputs
     baseButtonStyles = `bg-white hover:bg-slate-50 text-slate-800 border border-slate-200 focus:border-blue-600 focus:ring-1 focus:ring-blue-600`;

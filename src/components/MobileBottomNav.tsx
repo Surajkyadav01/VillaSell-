@@ -1,5 +1,5 @@
 import React from 'react';
-import { Home, Search, PlusCircle, Heart, Sparkles, Phone } from 'lucide-react';
+import { Home, Search, PlusCircle, Heart, Wrench } from 'lucide-react';
 import { ActiveView } from '../types/property';
 
 interface MobileBottomNavProps {
@@ -97,7 +97,7 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
           onClick={onOpenMenu}
           className="flex flex-col items-center justify-center py-1 rounded-xl text-slate-500 hover:text-blue-600 transition-all cursor-pointer active:scale-90"
         >
-          <Sparkles className="w-5 h-5 text-amber-500 stroke-2" />
+          <Wrench className="w-5 h-5 text-blue-600 stroke-2" />
           <span className="text-[10px] tracking-tight mt-0.5">Services</span>
         </button>
 

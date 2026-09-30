@@ -11,7 +11,8 @@ import {
   Phone, 
   ArrowRight,
   Sparkles,
-  Building
+  Building,
+  Video
 } from 'lucide-react';
 import { Property } from '../types/property';
 import { BRAND_CONFIG } from '../data/mockProperties';
@@ -60,6 +61,13 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({
           {property.isZeroBrokerage && (
             <span className="bg-blue-600/95 backdrop-blur-md text-white text-[11px] font-bold px-2 py-0.5 rounded-md shadow-xs">
               Zero Brokerage
+            </span>
+          )}
+
+          {property.videos && property.videos.length > 0 && (
+            <span className="flex items-center gap-1 bg-amber-500/95 backdrop-blur-md text-slate-950 text-[11px] font-bold px-2 py-0.5 rounded-md shadow-xs">
+              <Video className="w-3 h-3 text-slate-950" />
+              Video Tour
             </span>
           )}
 

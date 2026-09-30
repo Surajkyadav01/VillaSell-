@@ -53,6 +53,12 @@ export const CityPropertiesView: React.FC<CityPropertiesViewProps> = ({
     const target = cityName.toLowerCase();
 
     return allProperties.filter((prop) => {
+      // Restriction: Only approved properties appear on the public city page
+      const currentApproval = prop.approvalStatus || 'approved';
+      if (currentApproval === 'pending' || currentApproval === 'rejected') {
+        return false;
+      }
+
       const pCity = prop.city.toLowerCase();
       const pLoc = prop.locality.toLowerCase();
       const pAddr = prop.address.toLowerCase();

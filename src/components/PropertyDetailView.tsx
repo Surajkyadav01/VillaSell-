@@ -26,10 +26,13 @@ import {
   School,
   Store,
   Check,
-  Send
+  Send,
+  Play,
+  Video
 } from 'lucide-react';
 import { Property } from '../types/property';
 import { BRAND_CONFIG } from '../data/mockProperties';
+import { isVideoUrl } from '../services/cloudinary';
 
 interface PropertyDetailViewProps {
   property: Property;
@@ -50,6 +53,22 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({
 }) => {
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [copiedShare, setCopiedShare] = useState(false);
+
+  // Combined gallery media list (images & videos)
+  const mediaItems = useMemo(() => {
+    const list: { url: string; isVideo: boolean }[] = [];
+    (property.images || []).forEach((url) => {
+      list.push({ url, isVideo: isVideoUrl(url) });
+    });
+    (property.videos || []).forEach((url) => {
+      if (!list.some((item) => item.url === url)) {
+        list.push({ url, isVideo: true });
+      }
+    });
+    return list.length > 0
+      ? list
+      : [{ url: 'https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=1200&q=80', isVideo: false }];
+  }, [property.images, property.videos]);
 
   // Inquiry Form State
   const [inquiryName, setInquiryName] = useState('');
@@ -202,14 +221,26 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({
           <div className="lg:col-span-8 space-y-8">
             {/* Gallery Card */}
             <div className="bg-white rounded-2xl border border-slate-200 p-4 sm:p-5 shadow-xs overflow-hidden">
-              {/* Big Main Image */}
-              <div className="relative aspect-[16/9] rounded-xl overflow-hidden bg-slate-900 mb-3 group">
-                <img
-                  src={property.images[activeImageIndex] || property.images[0]}
-                  alt={property.title}
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute top-4 left-4 flex gap-2">
+              {/* Big Main Media Item */}
+              <div className="relative aspect-[16/9] rounded-xl overflow-hidden bg-slate-900 mb-3 group flex items-center justify-center">
+                {mediaItems[activeImageIndex]?.isVideo ? (
+                  <video
+                    key={mediaItems[activeImageIndex]?.url}
+                    src={mediaItems[activeImageIndex]?.url}
+                    controls
+                    autoPlay
+                    playsInline
+                    className="w-full h-full object-contain bg-black"
+                  />
+                ) : (
+                  <img
+                    src={mediaItems[activeImageIndex]?.url || property.images[0]}
+                    alt={property.title}
+                    className="w-full h-full object-cover"
+                  />
+                )}
+
+                <div className="absolute top-4 left-4 flex gap-2 pointer-events-none">
                   <span className="px-3 py-1 rounded-md bg-blue-600/90 backdrop-blur-md text-white font-bold text-xs shadow-md">
                     {property.propertyType}
                   </span>
@@ -218,17 +249,22 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({
                       Zero Brokerage
                     </span>
                   )}
+                  {mediaItems[activeImageIndex]?.isVideo && (
+                    <span className="px-3 py-1 rounded-md bg-amber-500 text-slate-950 font-black text-xs shadow-md flex items-center gap-1">
+                      <Video className="w-3.5 h-3.5" /> Video Tour
+                    </span>
+                  )}
                 </div>
 
-                <div className="absolute bottom-4 right-4 bg-slate-950/80 backdrop-blur-md text-white text-xs px-3 py-1 rounded-md font-semibold">
-                  Photo {activeImageIndex + 1} of {property.images.length}
+                <div className="absolute bottom-4 right-4 bg-slate-950/80 backdrop-blur-md text-white text-xs px-3 py-1 rounded-md font-semibold pointer-events-none">
+                  {mediaItems[activeImageIndex]?.isVideo ? 'Video' : 'Photo'} {activeImageIndex + 1} of {mediaItems.length}
                 </div>
               </div>
 
               {/* Thumbnails */}
-              {property.images.length > 1 && (
+              {mediaItems.length > 1 && (
                 <div className="flex gap-2.5 overflow-x-auto pb-1 no-scrollbar">
-                  {property.images.map((img, idx) => (
+                  {mediaItems.map((item, idx) => (
                     <button
                       key={idx}
                       onClick={() => setActiveImageIndex(idx)}
@@ -238,7 +274,19 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({
                           : 'border-transparent opacity-70 hover:opacity-100'
                       }`}
                     >
-                      <img src={img} alt={`Thumbnail ${idx}`} className="w-full h-full object-cover" />
+                      {item.isVideo ? (
+                        <div className="w-full h-full bg-slate-950 flex items-center justify-center relative">
+                          <video src={item.url} className="w-full h-full object-cover opacity-60" muted playsInline />
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <Play className="w-4 h-4 fill-white text-white" />
+                          </div>
+                          <span className="absolute bottom-0.5 right-0.5 bg-black/80 text-[8px] text-white font-bold px-1 rounded">
+                            Video
+                          </span>
+                        </div>
+                      ) : (
+                        <img src={item.url} alt={`Thumbnail ${idx}`} className="w-full h-full object-cover" />
+                      )}
                     </button>
                   ))}
                 </div>
