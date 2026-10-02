@@ -79,7 +79,7 @@ export const HeroSearch: React.FC<HeroSearchProps> = ({
           </div>
 
           <h1 className="text-2xl sm:text-4xl lg:text-[44px] font-extrabold tracking-tight text-slate-900 mb-2.5 leading-tight drop-shadow-xs">
-            Find Your Dream Villa, Apartment & Commercial Property
+            VillaSell — Find Your Dream Villa, Apartment & Commercial Property
           </h1>
           <p className="text-slate-600 text-xs sm:text-base font-normal max-w-2xl mx-auto leading-relaxed px-2">
             India's premier zero-brokerage property marketplace offering verified luxury villas, modern apartments, and premium commercial spaces with end-to-end legal assistance.
