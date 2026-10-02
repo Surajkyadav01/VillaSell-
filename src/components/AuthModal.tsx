@@ -86,7 +86,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({
       return 'Network connection issue. Please check your internet connection.';
     }
     if (code === 'auth/unauthorized-domain') {
-      return 'Google sign-in authorization in progress. Please refresh and try again, or sign up with email below.';
+      const host = typeof window !== 'undefined' ? window.location.hostname : 'your domain';
+      return `Domain "${host}" is not authorized. Please add "${host}" to Firebase Console -> Authentication -> Settings -> Authorized Domains.`;
+    }
+    if (code === 'auth/popup-blocked') {
+      return 'Sign-in popup was blocked by your browser. Please allow popups for this site and try again.';
     }
     if (code === 'auth/operation-not-allowed') {
       return 'Google Sign-in is not enabled in Firebase Console. Please enable Google under Authentication > Sign-in method.';

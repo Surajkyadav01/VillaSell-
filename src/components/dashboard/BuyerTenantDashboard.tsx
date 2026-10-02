@@ -450,7 +450,7 @@ export const BuyerTenantDashboard: React.FC<BuyerTenantDashboardProps> = ({
                   onChange={(e) => setNewAlertCity(e.target.value)}
                   className="w-full px-3 py-2 rounded-xl border border-blue-200 bg-white text-xs font-semibold"
                 >
-                  {['Bangalore', 'Mumbai', 'Delhi NCR', 'Pune', 'Hyderabad', 'Chennai', 'Lucknow'].map(c => (
+                  {['Mumbai', 'Lucknow', 'Varanasi', 'Prayagraj', 'Bangalore', 'Delhi NCR', 'Pune', 'Hyderabad', 'Chennai'].map(c => (
                     <option key={c} value={c}>{c}</option>
                   ))}
                 </select>
@@ -553,7 +553,7 @@ export const BuyerTenantDashboard: React.FC<BuyerTenantDashboardProps> = ({
                     onChange={(e) => setReqCity(e.target.value)}
                     className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-semibold focus:outline-none focus:border-blue-600"
                   >
-                    {['Bangalore', 'Mumbai', 'Delhi NCR', 'Pune', 'Hyderabad', 'Chennai', 'Lucknow'].map(c => (
+                    {['Mumbai', 'Lucknow', 'Varanasi', 'Prayagraj', 'Bangalore', 'Delhi NCR', 'Pune', 'Hyderabad', 'Chennai'].map(c => (
                       <option key={c} value={c}>{c}</option>
                     ))}
                   </select>

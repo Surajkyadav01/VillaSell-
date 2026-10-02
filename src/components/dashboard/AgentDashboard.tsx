@@ -466,7 +466,7 @@ export const AgentDashboard: React.FC<AgentDashboardProps> = ({
                   onChange={(e) => setFastCity(e.target.value)}
                   className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-semibold focus:outline-none focus:border-blue-600"
                 >
-                  {['Bangalore', 'Mumbai', 'Delhi NCR', 'Pune', 'Hyderabad', 'Chennai', 'Kolkata', 'Lucknow'].map(c => (
+                  {['Mumbai', 'Lucknow', 'Varanasi', 'Prayagraj', 'Bangalore', 'Delhi NCR', 'Pune', 'Hyderabad', 'Chennai', 'Kolkata'].map(c => (
                     <option key={c} value={c}>{c}</option>
                   ))}
                 </select>

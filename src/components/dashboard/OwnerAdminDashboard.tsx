@@ -371,14 +371,16 @@ export const OwnerAdminDashboard: React.FC<OwnerAdminDashboardProps> = ({
                 className="w-full py-2.5 px-3 rounded-xl border border-slate-200 text-xs font-semibold focus:outline-none focus:border-blue-600"
               >
                 <option value="All">All Cities</option>
-                <option value="Bangalore">Bangalore</option>
                 <option value="Mumbai">Mumbai</option>
+                <option value="Lucknow">Lucknow</option>
+                <option value="Varanasi">Varanasi</option>
+                <option value="Prayagraj">Prayagraj</option>
+                <option value="Bangalore">Bangalore</option>
                 <option value="Delhi NCR">Delhi NCR</option>
                 <option value="Pune">Pune</option>
                 <option value="Hyderabad">Hyderabad</option>
                 <option value="Chennai">Chennai</option>
                 <option value="Kolkata">Kolkata</option>
-                <option value="Lucknow">Lucknow</option>
               </select>
             </div>
 

@@ -21,6 +21,36 @@ const POPULAR_CITIES: CityItem[] = [
     )
   },
   {
+    id: 'lucknow',
+    name: 'Lucknow',
+    icon: (
+      <svg viewBox="0 0 24 24" className="w-5 h-5 text-blue-500" fill="currentColor">
+        {/* Rumi Darwaza Royal Arch */}
+        <path d="M4 21h16v-2H4v2zm2-4h2v-4c0-2.2 1.8-4 4-4s4 1.8 4 4v4h2V7l-6-3-6 3v10zm5-4c0-.6.4-1 1-1s1 .4 1 1v4h-2v-4z" />
+      </svg>
+    )
+  },
+  {
+    id: 'varanasi',
+    name: 'Varanasi',
+    icon: (
+      <svg viewBox="0 0 24 24" className="w-5 h-5 text-amber-500" fill="currentColor">
+        {/* Kashi Temple Spire & Ghat */}
+        <path d="M12 2L9 8h6l-3-6zm-4 7l-2 5h12l-2-5H8zm-3 6l-2 4h18l-2-4H5zm-2 5h18v2H3v-2zm8-4h2v2h-2v-2z" />
+      </svg>
+    )
+  },
+  {
+    id: 'prayagraj',
+    name: 'Prayagraj',
+    icon: (
+      <svg viewBox="0 0 24 24" className="w-5 h-5 text-rose-600" fill="currentColor">
+        {/* Triveni Sangam Confluence & Holy Temple Spire */}
+        <path d="M12 2l-2 3h4l-2-3zm-3 4l-1 3h8l-1-3H9zm-2 4l-1 4h12l-1-4H7zm-2 5l-1 4h16l-1-4H5zm-1 5h16v2H4v-2zm7-3h2v2h-2v-2z" />
+      </svg>
+    )
+  },
+  {
     id: 'bangalore',
     name: 'Bengaluru',
     icon: (
@@ -128,36 +158,6 @@ const POPULAR_CITIES: CityItem[] = [
       <svg viewBox="0 0 24 24" className="w-5 h-5 text-indigo-500" fill="currentColor">
         {/* Palm Beach Modern Coastal Towers */}
         <path d="M3 21h18v-2H3v2zm3-4h3V8L6 9v8zm4 0h4V5l-4 1v11zm5 0h3v-6l-3 1v5zm-7-7h2v2h-2V10zm0 3h2v2h-2v-2zm-3 0h1v2H8v-2z" />
-      </svg>
-    )
-  },
-  {
-    id: 'varanasi',
-    name: 'Varanasi',
-    icon: (
-      <svg viewBox="0 0 24 24" className="w-5 h-5 text-amber-500" fill="currentColor">
-        {/* Kashi Temple Spire & Ghat */}
-        <path d="M12 2L9 8h6l-3-6zm-4 7l-2 5h12l-2-5H8zm-3 6l-2 4h18l-2-4H5zm-2 5h18v2H3v-2zm8-4h2v2h-2v-2z" />
-      </svg>
-    )
-  },
-  {
-    id: 'lucknow',
-    name: 'Lucknow',
-    icon: (
-      <svg viewBox="0 0 24 24" className="w-5 h-5 text-blue-500" fill="currentColor">
-        {/* Rumi Darwaza Royal Arch */}
-        <path d="M4 21h16v-2H4v2zm2-4h2v-4c0-2.2 1.8-4 4-4s4 1.8 4 4v4h2V7l-6-3-6 3v10zm5-4c0-.6.4-1 1-1s1 .4 1 1v4h-2v-4z" />
-      </svg>
-    )
-  },
-  {
-    id: 'prayagraj',
-    name: 'Prayagraj',
-    icon: (
-      <svg viewBox="0 0 24 24" className="w-5 h-5 text-rose-600" fill="currentColor">
-        {/* Triveni Sangam Confluence & Holy Temple Spire */}
-        <path d="M12 2l-2 3h4l-2-3zm-3 4l-1 3h8l-1-3H9zm-2 4l-1 4h12l-1-4H7zm-2 5l-1 4h16l-1-4H5zm-1 5h16v2H4v-2zm7-3h2v2h-2v-2z" />
       </svg>
     )
   }

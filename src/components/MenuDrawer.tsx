@@ -397,7 +397,7 @@ export const MenuDrawer: React.FC<MenuDrawerProps> = ({
                 Top Metros (Active: {selectedCity})
               </span>
               <div className="flex flex-wrap gap-1.5">
-                {['All Cities', 'Mumbai', 'Bangalore', 'Pune', 'Delhi NCR', 'Chennai', 'Hyderabad'].map((city) => (
+                {['All Cities', 'Mumbai', 'Lucknow', 'Varanasi', 'Prayagraj', 'Bangalore', 'Pune', 'Delhi NCR', 'Chennai', 'Hyderabad'].map((city) => (
                   <button
                     key={city}
                     onClick={() => {
