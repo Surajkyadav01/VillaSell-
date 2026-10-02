@@ -6,4 +6,4 @@ Allow: /
 Disallow: /api/
 
 # Sitemap location
-Sitemap: https://villasell.in/sitemap.xml
+Sitemap: https://www.villasell.com/sitemap.xml

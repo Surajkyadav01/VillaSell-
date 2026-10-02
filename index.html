@@ -14,27 +14,40 @@
     <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
     <meta name="author" content="VillaSell Real Estate Marketplace" />
     <meta name="publisher" content="VillaSell India" />
-    <meta name="theme-color" content="#4a1582" />
+    <meta name="theme-color" content="#1e3a8a" />
     <meta name="format-detection" content="telephone=yes" />
+
+    <!-- Canonical Domain -->
+    <link rel="canonical" href="https://www.villasell.com/" />
+
+    <!-- Official VillaSell Favicon & App Icons (Optimized for Google Search 48x48+ standards & high-res browser tabs) -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
 
     <!-- OpenGraph / Facebook Social Sharing Tags -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="VillaSell" />
     <meta property="og:title" content="VillaSell - Buy, Rent Luxury Villas, Flats & Commercial Properties" />
     <meta property="og:description" content="India's leading zero-brokerage property marketplace. Explore 100% RERA verified luxury villas, high-rise flats, commercial spaces & plots." />
-    <meta property="og:image" content="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=80" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="VillaSell Luxury Real Estate Marketplace" />
+    <meta property="og:image" content="https://www.villasell.com/android-chrome-512x512.png" />
+    <meta property="og:image:width" content="512" />
+    <meta property="og:image:height" content="512" />
+    <meta property="og:image:alt" content="VillaSell Real Estate Emblem" />
+    <meta property="og:url" content="https://www.villasell.com/" />
     <meta property="og:locale" content="en_IN" />
 
     <!-- Twitter / X Social Cards -->
-    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:card" content="summary" />
     <meta name="twitter:site" content="@VillaSell" />
     <meta name="twitter:creator" content="@VillaSell" />
     <meta name="twitter:title" content="VillaSell - Real Estate Marketplace in India" />
     <meta name="twitter:description" content="Explore verified villas, apartments, plots & commercial hubs with 0% brokerage and verified direct owner contacts." />
-    <meta name="twitter:image" content="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=80" />
+    <meta name="twitter:image" content="https://www.villasell.com/android-chrome-512x512.png" />
 
     <!-- Google Fonts Preconnect & Styling -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -51,14 +64,15 @@
       "@graph": [
         {
           "@type": "RealEstateAgent",
-          "@id": "https://villasell.in/#organization",
+          "@id": "https://www.villasell.com/#organization",
           "name": "VillaSell",
           "alternateName": "VillaSell Real Estate Hub",
-          "url": "https://villasell.in",
-          "logo": "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=200&q=80",
+          "url": "https://www.villasell.com",
+          "logo": "https://www.villasell.com/android-chrome-512x512.png",
+          "image": "https://www.villasell.com/android-chrome-512x512.png",
           "description": "Zero-brokerage real estate aggregator offering verified luxury villas, flats, commercial spaces, and sanctioned plots across India.",
           "telephone": "+91-8383826205",
-          "email": "support@villasell.in",
+          "email": "supportvillasell@gmail.com",
           "priceRange": "₹₹₹",
           "address": {
             "@type": "PostalAddress",
@@ -67,16 +81,16 @@
         },
         {
           "@type": "WebSite",
-          "@id": "https://villasell.in/#website",
-          "url": "https://villasell.in",
+          "@id": "https://www.villasell.com/#website",
+          "url": "https://www.villasell.com",
           "name": "VillaSell",
           "description": "India's premier zero-brokerage real estate portal for verified villas, apartments, and land.",
           "publisher": {
-            "@id": "https://villasell.in/#organization"
+            "@id": "https://www.villasell.com/#organization"
           },
           "potentialAction": {
             "@type": "SearchAction",
-            "target": "https://villasell.in/?search={search_term_string}",
+            "target": "https://www.villasell.com/?search={search_term_string}",
             "query-input": "required name=search_term_string"
           }
         }
