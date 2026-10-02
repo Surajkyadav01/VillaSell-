@@ -27,6 +27,7 @@ import { CustomDropdown } from './CustomDropdown';
 import { CityMegaDropdown } from './CityMegaDropdown';
 import { MenuDrawer } from './MenuDrawer';
 import { ServicesDropdown } from './ServicesDropdown';
+import { DownloadAppButton } from './DownloadAppButton';
 
 interface NavbarProps {
   activeView: ActiveView;
@@ -241,7 +242,10 @@ export const Navbar: React.FC<NavbarProps> = ({
             </nav>
 
             {/* Right Action Buttons */}
-            <div className="flex items-center gap-2 sm:gap-2.5">
+            <div className="flex items-center gap-1.5 sm:gap-2.5">
+              {/* Download App Button (Housing.com style) */}
+              <DownloadAppButton variant="navbar" />
+
               {/* Shortlist Heart Button */}
               <button
                 onClick={() => navigateTo('shortlist')}

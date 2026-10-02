@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { BRAND_CONFIG, CITIES } from '../data/mockProperties';
 import { ActiveView, PropertyCategory } from '../types/property';
+import { DownloadAppButton } from './DownloadAppButton';
 
 interface FooterProps {
   onSelectView: (view: ActiveView) => void;
@@ -397,8 +398,33 @@ export const Footer: React.FC<FooterProps> = ({
           </div>
         </div>
 
+        {/* Sleek, Compact & Professional VillaSell App Strip in Footer */}
+        <div className="mt-8 p-3.5 sm:p-4 rounded-2xl bg-gradient-to-r from-slate-900/90 via-blue-950/50 to-slate-900/90 border border-slate-800 hover:border-blue-500/30 transition-all flex flex-col sm:flex-row items-center justify-between gap-3 shadow-lg">
+          <div className="flex items-center gap-3 text-center sm:text-left">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-700 to-slate-900 border border-blue-400/30 p-1.5 flex items-center justify-center shadow-md shrink-0">
+              <img src="/favicon-48x48.png" alt="VillaSell App" className="w-full h-full object-contain rounded-lg" />
+            </div>
+            <div>
+              <div className="flex items-center justify-center sm:justify-start gap-2">
+                <h4 className="text-white font-bold text-sm sm:text-base tracking-tight">
+                  Download VillaSell App
+                </h4>
+                <span className="px-2 py-0.5 rounded-full text-[9px] font-black uppercase tracking-wider bg-amber-400 text-slate-950">
+                  Free
+                </span>
+              </div>
+              <p className="text-slate-400 text-xs mt-0.5 hidden sm:block">
+                Install directly on your phone home screen for 1-tap property search
+              </p>
+            </div>
+          </div>
+          <div className="shrink-0 w-full sm:w-auto flex justify-center">
+            <DownloadAppButton variant="footer" />
+          </div>
+        </div>
+
         {/* Bottom Bar matching exact layout from screenshot */}
-        <div className="mt-12 pt-6 border-t border-slate-800/80 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-400">
+        <div className="mt-8 pt-6 border-t border-slate-800/80 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-400">
           {/* Left: Copyright & RERA */}
           <div className="flex items-center flex-wrap gap-2 text-center md:text-left justify-center md:justify-start">
             <span>© 2026 VillaSell. All Rights Reserved.</span>

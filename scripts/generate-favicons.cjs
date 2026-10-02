@@ -84,6 +84,66 @@ for (const { name, size } of sizes) {
   console.log(`✓ Created public/${name} (${size}x${size}, ${pngBuffer.length} bytes)`);
 }
 
+// Generate PWA Maskable Icon (Full bleed background with 15% safe zone for Android adaptive icons)
+const svgMaskable = `<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="villaBgMaskable" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#2563eb" />
+      <stop offset="50%" stop-color="#3730a3" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </linearGradient>
+  </defs>
+
+  <!-- Full-bleed background filling 100% of canvas -->
+  <rect x="0" y="0" width="512" height="512" fill="url(#villaBgMaskable)" />
+
+  <!-- Villa House Icon scaled within safe 75% zone -->
+  <g transform="translate(85, 90) scale(10.8)">
+    <!-- Chimney -->
+    <path
+      d="M21.5 8.5V5.5H24V11"
+      stroke="#ffffff"
+      stroke-width="1.8"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+
+    <!-- Main Villa Outer Outline & Slanted Roof -->
+    <path
+      d="M16 4L4 14.5H8.5V26.5H23.5V14.5H28L16 4Z"
+      stroke="#ffffff"
+      stroke-width="2.2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      fill="rgba(255, 255, 255, 0.08)"
+    />
+
+    <!-- Golden Villa Gable / Attic Pediment -->
+    <polygon
+      points="16,8.5 9.6,14.5 22.4,14.5"
+      fill="#f59e0b"
+    />
+
+    <!-- Grand Arched Villa Entrance Doorway -->
+    <path
+      d="M13.5 26.5V19.5C13.5 18.2 14.6 17.2 16 17.2C17.4 17.2 18.5 18.2 18.5 19.5V26.5"
+      stroke="#f59e0b"
+      stroke-width="2.2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      fill="none"
+    />
+  </g>
+</svg>`;
+
+const resvgMaskable = new Resvg(svgMaskable, {
+  fitTo: { mode: 'width', value: 512 }
+});
+const maskableBuffer = resvgMaskable.render().asPng();
+fs.writeFileSync(path.join(publicDir, 'pwa-maskable-512x512.png'), maskableBuffer);
+console.log(`✓ Created public/pwa-maskable-512x512.png (512x512, ${maskableBuffer.length} bytes)`);
+
 // Generate favicon.ico with 16, 32, 48 px PNGs
 function createIco(images) {
   const header = Buffer.alloc(6);
@@ -119,30 +179,41 @@ console.log(`✓ Created public/favicon.ico (${icoBuffer.length} bytes)`);
 
 // Generate site.webmanifest
 const manifest = {
+  id: "/",
   name: "VillaSell - Real Estate Marketplace",
   short_name: "VillaSell",
-  description: "Find your dream villa, luxury apartment, commercial property, and verified plots with zero brokerage.",
+  description: "Explore 10,000+ verified luxury villas, penthouses, modern flats & plots across India with zero brokerage.",
   start_url: "/",
+  scope: "/",
   display: "standalone",
+  orientation: "portrait",
   background_color: "#0f172a",
-  theme_color: "#2563eb",
+  theme_color: "#1e3a8a",
+  categories: ["business", "lifestyle", "utilities"],
   icons: [
     {
       src: "/favicon-48x48.png",
       sizes: "48x48",
-      type: "image/png"
+      type: "image/png",
+      purpose: "any"
     },
     {
       src: "/android-chrome-192x192.png",
       sizes: "192x192",
       type: "image/png",
-      purpose: "any maskable"
+      purpose: "any"
     },
     {
       src: "/android-chrome-512x512.png",
       sizes: "512x512",
       type: "image/png",
-      purpose: "any maskable"
+      purpose: "any"
+    },
+    {
+      src: "/pwa-maskable-512x512.png",
+      sizes: "512x512",
+      type: "image/png",
+      purpose: "maskable"
     }
   ]
 };

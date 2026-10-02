@@ -23,6 +23,7 @@ import {
 import { ActiveView, PropertyCategory, UserProfile } from '../types/property';
 import { BRAND_CONFIG, CITIES } from '../data/mockProperties';
 import { sanitizeUserPhone, resolveUserDisplayName } from '../utils/phoneSanitizer';
+import { DownloadAppButton } from './DownloadAppButton';
 
 interface MenuDrawerProps {
   isOpen: boolean;
@@ -239,6 +240,9 @@ export const MenuDrawer: React.FC<MenuDrawerProps> = ({
                 <span>Shortlist ({shortlistCount})</span>
               </button>
             </div>
+
+            {/* Install VillaSell App Action */}
+            <DownloadAppButton variant="drawer" />
 
             {/* Property Categories */}
             <div>
