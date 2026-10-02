@@ -35,12 +35,15 @@ import {
   Image as ImageIcon,
   Play,
   Plus,
-  X
+  X,
+  LayoutDashboard,
+  LogIn
 } from 'lucide-react';
-import { Property, PropertyCategory, PropertyType, AdminEmailNotification } from '../types/property';
+import { Property, PropertyCategory, PropertyType, AdminEmailNotification, UserProfile } from '../types/property';
 import { CITIES, BRAND_CONFIG } from '../data/mockProperties';
+import { sanitizeUserPhone, isHelplineOrAdminPhone, resolveUserDisplayName } from '../utils/phoneSanitizer';
 import { CustomDropdown } from './CustomDropdown';
-import { savePropertyToFirestore, recordAdminEmailNotification } from '../services/firebase';
+import { savePropertyToFirestore, recordAdminEmailNotification, recordUserPostedProperty } from '../services/firebase';
 import { uploadToCloudinary, isVideoUrl } from '../services/cloudinary';
 
 export interface MediaUploadItem {
@@ -61,6 +64,9 @@ interface PostPropertyViewProps {
   onPropertyAdded: (newProperty: Property) => void;
   onViewProperty: (property: Property) => void;
   onNavigateToAdminPanel?: () => void;
+  onNavigateToDashboard?: () => void;
+  currentUser?: UserProfile | null;
+  onRequireAuth?: () => void;
 }
 
 export const PostPropertyView: React.FC<PostPropertyViewProps> = ({
@@ -68,6 +74,9 @@ export const PostPropertyView: React.FC<PostPropertyViewProps> = ({
   onPropertyAdded,
   onViewProperty,
   onNavigateToAdminPanel,
+  onNavigateToDashboard,
+  currentUser,
+  onRequireAuth,
 }) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [createdProperty, setCreatedProperty] = useState<Property | null>(null);
@@ -164,10 +173,21 @@ export const PostPropertyView: React.FC<PostPropertyViewProps> = ({
   };
 
   // Step 4: Contact & Amenities & Cloudinary Media
-  const [contactName, setContactName] = useState('');
-  const [contactPhone, setContactPhone] = useState('+91 8383826205');
-  const [contactEmail, setContactEmail] = useState('');
+  const [contactName, setContactName] = useState(currentUser?.name || resolveUserDisplayName(null, currentUser?.email));
+  const [contactPhone, setContactPhone] = useState(sanitizeUserPhone(currentUser?.phone));
+  const [contactEmail, setContactEmail] = useState(currentUser?.email || '');
   const [description, setDescription] = useState('');
+
+  React.useEffect(() => {
+    if (currentUser) {
+      if (!contactName) setContactName(currentUser.name || resolveUserDisplayName(null, currentUser.email));
+      if (!contactEmail) setContactEmail(currentUser.email || '');
+      const userCleanPhone = sanitizeUserPhone(currentUser.phone);
+      if (!contactPhone || isHelplineOrAdminPhone(contactPhone)) {
+        setContactPhone(userCleanPhone);
+      }
+    }
+  }, [currentUser]);
   const [selectedAmenities, setSelectedAmenities] = useState<string[]>([
     '24x7 Security & CCTV',
     '100% Power Backup',
@@ -404,10 +424,13 @@ export const PostPropertyView: React.FC<PostPropertyViewProps> = ({
         { title: 'Top Ranked School', distance: '1.0 km', type: 'school' }
       ],
       postedBy: {
-        name: contactName || 'Verified Owner',
+        name: contactName || currentUser?.name || resolveUserDisplayName(null, currentUser?.email) || 'Verified Owner',
         type: userRole,
-        phone: contactPhone || BRAND_CONFIG.phone
+        phone: sanitizeUserPhone(contactPhone) || sanitizeUserPhone(currentUser?.phone) || '',
+        email: contactEmail || currentUser?.email,
+        userId: currentUser?.id
       },
+      postedByEmail: contactEmail || currentUser?.email,
       description: description || `Splendid ${propertyType} offered with zero brokerage in prime ${city}. Complete with ${selectedAmenities.slice(0, 3).join(', ')}. Clear title, immediate loan sanction available.`,
       createdAt: new Date().toISOString().split('T')[0],
       approvalStatus: 'pending' // Restricted: Must be approved by Admin before showing on public website
@@ -419,6 +442,13 @@ export const PostPropertyView: React.FC<PostPropertyViewProps> = ({
         newProp.id = firestoreId;
       }
 
+      // Record in user property map so it immediately appears in User Dashboard
+      if (currentUser?.email) {
+        recordUserPostedProperty(currentUser.email, newProp.id);
+      } else if (contactEmail) {
+        recordUserPostedProperty(contactEmail, newProp.id);
+      }
+
       // Dispatch & Record notification for Admin (supportvillasell@gmail.com)
       const adminNotif: AdminEmailNotification = {
         id: `notif-${newProp.id}`,
@@ -428,8 +458,8 @@ export const PostPropertyView: React.FC<PostPropertyViewProps> = ({
         propertyLocality: newProp.locality,
         propertyPrice: newProp.priceDisplay,
         submittedBy: {
-          name: contactName || 'Owner',
-          phone: contactPhone || BRAND_CONFIG.phone,
+          name: contactName || currentUser?.name || resolveUserDisplayName(null, currentUser?.email) || 'Owner',
+          phone: sanitizeUserPhone(contactPhone) || sanitizeUserPhone(currentUser?.phone) || '',
           role: userRole
         },
         adminEmail: BRAND_CONFIG.email,
@@ -475,6 +505,35 @@ export const PostPropertyView: React.FC<PostPropertyViewProps> = ({
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-6">
+        {/* Auth Required Notice if user is browsing anonymously */}
+        {!currentUser && (
+          <div className="mb-6 p-4.5 rounded-2xl bg-gradient-to-r from-amber-50 to-orange-50 border-2 border-amber-300 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-sm animate-in fade-in">
+            <div className="flex items-start gap-3.5">
+              <div className="w-10 h-10 rounded-2xl bg-amber-500 text-slate-950 flex items-center justify-center shrink-0 font-black shadow-sm">
+                <LogIn className="w-5 h-5" />
+              </div>
+              <div>
+                <h4 className="font-black text-sm text-slate-900 flex items-center gap-2">
+                  <span>Sign In to Publish Your Listing</span>
+                  <span className="px-2.5 py-0.5 rounded-md bg-emerald-100 text-emerald-800 text-[10px] font-bold uppercase tracking-wider">100% Free • Zero Brokerage</span>
+                </h4>
+                <p className="text-xs text-slate-600 mt-1 leading-relaxed">
+                  List residential or commercial properties with zero brokerage fees. Please sign in or create a free account to track live verification status, manage property details, and receive verified buyer inquiries directly.
+                </p>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              onClick={onRequireAuth}
+              className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 text-white font-extrabold text-xs shadow-md shrink-0 cursor-pointer flex items-center justify-center gap-2 active:scale-95 transition-all"
+            >
+              <LogIn className="w-4 h-4" />
+              <span>Sign In / Register</span>
+            </button>
+          </div>
+        )}
+
         {currentStep <= 4 ? (
           <div>
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
@@ -1760,6 +1819,16 @@ export const PostPropertyView: React.FC<PostPropertyViewProps> = ({
                 </div>
 
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+                  {onNavigateToDashboard && (
+                    <button
+                      onClick={onNavigateToDashboard}
+                      className="w-full sm:w-auto px-6 py-3 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 text-white font-extrabold text-sm shadow-lg shadow-emerald-950/20 transition-all cursor-pointer flex items-center justify-center gap-2 active:scale-95"
+                    >
+                      <LayoutDashboard className="w-4 h-4" />
+                      <span>Go to My Dashboard (Track Status)</span>
+                    </button>
+                  )}
+
                   <button
                     onClick={() => onViewProperty(createdProperty)}
                     className="w-full sm:w-auto px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-800 text-white font-bold text-sm shadow-md transition-all cursor-pointer"

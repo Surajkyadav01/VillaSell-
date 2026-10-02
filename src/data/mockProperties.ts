@@ -2,13 +2,13 @@ import { Property, CustomerReview } from '../types/property';
 
 export const CITIES = [
   'All Cities',
+  'Mumbai',
   'Lucknow',
   'Varanasi',
   'Prayagraj',
   'Noida',
   'Gurgaon',
   'Delhi',
-  'Mumbai',
   'Bangalore',
   'Pune',
   'Hyderabad',

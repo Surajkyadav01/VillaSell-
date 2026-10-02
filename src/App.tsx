@@ -66,6 +66,7 @@ import {
   savePropertyToFirestore,
   deduplicatePropertyList
 } from './services/firebase';
+import { sanitizeUserPhone, isHelplineOrAdminPhone } from './utils/phoneSanitizer';
 
 export default function App() {
   // Navigation & View State (NO MODALS: All views are full-page!)
@@ -83,8 +84,12 @@ export default function App() {
       // Strict Security: Only official authorized admin email can have Admin privileges
       if (parsed.role === 'Admin' && parsed.email?.toLowerCase() !== 'supportvillasell@gmail.com') {
         parsed.role = 'Buyer';
-        localStorage.setItem('villasell_user', JSON.stringify(parsed));
       }
+      // Never attach company helpline phone to regular buyer/seller profile
+      parsed.phone = sanitizeUserPhone(parsed.phone);
+      try {
+        localStorage.setItem('villasell_user', JSON.stringify(parsed));
+      } catch {}
       return parsed;
     } catch {
       return null;
@@ -92,10 +97,22 @@ export default function App() {
   });
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const [authModalMode, setAuthModalMode] = useState<'login' | 'signup' | 'admin'>('login');
+  const [postPropertyAuthPrompt, setPostPropertyAuthPrompt] = useState(false);
 
   const handleOpenLogin = (mode: 'login' | 'signup' | 'admin' = 'login') => {
     setAuthModalMode(mode);
     setAuthModalOpen(true);
+  };
+
+  const handleNavigateToPostProperty = () => {
+    if (!currentUser) {
+      setPostPropertyAuthPrompt(true);
+      handleOpenLogin('signup');
+      showToast('Please sign in or create an account to list your property.');
+      return;
+    }
+    setActiveView('post-property');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   // Core Properties State (Live synchronized with Firestore)
@@ -106,6 +123,7 @@ export default function App() {
   useEffect(() => {
     const unsub = onAuthStatusChanged((user) => {
       if (user) {
+        user.phone = sanitizeUserPhone(user.phone);
         setCurrentUser(user);
         try {
           localStorage.setItem('villasell_user', JSON.stringify(user));
@@ -173,6 +191,7 @@ export default function App() {
     if (user.role === 'Admin' && user.email?.toLowerCase() !== 'supportvillasell@gmail.com') {
       user.role = 'Buyer';
     }
+    user.phone = sanitizeUserPhone(user.phone);
     setCurrentUser(user);
     try {
       localStorage.setItem('villasell_user', JSON.stringify(user));
@@ -185,8 +204,15 @@ export default function App() {
       setActiveView('admin-panel');
       window.scrollTo({ top: 0, behavior: 'smooth' });
       showToast(`Welcome Administrator ${user.name}! Admin Control Panel loaded.`);
+    } else if (postPropertyAuthPrompt) {
+      setPostPropertyAuthPrompt(false);
+      setActiveView('post-property');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      showToast(`Welcome, ${user.name}! You are signed in. You can now post your property.`);
     } else {
-      showToast(`Welcome back, ${user.name}!`);
+      setActiveView('dashboard');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      showToast(`Welcome back, ${user.name}! Opening your User Dashboard.`);
     }
   };
 
@@ -482,6 +508,7 @@ export default function App() {
           currentUser={currentUser}
           onOpenLogin={() => handleOpenLogin('login')}
           onOpenLoginWithMode={handleOpenLogin}
+          onNavigateToPostProperty={handleNavigateToPostProperty}
           onLogout={handleLogout}
           menuDrawerOpen={mobileMenuOpen}
           setMenuDrawerOpen={setMobileMenuOpen}
@@ -528,6 +555,17 @@ export default function App() {
             user={currentUser}
             onUpdateUserRole={(newRole) => {
               setCurrentUser((prev) => prev ? { ...prev, role: newRole } : null);
+            }}
+            onUpdateUserProfile={(updated) => {
+              setCurrentUser((prev) => {
+                if (!prev) return null;
+                const next = { ...prev, ...updated };
+                next.phone = sanitizeUserPhone(next.phone);
+                try {
+                  localStorage.setItem('villasell_user', JSON.stringify(next));
+                } catch {}
+                return next;
+              });
             }}
             onBackToMarketplace={() => {
               setActiveView('home');
@@ -581,6 +619,15 @@ export default function App() {
             onBack={() => setActiveView('home')}
             onPropertyAdded={handlePropertyAdded}
             onViewProperty={handleSelectProperty}
+            currentUser={currentUser}
+            onRequireAuth={() => {
+              setPostPropertyAuthPrompt(true);
+              handleOpenLogin('signup');
+            }}
+            onNavigateToDashboard={() => {
+              setActiveView('dashboard');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
             onNavigateToAdminPanel={() => {
               if (currentUser?.role === 'Admin') {
                 setActiveView('admin-panel');
@@ -714,10 +761,7 @@ export default function App() {
               setFilters={setFilters}
               totalMatches={filteredProperties.length}
               onSearchClick={scrollToProperties}
-              onPostPropertyClick={() => {
-                setActiveView('post-property');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              }}
+              onPostPropertyClick={handleNavigateToPostProperty}
             />
 
             {/* Quick Category Cards Section (Compact, Professional & Subtle Animated Gradient on Click) */}
@@ -1286,10 +1330,7 @@ export default function App() {
           activeView={activeView}
           setActiveView={setActiveView}
           shortlistCount={shortlist.length}
-          onPostPropertyClick={() => {
-            setActiveView('post-property');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-          }}
+          onPostPropertyClick={handleNavigateToPostProperty}
           onSearchClick={() => {
             if (activeView !== 'home') setActiveView('home');
             setTimeout(() => {
@@ -1303,7 +1344,13 @@ export default function App() {
       {/* Professional Housing.com Style Footer (Hidden in dedicated Admin Panel) */}
       {activeView !== 'admin-panel' && (
         <Footer
-          onSelectView={setActiveView}
+          onSelectView={(view) => {
+            if (view === 'post-property') {
+              handleNavigateToPostProperty();
+              return;
+            }
+            setActiveView(view);
+          }}
           onSelectCategory={(cat) => setFilters((prev) => ({ ...prev, category: cat }))}
           onSelectCity={(city) => setFilters((prev) => ({ ...prev, city }))}
         />
@@ -1312,9 +1359,17 @@ export default function App() {
       {/* User Login & Authentication Modal */}
       <AuthModal
         isOpen={authModalOpen}
-        onClose={() => setAuthModalOpen(false)}
+        onClose={() => {
+          setAuthModalOpen(false);
+          setPostPropertyAuthPrompt(false);
+        }}
         onLoginSuccess={handleLoginSuccess}
         initialMode={authModalMode}
+        customMessage={
+          postPropertyAuthPrompt
+            ? 'List your property for free with 0% brokerage. Sign in or create an account to manage your listings, review buyer inquiries, and track live status updates.'
+            : undefined
+        }
       />
     </div>
   );

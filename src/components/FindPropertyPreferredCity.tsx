@@ -29,8 +29,15 @@ const CITY_FALLBACKS: Record<string, string> = {
   chandigarh: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=300&q=80',
 };
 
-// Top cities ordered as requested: Lucknow, Varanasi, Prayagraj, Noida, Gurgaon, Delhi, then Mumbai, Bangalore, Pune, etc.
+// Top cities ordered as requested: Mumbai, Lucknow, Varanasi, Prayagraj, Noida, Gurgaon, Delhi, Bangalore, Pune, etc.
 export const PREFERRED_CITIES_LIST: PreferredCityItem[] = [
+  {
+    id: 'mumbai',
+    name: 'Mumbai',
+    count: '34726 + Properties',
+    imageUrl: 'images/cities/mumbai.jpg',
+    filterValue: 'Mumbai'
+  },
   {
     id: 'lucknow',
     name: 'Lucknow',
@@ -72,13 +79,6 @@ export const PREFERRED_CITIES_LIST: PreferredCityItem[] = [
     count: '31496 + Properties',
     imageUrl: 'images/cities/delhi.jpg',
     filterValue: 'Delhi'
-  },
-  {
-    id: 'mumbai',
-    name: 'Mumbai',
-    count: '34726 + Properties',
-    imageUrl: 'images/cities/mumbai.jpg',
-    filterValue: 'Mumbai'
   },
   {
     id: 'bangalore',

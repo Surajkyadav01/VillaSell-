@@ -22,6 +22,7 @@ import {
 } from 'lucide-react';
 import { ActiveView, PropertyCategory, UserProfile } from '../types/property';
 import { BRAND_CONFIG, CITIES } from '../data/mockProperties';
+import { sanitizeUserPhone, resolveUserDisplayName } from '../utils/phoneSanitizer';
 
 interface MenuDrawerProps {
   isOpen: boolean;
@@ -57,6 +58,15 @@ export const MenuDrawer: React.FC<MenuDrawerProps> = ({
   if (!isOpen) return null;
 
   const navigateTo = (view: ActiveView) => {
+    if (view === 'post-property' && !currentUser) {
+      onClose();
+      if (onOpenLoginWithMode) {
+        onOpenLoginWithMode('signup');
+      } else {
+        onOpenLogin();
+      }
+      return;
+    }
     setActiveView(view);
     onClose();
   };
@@ -118,14 +128,21 @@ export const MenuDrawer: React.FC<MenuDrawerProps> = ({
                       />
                       <div>
                         <div className="flex items-center gap-1.5">
-                          <h4 className="font-extrabold text-sm text-slate-900">{currentUser.name}</h4>
+                          <h4 className="font-extrabold text-sm text-slate-900 line-clamp-1">
+                            {currentUser.name || resolveUserDisplayName(null, currentUser.email)}
+                          </h4>
                           <span className="px-1.5 py-0.5 rounded text-[9px] font-black uppercase bg-emerald-100 text-emerald-800">
                             {currentUser.role}
                           </span>
                         </div>
-                        <span className="text-xs text-slate-500 font-medium block">
-                          {currentUser.phone || currentUser.email}
+                        <span className="text-xs text-slate-600 font-medium block truncate max-w-[160px] break-all">
+                          {currentUser.email}
                         </span>
+                        {sanitizeUserPhone(currentUser.phone) && (
+                          <span className="text-[10px] text-slate-400 block">
+                            {sanitizeUserPhone(currentUser.phone)}
+                          </span>
+                        )}
                       </div>
                     </div>
 

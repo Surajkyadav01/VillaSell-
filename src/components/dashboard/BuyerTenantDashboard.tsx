@@ -24,6 +24,7 @@ import {
   BuyerRequirement,
   PropertyInquiry 
 } from '../../types/property';
+import { sanitizeUserPhone, resolveUserDisplayName } from '../../utils/phoneSanitizer';
 
 interface BuyerTenantDashboardProps {
   user: UserProfile;
@@ -92,8 +93,8 @@ export const BuyerTenantDashboard: React.FC<BuyerTenantDashboardProps> = ({
     const newReq: BuyerRequirement = {
       id: `req-${Date.now()}`,
       userId: user.email,
-      userName: user.name || 'Buyer',
-      userPhone: user.phone || '+91 83838 26205',
+      userName: user.name || resolveUserDisplayName(null, user.email),
+      userPhone: sanitizeUserPhone(user.phone),
       userEmail: user.email,
       city: reqCity,
       locality: reqLocality.trim(),

@@ -21,6 +21,7 @@ import {
   ShoppingBag
 } from 'lucide-react';
 import { BRAND_CONFIG, CITIES } from '../data/mockProperties';
+import { sanitizeUserPhone, resolveUserDisplayName } from '../utils/phoneSanitizer';
 import { ActiveView, PropertyCategory, UserProfile } from '../types/property';
 import { CustomDropdown } from './CustomDropdown';
 import { CityMegaDropdown } from './CityMegaDropdown';
@@ -39,6 +40,7 @@ interface NavbarProps {
   onOpenLogin: () => void;
   onOpenLoginWithMode?: (mode: 'login' | 'signup' | 'admin') => void;
   onLogout: () => void;
+  onNavigateToPostProperty?: () => void;
   menuDrawerOpen?: boolean;
   setMenuDrawerOpen?: (open: boolean) => void;
   pendingCount?: number;
@@ -55,6 +57,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   currentUser,
   onOpenLogin,
   onOpenLoginWithMode,
+  onNavigateToPostProperty,
   onLogout,
   menuDrawerOpen,
   setMenuDrawerOpen,
@@ -84,6 +87,20 @@ export const Navbar: React.FC<NavbarProps> = ({
   };
 
   const navigateTo = (view: ActiveView) => {
+    if (view === 'post-property') {
+      if (onNavigateToPostProperty) {
+        onNavigateToPostProperty();
+        return;
+      }
+      if (!currentUser) {
+        if (onOpenLoginWithMode) {
+          onOpenLoginWithMode('signup');
+        } else {
+          onOpenLogin();
+        }
+        return;
+      }
+    }
     setActiveView(view);
   };
 
@@ -267,91 +284,68 @@ export const Navbar: React.FC<NavbarProps> = ({
                   <span>Login</span>
                 </button>
               ) : (
-                <div className="flex items-center gap-2 shrink-0">
-                  {/* Role Badge in Navbar */}
+                <div className="flex items-center gap-2.5 shrink-0">
+                  {/* Role Badge in Navbar (Refined, no brackets, matches site palette) */}
                   <div className="hidden lg:flex items-center">
-                    {(currentUser.role === 'Owner' || currentUser.role === 'Admin') && (
-                      <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-indigo-950/85 border border-amber-400/50 text-amber-300 font-black text-[10px] uppercase tracking-wider shadow-xs">
-                        <ShieldCheck className="w-3 h-3 text-amber-400" />
-                        <span>[Owner/Admin Portal]</span>
+                    {currentUser.role === 'Buyer' && (
+                      <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-emerald-500/15 border border-emerald-400/35 text-emerald-200 font-extrabold text-xs shadow-sm shadow-emerald-950/20 backdrop-blur-sm tracking-wide">
+                        <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-sm shadow-emerald-400" />
+                        <span>Buyer Space</span>
                       </span>
                     )}
 
                     {currentUser.role === 'Agent' && (
-                      <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-blue-950/85 border border-sky-400/50 text-sky-200 font-black text-[10px] uppercase tracking-wider shadow-xs">
+                      <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-sky-500/15 border border-sky-400/30 text-sky-200 font-bold text-xs shadow-2xs backdrop-blur-xs">
                         <Briefcase className="w-3 h-3 text-sky-300" />
-                        <span>[Agent Dashboard]</span>
+                        <span>Agent Space</span>
                       </span>
                     )}
 
-                    {currentUser.role === 'Buyer' && (
-                      <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-emerald-950/85 border border-emerald-400/50 text-emerald-300 font-black text-[10px] uppercase tracking-wider shadow-xs">
-                        <ShoppingBag className="w-3 h-3 text-emerald-300" />
-                        <span>[Buyer Space]</span>
+                    {(currentUser.role === 'Owner' || currentUser.role === 'Admin') && (
+                      <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-indigo-500/20 border border-indigo-400/40 text-indigo-200 font-bold text-xs shadow-2xs backdrop-blur-xs">
+                        <ShieldCheck className="w-3 h-3 text-indigo-300" />
+                        <span>{currentUser.role === 'Admin' ? 'Admin Portal' : 'Owner Portal'}</span>
                       </span>
                     )}
                   </div>
 
-                  {/* PROMINENT GO TO DASHBOARD / ADMIN PANEL BUTTON */}
-                  {currentUser.role === 'Admin' ? (
-                    <button
-                      onClick={() => navigateTo('admin-panel')}
-                      className={`flex items-center gap-1.5 px-3 py-2 sm:px-3.5 sm:py-2 rounded-xl font-black text-xs sm:text-sm shadow-md transition-all cursor-pointer transform active:scale-95 ${
-                        activeView === 'admin-panel'
-                          ? 'bg-amber-400 text-slate-950 ring-2 ring-white/50'
-                          : 'bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 hover:brightness-105 border border-amber-300'
-                      }`}
-                      title="Open Admin Moderation Panel"
-                    >
-                      <ShieldCheck className="w-4 h-4 text-slate-950" />
-                      <span>Admin Panel</span>
-                      {pendingCount > 0 && (
-                        <span className="px-1.5 py-0.2 rounded-full bg-slate-950 text-amber-300 text-[10px] font-black animate-pulse">
-                          {pendingCount}
-                        </span>
-                      )}
-                    </button>
-                  ) : (
-                    <button
-                      onClick={() => navigateTo('dashboard')}
-                      className={`flex items-center gap-1.5 px-3 py-2 sm:px-3.5 sm:py-2 rounded-xl font-extrabold text-xs sm:text-sm shadow-md transition-all cursor-pointer transform active:scale-95 ${
-                        activeView === 'dashboard'
-                          ? 'bg-amber-400 text-slate-950 ring-2 ring-white/40'
-                          : 'bg-white/15 hover:bg-white/25 text-white border border-sky-300/40 hover:border-amber-400/60'
-                      }`}
-                      title="Open Full-Page Dedicated Dashboard"
-                    >
-                      <LayoutDashboard className="w-4 h-4 text-amber-300" />
-                      <span className="hidden sm:inline">Go to Dashboard</span>
-                      <span className="sm:hidden">Dashboard</span>
-                    </button>
-                  )}
-
-                  {/* User Profile Chip with Quick Access */}
+                  {/* User Profile Chip with Quick Access Dropdown (Dashboard is accessed here) */}
                   <div className="relative shrink-0" ref={userMenuRef}>
                     <button
                       onClick={() => setUserDropdownOpen(!userDropdownOpen)}
-                      className="flex items-center gap-1.5 p-1 sm:px-2 sm:py-1 rounded-xl bg-slate-900/60 hover:bg-blue-900/80 border border-blue-400/40 text-white transition-all cursor-pointer"
+                      className="flex items-center gap-2 px-2.5 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 border border-sky-300/30 text-white transition-all cursor-pointer shadow-xs active:scale-95"
                       title="User Account Menu"
                     >
                       <img
                         src={currentUser.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80'}
                         alt={currentUser.name}
-                        className="w-7 h-7 rounded-lg object-cover border border-amber-400/50"
+                        className="w-7 h-7 rounded-lg object-cover border border-sky-300/40"
                       />
-                      <ChevronDown className="w-3.5 h-3.5 text-blue-200" />
+                      <span className="hidden sm:inline font-bold text-xs max-w-[110px] truncate text-slate-100">
+                        {(currentUser.name || resolveUserDisplayName(null, currentUser.email)).split(' ')[0]}
+                      </span>
+                      <ChevronDown className="w-3.5 h-3.5 text-sky-200" />
                     </button>
 
                     {/* Quick Access Menu with Direct Link to Dedicated Full Dashboard */}
                     {userDropdownOpen && (
                       <div className="absolute right-0 mt-2 w-64 rounded-2xl bg-white text-slate-800 shadow-2xl border border-slate-200 p-2 z-50 animate-in fade-in zoom-in-95">
                         <div className="p-2.5 border-b border-slate-100">
-                          <div className="font-extrabold text-xs text-slate-900 line-clamp-1">{currentUser.name}</div>
-                          <div className="text-[11px] text-slate-500 line-clamp-1">{currentUser.phone || currentUser.email}</div>
-                          <span className={`inline-block mt-1 px-1.5 py-0.5 rounded text-[9px] font-black uppercase ${
+                          <div className="font-extrabold text-xs text-slate-900 line-clamp-1">
+                            {currentUser.name || resolveUserDisplayName(null, currentUser.email)}
+                          </div>
+                          <div className="text-[11px] text-slate-600 font-medium line-clamp-1 break-all">
+                            {currentUser.email}
+                          </div>
+                          {sanitizeUserPhone(currentUser.phone) && (
+                            <div className="text-[10px] text-slate-400 line-clamp-1 mt-0.5">
+                              {sanitizeUserPhone(currentUser.phone)}
+                            </div>
+                          )}
+                          <span className={`inline-block mt-1 px-2 py-0.5 rounded-full text-[10px] font-bold ${
                             currentUser.role === 'Admin'
                               ? 'bg-amber-100 text-amber-900 border border-amber-300'
-                              : 'bg-emerald-100 text-emerald-800'
+                              : 'bg-emerald-100 text-emerald-800 border border-emerald-200'
                           }`}>
                             Verified {currentUser.role}
                           </span>
@@ -382,11 +376,11 @@ export const Navbar: React.FC<NavbarProps> = ({
                               navigateTo('dashboard');
                               setUserDropdownOpen(false);
                             }}
-                            className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-extrabold bg-blue-50 text-blue-700 hover:bg-blue-100 cursor-pointer mb-1"
+                            className="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-extrabold bg-blue-50 text-blue-900 hover:bg-blue-100 cursor-pointer mb-1 border border-blue-200/60"
                           >
                             <span className="flex items-center gap-2">
                               <LayoutDashboard className="w-4 h-4 text-blue-700" />
-                              <span>Open User Dashboard</span>
+                              <span>Open Your Dashboard</span>
                             </span>
                             <span className="text-[10px] uppercase font-black px-1.5 py-0.5 bg-blue-600 text-white rounded">
                               Open

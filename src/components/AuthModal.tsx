@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import { UserProfile, UserRole } from '../types/property';
 import { BRAND_CONFIG } from '../data/mockProperties';
+import { sanitizeUserPhone, resolveUserDisplayName } from '../utils/phoneSanitizer';
 import { 
   loginWithEmail, 
   registerWithEmail, 
@@ -30,6 +31,7 @@ interface AuthModalProps {
   onClose: () => void;
   onLoginSuccess: (user: UserProfile) => void;
   initialMode?: 'login' | 'signup' | 'admin';
+  customMessage?: string;
 }
 
 export const AuthModal: React.FC<AuthModalProps> = ({
@@ -37,6 +39,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
   onClose,
   onLoginSuccess,
   initialMode = 'login',
+  customMessage,
 }) => {
   const [authMode, setAuthMode] = useState<'login' | 'signup' | 'admin'>(initialMode);
   const [email, setEmail] = useState('');
@@ -81,6 +84,12 @@ export const AuthModal: React.FC<AuthModalProps> = ({
     }
     if (code === 'auth/network-request-failed') {
       return 'Network connection issue. Please check your internet connection.';
+    }
+    if (code === 'auth/unauthorized-domain') {
+      return 'Google sign-in authorization in progress. Please refresh and try again, or sign up with email below.';
+    }
+    if (code === 'auth/operation-not-allowed') {
+      return 'Google Sign-in is not enabled in Firebase Console. Please enable Google under Authentication > Sign-in method.';
     }
     return err?.message || 'Authentication failed. Please try again.';
   };
@@ -209,6 +218,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         // Demote any other unauthorized user account to Buyer
         userProfile.role = 'Buyer';
       }
+      userProfile.name = userProfile.name || resolveUserDisplayName(null, userProfile.email);
+      userProfile.phone = sanitizeUserPhone(userProfile.phone);
       setIsLoading(false);
       onLoginSuccess(userProfile);
     } catch (err: any) {
@@ -255,9 +266,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         email.trim(), 
         password, 
         name.trim(), 
-        phone.trim() || '+91 83838 26205', 
+        sanitizeUserPhone(phone), 
         role
       );
+      userProfile.name = userProfile.name || resolveUserDisplayName(name, email);
+      userProfile.phone = sanitizeUserPhone(userProfile.phone);
       setIsLoading(false);
       onLoginSuccess(userProfile);
     } catch (err: any) {
@@ -282,7 +295,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
               Welcome to <span className="text-[#1b4a80]">Villa</span><span className="text-amber-500">Sell</span>!
             </h3>
             <p className="text-xs text-slate-500 max-w-xs mx-auto">
-              Hi <strong>{googleUserPendingRole.name}</strong>, please select your primary role to configure your dedicated dashboard:
+              Hi <strong>{googleUserPendingRole.name}</strong>, please select your profile type to personalize your experience:
             </p>
           </div>
 
@@ -429,6 +442,13 @@ export const AuthModal: React.FC<AuthModalProps> = ({
               ? 'Sign in to access your role-specific dashboard, saved properties & inquiries.' 
               : 'Join thousands of verified buyers, agents & property owners with zero brokerage.'}
           </p>
+
+          {customMessage && (
+            <div className="bg-amber-400/15 border border-amber-300/30 text-amber-100 text-xs font-medium px-3.5 py-2.5 rounded-xl mt-3 flex items-start gap-2.5 backdrop-blur-xs leading-relaxed">
+              <Sparkles className="w-4 h-4 text-amber-300 shrink-0 mt-0.5" />
+              <span>{customMessage}</span>
+            </div>
+          )}
         </div>
 
         {/* Tab Toggle: User Login vs Admin Login vs Sign Up */}

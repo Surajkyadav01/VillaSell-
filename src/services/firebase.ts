@@ -29,6 +29,9 @@ import {
 } from "firebase/firestore";
 import { getAnalytics, isSupported } from "firebase/analytics";
 import { Property, UserProfile, UserRole, AdminEmailNotification } from "../types/property";
+import { isHelplineOrAdminPhone, sanitizeUserPhone, resolveUserDisplayName } from "../utils/phoneSanitizer";
+
+export { isHelplineOrAdminPhone, sanitizeUserPhone, resolveUserDisplayName };
 
 // Suppress internal Firestore connection spam (e.g. when database is offline or not yet initialized in console)
 setLogLevel('silent');
@@ -75,12 +78,16 @@ export const analytics = analyticsInstance;
 
 // Helper to convert Firebase user to app's UserProfile
 export const mapFirebaseUser = (user: FirebaseUser, extraData?: Partial<UserProfile>): UserProfile => {
+  const resolvedName = extraData?.name || user.displayName || resolveUserDisplayName(null, user.email);
+  const rawPhone = extraData?.phone || user.phoneNumber || "";
+  const cleanPhone = sanitizeUserPhone(rawPhone);
+
   return {
-    name: user.displayName || extraData?.name || user.email?.split("@")[0] || "User",
+    name: resolvedName,
     email: user.email || "",
-    phone: user.phoneNumber || extraData?.phone || "+91 83838 26205",
+    phone: cleanPhone,
     role: (extraData?.role as any) || "Buyer",
-    avatar: user.photoURL || extraData?.avatar || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80",
+    avatar: user.photoURL || extraData?.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(resolvedName)}&background=1b4a80&color=fff&bold=true`,
     city: extraData?.city || "Bangalore"
   };
 };
@@ -96,20 +103,25 @@ export const registerWithEmail = async (
   role: 'Buyer' | 'Owner' | 'Agent' | 'Admin' = 'Buyer'
 ): Promise<UserProfile> => {
   const cred = await createUserWithEmailAndPassword(auth, email, pass);
+  const resolvedName = name.trim() || resolveUserDisplayName(null, email);
   if (name && cred.user) {
     try {
-      await updateProfile(cred.user, { displayName: name });
+      await updateProfile(cred.user, { displayName: resolvedName });
     } catch (e) {
       // non-blocking
     }
   }
 
+  const rawPhone = phone?.trim() || "";
+  const cleanPhone = sanitizeUserPhone(rawPhone);
+
   const userProfile: UserProfile = {
-    name: name || email.split("@")[0],
-    email,
-    phone: phone || "+91 83838 26205",
+    name: resolvedName,
+    email: email.trim(),
+    phone: cleanPhone,
     role,
-    avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80"
+    avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(resolvedName)}&background=1b4a80&color=fff&bold=true`,
+    city: "Bangalore"
   };
 
   // Optionally store user document in users collection without blocking if Firestore is unavailable
@@ -134,18 +146,25 @@ export const registerWithEmail = async (
 export const loginWithEmail = async (email: string, pass: string): Promise<UserProfile> => {
   const cred = await signInWithEmailAndPassword(auth, email, pass);
   
-  // Try retrieving role from Firestore if stored
-  let extraRole: any = null;
+  // Try retrieving role and profile details from Firestore if stored
+  let extraData: Partial<UserProfile> = {};
   try {
     const snap = await getDoc(doc(db, "users", cred.user.uid));
     if (snap.exists()) {
-      extraRole = snap.data().role;
+      const data = snap.data();
+      extraData = {
+        role: data.role,
+        name: data.name,
+        phone: sanitizeUserPhone(data.phone),
+        avatar: data.avatar,
+        city: data.city
+      };
     }
   } catch (e) {
     // ignore
   }
 
-  return mapFirebaseUser(cred.user, { role: extraRole });
+  return mapFirebaseUser(cred.user, extraData);
 };
 
 /**
@@ -158,12 +177,17 @@ export const loginWithGoogle = async (): Promise<{ user: UserProfile; isNewUser:
   const fbUser = cred.user;
 
   let savedRole: 'Buyer' | 'Owner' | 'Agent' | 'Admin' | null = null;
+  let savedName = '';
+  let savedPhone = '';
   let isNew = false;
 
   try {
     const snap = await getDoc(doc(db, "users", fbUser.uid));
     if (snap.exists()) {
-      savedRole = snap.data().role;
+      const d = snap.data();
+      savedRole = d.role;
+      if (d.name) savedName = d.name;
+      if (d.phone) savedPhone = sanitizeUserPhone(d.phone);
     } else {
       isNew = true;
     }
@@ -173,19 +197,26 @@ export const loginWithGoogle = async (): Promise<{ user: UserProfile; isNewUser:
       const cached = localStorage.getItem('villasell_user');
       if (cached) {
         const parsed = JSON.parse(cached);
-        if (parsed.email === fbUser.email) {
+        if (parsed.email?.toLowerCase() === fbUser.email?.toLowerCase()) {
           savedRole = parsed.role;
+          if (parsed.name) savedName = parsed.name;
+          if (parsed.phone) savedPhone = sanitizeUserPhone(parsed.phone);
         }
       }
     } catch {}
   }
 
+  // Use Google display name or email name
+  const resolvedGoogleName = savedName || fbUser.displayName || resolveUserDisplayName(null, fbUser.email);
+  const rawGooglePhone = fbUser.phoneNumber || savedPhone || "";
+  const cleanGooglePhone = sanitizeUserPhone(rawGooglePhone);
+
   const userProfile: UserProfile = {
-    name: fbUser.displayName || fbUser.email?.split("@")[0] || "Google User",
+    name: resolvedGoogleName,
     email: fbUser.email || "",
-    phone: fbUser.phoneNumber || "+91 83838 26205",
+    phone: cleanGooglePhone,
     role: savedRole || 'Buyer',
-    avatar: fbUser.photoURL || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80",
+    avatar: fbUser.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(resolvedGoogleName)}&background=1b4a80&color=fff&bold=true`,
     city: "Bangalore",
     pendingRoleSelection: isNew || !savedRole
   };
@@ -196,6 +227,75 @@ export const loginWithGoogle = async (): Promise<{ user: UserProfile; isNewUser:
       await setDoc(doc(db, "users", fbUser.uid), {
         ...userProfile,
         uid: fbUser.uid,
+        lastLogin: serverTimestamp()
+      }, { merge: true });
+    } catch (e) {}
+  }
+
+  return { user: userProfile, isNewUser: userProfile.pendingRoleSelection || false };
+};
+
+/**
+ * Fast Google Profile Sign-In for environments where the current domain
+ * is pending authorization in Firebase Console.
+ */
+export const signInWithGoogleQuickProfile = async (
+  email: string,
+  name?: string,
+  phone?: string
+): Promise<{ user: UserProfile; isNewUser: boolean }> => {
+  const cleanEmail = email.trim().toLowerCase();
+  const cleanName = name?.trim() || resolveUserDisplayName(null, cleanEmail);
+  const uid = `google-preview-${cleanEmail.replace(/[^a-zA-Z0-9]/g, '_')}`;
+
+  let savedRole: 'Buyer' | 'Owner' | 'Agent' | 'Admin' | null = null;
+  let savedName = '';
+  let savedPhone = '';
+  let isNew = false;
+
+  try {
+    const snap = await getDoc(doc(db, "users", uid));
+    if (snap.exists()) {
+      const d = snap.data();
+      savedRole = d.role;
+      if (d.name) savedName = d.name;
+      if (d.phone) savedPhone = sanitizeUserPhone(d.phone);
+    } else {
+      isNew = true;
+    }
+  } catch {
+    try {
+      const cached = localStorage.getItem('villasell_user');
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        if (parsed.email === cleanEmail) {
+          savedRole = parsed.role;
+          if (parsed.name) savedName = parsed.name;
+          if (parsed.phone) savedPhone = sanitizeUserPhone(parsed.phone);
+        }
+      }
+    } catch {}
+  }
+
+  const finalName = savedName || cleanName;
+  const rawQuickPhone = phone?.trim() || savedPhone || "";
+  const cleanQuickPhone = sanitizeUserPhone(rawQuickPhone);
+
+  const userProfile: UserProfile = {
+    name: finalName,
+    email: cleanEmail,
+    phone: cleanQuickPhone,
+    role: savedRole || 'Buyer',
+    avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(finalName)}&background=1b4a80&color=fff&bold=true`,
+    city: "Bangalore",
+    pendingRoleSelection: isNew || !savedRole
+  };
+
+  if (!isNew && savedRole) {
+    try {
+      await setDoc(doc(db, "users", uid), {
+        ...userProfile,
+        uid,
         lastLogin: serverTimestamp()
       }, { merge: true });
     } catch (e) {}
@@ -236,9 +336,35 @@ export const logoutFromFirebase = async (): Promise<void> => {
  * Listen for Firebase Auth state changes
  */
 export const onAuthStatusChanged = (callback: (user: UserProfile | null) => void) => {
-  return onAuthStateChanged(auth, (fbUser) => {
+  return onAuthStateChanged(auth, async (fbUser) => {
     if (fbUser) {
-      callback(mapFirebaseUser(fbUser));
+      let extra: Partial<UserProfile> = {};
+      try {
+        const snap = await getDoc(doc(db, "users", fbUser.uid));
+        if (snap.exists()) {
+          const d = snap.data();
+          extra = {
+            role: d.role,
+            name: d.name,
+            phone: sanitizeUserPhone(d.phone),
+            city: d.city
+          };
+        }
+      } catch {}
+
+      try {
+        const cached = localStorage.getItem('villasell_user');
+        if (cached) {
+          const p = JSON.parse(cached);
+          if (p.email?.toLowerCase() === fbUser.email?.toLowerCase()) {
+            if (!extra.role && p.role) extra.role = p.role;
+            if (!extra.name && p.name) extra.name = p.name;
+            if (!extra.phone && p.phone) extra.phone = sanitizeUserPhone(p.phone);
+          }
+        }
+      } catch {}
+
+      callback(mapFirebaseUser(fbUser, extra));
     } else {
       callback(null);
     }
@@ -659,6 +785,66 @@ export const fetchAndCleanAdminNotifications = async (
   }
 
   return cleaned;
+};
+
+/**
+ * Associate a posted property ID with a user account in local storage
+ */
+export const recordUserPostedProperty = (userEmail: string, propertyId: string): void => {
+  if (!userEmail || !propertyId) return;
+  try {
+    const cleanEmail = userEmail.toLowerCase().trim();
+    const existingStr = localStorage.getItem('villasell_user_property_map');
+    const map: Record<string, string[]> = existingStr ? JSON.parse(existingStr) : {};
+    const userList = map[cleanEmail] || [];
+    if (!userList.includes(propertyId)) {
+      map[cleanEmail] = [...userList, propertyId];
+      localStorage.setItem('villasell_user_property_map', JSON.stringify(map));
+    }
+  } catch (e) {
+    console.warn('Error recording user posted property:', e);
+  }
+};
+
+/**
+ * Check if a property belongs to the current user
+ */
+export const isPropertyOwnedByUser = (property: Property, user: UserProfile | null): boolean => {
+  if (!user || !property) return false;
+  const userEmail = (user.email || '').toLowerCase().trim();
+  const userPhone = (user.phone || '').replace(/\D/g, '');
+
+  if (property.postedByEmail && property.postedByEmail.toLowerCase().trim() === userEmail) {
+    return true;
+  }
+  if (property.postedBy?.email && property.postedBy.email.toLowerCase().trim() === userEmail) {
+    return true;
+  }
+  if (property.postedBy?.userId && property.postedBy.userId === user.id) {
+    return true;
+  }
+  if (userPhone && property.postedBy?.phone) {
+    const propPhone = property.postedBy.phone.replace(/\D/g, '');
+    if (propPhone && propPhone.length >= 10 && propPhone === userPhone) {
+      return true;
+    }
+  }
+
+  // Check localStorage mapping
+  try {
+    const mapStr = localStorage.getItem('villasell_user_property_map');
+    if (mapStr) {
+      const map: Record<string, string[]> = JSON.parse(mapStr);
+      const userList = map[userEmail] || [];
+      if (userList.includes(property.id)) {
+        return true;
+      }
+    }
+  } catch {
+    // ignore
+  }
+
+  return false;
 };
 
 /**

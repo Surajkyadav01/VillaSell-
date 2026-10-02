@@ -49,6 +49,8 @@ export interface Property {
     name: string;
     type: 'Owner' | 'Agent' | 'Builder';
     phone: string;
+    email?: string;
+    userId?: string;
   };
   description: string;
   createdAt: string;
@@ -85,6 +87,7 @@ export interface CustomerReview {
 export type UserRole = 'Buyer' | 'Agent' | 'Owner' | 'Admin';
 
 export interface UserProfile {
+  id?: string;
   name: string;
   phone: string;
   email: string;

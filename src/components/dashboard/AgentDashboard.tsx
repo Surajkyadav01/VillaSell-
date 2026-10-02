@@ -23,6 +23,7 @@ import {
   Tag
 } from 'lucide-react';
 import { Property, UserProfile, PropertyInquiry, PropertyType, PropertyCategory } from '../../types/property';
+import { sanitizeUserPhone, resolveUserDisplayName } from '../../utils/phoneSanitizer';
 
 interface AgentDashboardProps {
   user: UserProfile;
@@ -160,9 +161,9 @@ export const AgentDashboard: React.FC<AgentDashboardProps> = ({
         { title: 'International Airport', distance: '18 km', type: 'airport' }
       ],
       postedBy: {
-        name: user.name || 'Verified Agent',
+        name: user.name || resolveUserDisplayName(null, user.email) || 'Verified Agent',
         type: 'Agent',
-        phone: user.phone || '+91 83838 26205'
+        phone: sanitizeUserPhone(user.phone)
       },
       description: fastDesc.trim() || `Prime ${fastBhk} BHK ${fastType} presented exclusively by ${user.name}. High rental yield, premium fittings, and immediate possession.`,
       createdAt: new Date().toISOString().split('T')[0]
