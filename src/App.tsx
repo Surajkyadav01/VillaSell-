@@ -475,7 +475,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col antialiased selection:bg-blue-100 selection:text-blue-900 pb-16 md:pb-0">
+    <div className="min-h-screen w-full max-w-full overflow-x-hidden bg-slate-50 text-slate-900 flex flex-col antialiased selection:bg-blue-100 selection:text-blue-900 pb-16 md:pb-0">
       {/* Toast Alert */}
       {toast && (
         <div className="fixed bottom-6 right-6 z-50 bg-slate-900 text-white text-xs font-bold px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2 border border-slate-700 animate-in slide-in-from-bottom-5">
@@ -517,7 +517,7 @@ export default function App() {
       )}
 
       {/* ROUTING VIEWS (Full Page, No Popups) */}
-      <main className="flex-1">
+      <main className="flex-1 w-full max-w-full overflow-x-hidden">
         {/* VIEW: DEDICATED ADMIN CONTROL PANEL */}
         {activeView === 'admin-panel' && (
           <AdminDashboardView
