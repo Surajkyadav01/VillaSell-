@@ -62,9 +62,14 @@ export const ServicesDropdown: React.FC<ServicesDropdownProps> = ({
 
       {/* Dropdown Menu Popup (Exactly matching the user's Housing.com screenshot) */}
       {isOpen && (
-        <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-3 w-[420px] bg-white rounded-2xl shadow-2xl border border-slate-200 p-6 z-50 animate-in fade-in zoom-in-95 duration-150">
+        <div 
+          className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2.5 w-[390px] sm:w-[420px] bg-white rounded-2xl shadow-2xl border border-slate-200 p-5 sm:p-6 z-[100] animate-in fade-in zoom-in-95 duration-150"
+          style={{
+            filter: 'drop-shadow(0 20px 30px rgba(0,0,0,0.18))'
+          }}
+        >
           {/* Top Triangle Speech Bubble Caret */}
-          <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 w-4 h-4 bg-white border-t border-l border-slate-200 rotate-45" />
+          <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 w-4 h-4 bg-white border-t border-l border-slate-200 rotate-45 z-20" />
 
           {/* 2-Column Layout */}
           <div className="relative z-10 grid grid-cols-2 gap-8 text-left">

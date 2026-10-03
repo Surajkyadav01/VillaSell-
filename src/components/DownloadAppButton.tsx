@@ -43,12 +43,12 @@ export const DownloadAppButton: React.FC<DownloadAppButtonProps> = ({
 
   return (
     <>
-      {/* 1. NAVBAR VARIANT */}
+      {/* 1. NAVBAR VARIANT (Desktop only, hidden on mobile phone screens) */}
       {variant === 'navbar' && (
         <button
           onClick={handleClick}
           type="button"
-          className={`inline-flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl text-[11px] sm:text-xs font-bold text-white bg-white/10 hover:bg-white/20 border border-white/20 shadow-xs backdrop-blur-md transition-all cursor-pointer active:scale-95 group shrink-0 ${className}`}
+          className={`hidden lg:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold text-white bg-white/10 hover:bg-white/20 border border-white/20 shadow-xs backdrop-blur-md transition-all cursor-pointer active:scale-95 group shrink-0 ${className}`}
           title="Install VillaSell App on your device"
         >
           <Smartphone className="w-3.5 h-3.5 text-amber-400 group-hover:scale-110 transition-transform shrink-0" />

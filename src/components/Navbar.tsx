@@ -107,7 +107,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <>
-      <header className="sticky top-0 z-40 w-full max-w-full bg-gradient-to-r from-[#1b4a80] via-[#255e9c] to-[#2b568d] border-b border-sky-300/35 shadow-md backdrop-blur-md">
+      <header className="sticky top-0 z-50 w-full max-w-full bg-gradient-to-r from-[#1b4a80] via-[#255e9c] to-[#2b568d] border-b border-sky-300/35 shadow-md backdrop-blur-md">
         <div className="w-full max-w-full px-2 sm:px-4 lg:px-6">
           <div className="flex items-center justify-between h-16 sm:h-18 w-full max-w-full min-w-0">
             {/* Left: Custom Luxury Real Estate Logo & City Selector in corner */}
@@ -226,12 +226,26 @@ export const Navbar: React.FC<NavbarProps> = ({
                 activeView={activeView}
                 onNavigate={navigateTo}
               />
+
+              {/* Contact Navigation Link */}
+              <button
+                onClick={() => navigateTo('contact')}
+                className={`px-2 2xl:px-2.5 py-1.5 rounded-xl font-bold text-xs 2xl:text-sm transition-all cursor-pointer ${
+                  activeView === 'contact'
+                    ? 'text-white bg-blue-500/80 shadow-inner border border-blue-300/40'
+                    : 'text-sky-100 hover:text-white hover:bg-white/10'
+                }`}
+              >
+                Contact
+              </button>
             </nav>
 
             {/* Right Action Buttons */}
             <div className="flex items-center gap-1 sm:gap-1.5 lg:gap-2 shrink-0">
-              {/* Download App Button (Desktop/Laptop browser only, hidden on mobile phone navbar) */}
-              <DownloadAppButton variant="navbar" className="hidden lg:inline-flex" />
+              {/* Download App Button (Desktop only, strictly hidden on mobile navbar) */}
+              <div className="hidden lg:block shrink-0">
+                <DownloadAppButton variant="navbar" />
+              </div>
 
               {/* Shortlist Heart Button */}
               <button
