@@ -81,6 +81,8 @@ export const LazyImage: React.FC<LazyImageProps> = ({
         <img
           src={src}
           alt={alt}
+          width="640"
+          height="400"
           loading="lazy"
           decoding="async"
           onLoad={() => setIsLoaded(true)}

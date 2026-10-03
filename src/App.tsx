@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect, useRef } from 'react';
+import React, { useState, useMemo, useEffect, useRef, lazy, Suspense } from 'react';
 import { 
   Building2, 
   Home as HomeIcon, 
@@ -40,25 +40,11 @@ import { Navbar } from './components/Navbar';
 import { HeroSearch } from './components/HeroSearch';
 import { PropertyCard } from './components/PropertyCard';
 import { PropertyCardSkeleton } from './components/PropertyCardSkeleton';
-import { PropertyDetailView } from './components/PropertyDetailView';
-import { PostPropertyView } from './components/PostPropertyView';
-import { ShortlistView } from './components/ShortlistView';
-import { ContactView } from './components/ContactView';
-import { LegalView } from './components/LegalView';
 import { Footer } from './components/Footer';
 import { CustomDropdown } from './components/CustomDropdown';
 import { LazySection } from './components/LazySection';
-import { AuthModal } from './components/AuthModal';
-import { HomeLoanView } from './components/HomeLoanView';
-import { HousingPremiumView } from './components/HousingPremiumView';
-import { EmiCalculatorView } from './components/EmiCalculatorView';
-import { PropertyValuationView } from './components/PropertyValuationView';
-import { RentReceiptView } from './components/RentReceiptView';
 import { MobileBottomNav } from './components/MobileBottomNav';
 import { FindPropertyPreferredCity } from './components/FindPropertyPreferredCity';
-import { CityPropertiesView } from './components/CityPropertiesView';
-import { AdminDashboardView } from './components/AdminDashboardView';
-import { DashboardView } from './components/dashboard/DashboardView';
 import { 
   onAuthStatusChanged, 
   logoutFromFirebase, 
@@ -66,6 +52,22 @@ import {
   savePropertyToFirestore,
   deduplicatePropertyList
 } from './services/firebase';
+
+// Code-split heavy full-page views and modals to keep initial bundle ultra-light
+const PropertyDetailView = lazy(() => import('./components/PropertyDetailView').then(m => ({ default: m.PropertyDetailView })));
+const PostPropertyView = lazy(() => import('./components/PostPropertyView').then(m => ({ default: m.PostPropertyView })));
+const ShortlistView = lazy(() => import('./components/ShortlistView').then(m => ({ default: m.ShortlistView })));
+const ContactView = lazy(() => import('./components/ContactView').then(m => ({ default: m.ContactView })));
+const LegalView = lazy(() => import('./components/LegalView').then(m => ({ default: m.LegalView })));
+const HomeLoanView = lazy(() => import('./components/HomeLoanView').then(m => ({ default: m.HomeLoanView })));
+const HousingPremiumView = lazy(() => import('./components/HousingPremiumView').then(m => ({ default: m.HousingPremiumView })));
+const EmiCalculatorView = lazy(() => import('./components/EmiCalculatorView').then(m => ({ default: m.EmiCalculatorView })));
+const PropertyValuationView = lazy(() => import('./components/PropertyValuationView').then(m => ({ default: m.PropertyValuationView })));
+const RentReceiptView = lazy(() => import('./components/RentReceiptView').then(m => ({ default: m.RentReceiptView })));
+const CityPropertiesView = lazy(() => import('./components/CityPropertiesView').then(m => ({ default: m.CityPropertiesView })));
+const AdminDashboardView = lazy(() => import('./components/AdminDashboardView').then(m => ({ default: m.AdminDashboardView })));
+const DashboardView = lazy(() => import('./components/dashboard/DashboardView').then(m => ({ default: m.DashboardView })));
+const AuthModal = lazy(() => import('./components/AuthModal').then(m => ({ default: m.AuthModal })));
 import { sanitizeUserPhone, isHelplineOrAdminPhone } from './utils/phoneSanitizer';
 
 export default function App() {
@@ -518,6 +520,12 @@ export default function App() {
 
       {/* ROUTING VIEWS (Full Page, No Popups) */}
       <main className="flex-1 w-full max-w-full overflow-x-hidden">
+        <Suspense fallback={
+          <div className="min-h-[50vh] flex flex-col items-center justify-center gap-2 py-16">
+            <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
+            <span className="text-xs font-bold text-slate-500">Loading view...</span>
+          </div>
+        }>
         {/* VIEW: DEDICATED ADMIN CONTROL PANEL */}
         {activeView === 'admin-panel' && (
           <AdminDashboardView
@@ -1322,6 +1330,7 @@ export default function App() {
             </LazySection>
           </div>
         )}
+        </Suspense>
       </main>
 
       {/* Mobile Bottom Navigation Bar (Hidden in dedicated Admin Panel) */}
@@ -1356,21 +1365,25 @@ export default function App() {
         />
       )}
 
-      {/* User Login & Authentication Modal */}
-      <AuthModal
-        isOpen={authModalOpen}
-        onClose={() => {
-          setAuthModalOpen(false);
-          setPostPropertyAuthPrompt(false);
-        }}
-        onLoginSuccess={handleLoginSuccess}
-        initialMode={authModalMode}
-        customMessage={
-          postPropertyAuthPrompt
-            ? 'List your property for free with 0% brokerage. Sign in or create an account to manage your listings, review buyer inquiries, and track live status updates.'
-            : undefined
-        }
-      />
+      {/* User Login & Authentication Modal (Code-split) */}
+      {authModalOpen && (
+        <Suspense fallback={null}>
+          <AuthModal
+            isOpen={authModalOpen}
+            onClose={() => {
+              setAuthModalOpen(false);
+              setPostPropertyAuthPrompt(false);
+            }}
+            onLoginSuccess={handleLoginSuccess}
+            initialMode={authModalMode}
+            customMessage={
+              postPropertyAuthPrompt
+                ? 'List your property for free with 0% brokerage. Sign in or create an account to manage your listings, review buyer inquiries, and track live status updates.'
+                : undefined
+            }
+          />
+        </Suspense>
+      )}
     </div>
   );
 }

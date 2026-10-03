@@ -56,10 +56,13 @@
     <meta name="twitter:description" content="Explore verified villas, apartments, plots & commercial hubs with 0% brokerage and verified direct owner contacts." />
     <meta name="twitter:image" content="https://www.villasell.com/android-chrome-512x512.png" />
 
-    <!-- Google Fonts Preconnect & Styling -->
+    <!-- Google Fonts Preconnect & Non-Blocking Styling -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap">
+    </noscript>
 
     <!-- High-Priority Preload for City Skyline Hero Background (Instant zero-delay load) -->
     <link rel="preload" as="image" href="./images/header_bg_final.webp" type="image/webp" fetchpriority="high">
