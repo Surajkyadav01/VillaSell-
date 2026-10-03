@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { X, Smartphone, Download, Share2, PlusSquare, CheckCircle2, Sparkles, ShieldCheck, RefreshCw, Check } from 'lucide-react';
 import { usePWAInstall } from '../hooks/usePWAInstall';
+import { getAssetUrl } from '../utils/assetHelper';
 
 interface DownloadAppModalProps {
   isOpen: boolean;
@@ -62,7 +63,7 @@ export const DownloadAppModal: React.FC<DownloadAppModalProps> = ({ isOpen, onCl
           <div className="flex items-center gap-2.5">
             <div className="w-9 h-9 rounded-xl bg-white/10 border border-white/20 p-1 flex items-center justify-center shadow-xs shrink-0">
               <img 
-                src="/favicon-48x48.png" 
+                src={getAssetUrl('favicon-48x48.png')} 
                 alt="VillaSell App" 
                 className="w-full h-full object-contain rounded-lg"
               />

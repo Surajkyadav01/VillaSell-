@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Smartphone, Download, CheckCircle2 } from 'lucide-react';
 import { usePWAInstall } from '../hooks/usePWAInstall';
 import { DownloadAppModal } from './DownloadAppModal';
+import { getAssetUrl } from '../utils/assetHelper';
 
 interface DownloadAppButtonProps {
   variant?: 'navbar' | 'footer' | 'drawer' | 'pill';
@@ -66,7 +67,7 @@ export const DownloadAppButton: React.FC<DownloadAppButtonProps> = ({
         >
           <div className="flex items-center gap-3 text-left">
             <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-700 to-slate-900 border border-blue-400/30 p-1 flex items-center justify-center shadow-xs shrink-0 group-hover:scale-105 transition-transform">
-              <img src="/favicon-48x48.png" alt="VillaSell App" className="w-full h-full object-contain rounded-lg" />
+              <img src={getAssetUrl('favicon-48x48.png')} alt="VillaSell App" className="w-full h-full object-contain rounded-lg" />
             </div>
             <div>
               <div className="flex items-center gap-2">

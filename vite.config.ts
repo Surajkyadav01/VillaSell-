@@ -1,12 +1,21 @@
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
+import { fileURLToPath } from 'url';
 import { defineConfig } from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 export default defineConfig(() => {
+  // Support both root domains (AI Studio dev/preview) and GitHub Pages subpath (/VillaSell/)
+  const isGitHubActions = process.env.GITHUB_ACTIONS === 'true';
+  const repoName = process.env.GITHUB_REPOSITORY ? `/${process.env.GITHUB_REPOSITORY.split('/')[1]}/` : '/VillaSell/';
+  const basePath = process.env.VITE_BASE_PATH || (isGitHubActions ? repoName : '/');
+
   return {
-    base: '/',
+    base: basePath,
     plugins: [
       react(),
       tailwindcss(),
@@ -14,7 +23,7 @@ export default defineConfig(() => {
         registerType: 'autoUpdate',
         includeAssets: ['favicon.ico', 'favicon.svg', 'apple-touch-icon.png', 'favicon-48x48.png'],
         manifest: {
-          id: '/',
+          id: basePath,
           name: 'VillaSell - Real Estate Marketplace',
           short_name: 'VillaSell',
           description: 'Explore 10,000+ verified luxury villas, penthouses, modern flats & plots across India with zero brokerage.',
@@ -22,30 +31,30 @@ export default defineConfig(() => {
           background_color: '#0f172a',
           display: 'standalone',
           orientation: 'portrait',
-          start_url: '/',
-          scope: '/',
+          start_url: basePath,
+          scope: basePath,
           categories: ['business', 'lifestyle', 'utilities'],
           icons: [
             {
-              src: '/favicon-48x48.png',
+              src: `${basePath}favicon-48x48.png`,
               sizes: '48x48',
               type: 'image/png',
               purpose: 'any'
             },
             {
-              src: '/android-chrome-192x192.png',
+              src: `${basePath}android-chrome-192x192.png`,
               sizes: '192x192',
               type: 'image/png',
               purpose: 'any'
             },
             {
-              src: '/android-chrome-512x512.png',
+              src: `${basePath}android-chrome-512x512.png`,
               sizes: '512x512',
               type: 'image/png',
               purpose: 'any'
             },
             {
-              src: '/android-chrome-512x512.png',
+              src: `${basePath}android-chrome-512x512.png`,
               sizes: '512x512',
               type: 'image/png',
               purpose: 'maskable'
