@@ -107,20 +107,20 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <>
-      <header className="sticky top-0 z-40 w-full max-w-full bg-gradient-to-r from-[#1b4a80] via-[#255e9c] to-[#2b568d] border-b border-sky-300/35 shadow-md backdrop-blur-md overflow-hidden">
-        <div className="w-full max-w-full px-2.5 sm:px-4 lg:px-6">
+      <header className="sticky top-0 z-40 w-full max-w-full bg-gradient-to-r from-[#1b4a80] via-[#255e9c] to-[#2b568d] border-b border-sky-300/35 shadow-md backdrop-blur-md">
+        <div className="w-full max-w-full px-2 sm:px-4 lg:px-6">
           <div className="flex items-center justify-between h-16 sm:h-18 w-full max-w-full min-w-0">
             {/* Left: Custom Luxury Real Estate Logo & City Selector in corner */}
-            <div className="flex items-center gap-2 sm:gap-3 lg:gap-4 shrink-0">
+            <div className="flex items-center gap-1.5 sm:gap-3 lg:gap-4 shrink-0">
               {/* Logo */}
               <button
                 onClick={() => navigateTo('home')}
-                className="flex items-center gap-2 sm:gap-2.5 text-left group cursor-pointer focus:outline-none shrink-0"
+                className="flex items-center gap-1.5 sm:gap-2.5 text-left group cursor-pointer focus:outline-none shrink-0"
                 title="VillaSell Home"
               >
                 {/* Luxury Architectural Villa Emblem */}
-                <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-tr from-blue-600 via-indigo-800 to-slate-900 border border-blue-300/40 flex items-center justify-center shadow-lg shadow-slate-900/60 group-hover:scale-105 group-hover:border-amber-400/60 transition-all shrink-0">
-                  <svg viewBox="0 0 32 32" className="w-6.5 h-6.5 sm:w-7.5 sm:h-7.5" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl bg-gradient-to-tr from-blue-600 via-indigo-800 to-slate-900 border border-blue-300/40 flex items-center justify-center shadow-md sm:shadow-lg shadow-slate-900/60 group-hover:scale-105 group-hover:border-amber-400/60 transition-all shrink-0">
+                  <svg viewBox="0 0 32 32" className="w-6 h-6 sm:w-7.5 sm:h-7.5" fill="none" xmlns="http://www.w3.org/2000/svg">
                     {/* Villa Structure & Roof */}
                     <path
                       d="M16 4L4 14.5H8.5V26.5H23.5V14.5H28L16 4Z"
@@ -153,8 +153,8 @@ export const Navbar: React.FC<NavbarProps> = ({
                 </div>
 
                 {/* Brand Typography (VillaSell without .com) */}
-                <div className="flex items-center gap-1.5">
-                  <span className="text-xl sm:text-2xl font-black tracking-tight text-white font-sans">
+                <div className="flex items-center gap-1">
+                  <span className="text-lg sm:text-2xl font-black tracking-tight text-white font-sans">
                     Villa<span className="text-amber-400">Sell</span>
                   </span>
                   <span className="hidden sm:inline-flex px-1.5 py-0.5 text-[9px] uppercase font-black tracking-wider rounded bg-emerald-500 text-slate-950 shadow-xs">
@@ -164,7 +164,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               </button>
 
               {/* All Cities Selector (Housing.com style: mega cities popup with search & landmark grid) */}
-              <div className="w-auto shrink-0 mr-1 sm:mr-2 lg:mr-3">
+              <div className="w-auto shrink-0 mr-0.5 sm:mr-2 lg:mr-3">
                 <CityMegaDropdown
                   selectedCity={selectedCity}
                   onSelectCity={(city) => {
@@ -226,25 +226,12 @@ export const Navbar: React.FC<NavbarProps> = ({
                 activeView={activeView}
                 onNavigate={navigateTo}
               />
-
-              <div className="w-px h-4 bg-sky-300/30 mx-1 hidden 2xl:block" />
-
-              <button
-                onClick={() => navigateTo('contact')}
-                className={`hidden 2xl:block px-2.5 py-1.5 rounded-xl transition-all cursor-pointer ${
-                  activeView === 'contact'
-                    ? 'text-white bg-blue-500/80 shadow-inner border border-blue-300/40'
-                    : 'text-sky-100 hover:text-white hover:bg-white/10'
-                }`}
-              >
-                Contact
-              </button>
             </nav>
 
             {/* Right Action Buttons */}
             <div className="flex items-center gap-1 sm:gap-1.5 lg:gap-2 shrink-0">
-              {/* Download App Button (Housing.com style) */}
-              <DownloadAppButton variant="navbar" className="hidden md:inline-flex" />
+              {/* Download App Button (Desktop/Laptop browser only, hidden on mobile phone navbar) */}
+              <DownloadAppButton variant="navbar" className="hidden lg:inline-flex" />
 
               {/* Shortlist Heart Button */}
               <button
@@ -281,10 +268,10 @@ export const Navbar: React.FC<NavbarProps> = ({
               {!currentUser ? (
                 <button
                   onClick={onOpenLogin}
-                  className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs border border-sky-300/30 hover:border-amber-400/60 shadow-xs transition-all cursor-pointer shrink-0"
+                  className="flex items-center gap-1 px-2 py-1.5 sm:px-3 sm:py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs border border-sky-300/30 hover:border-amber-400/60 shadow-xs transition-all cursor-pointer shrink-0"
                   title="Login or Sign Up"
                 >
-                  <User className="w-4 h-4 text-amber-300" />
+                  <User className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-300" />
                   <span>Login</span>
                 </button>
               ) : (
@@ -439,15 +426,15 @@ export const Navbar: React.FC<NavbarProps> = ({
                 </div>
               )}
 
-              {/* EXECUTIVE MENU BUTTON */}
+              {/* EXECUTIVE MENU BUTTON (Always clearly visible on Mobile & Desktop) */}
               <button
                 onClick={() => setIsDrawerOpen(true)}
-                className="flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 py-1.5 sm:py-2 rounded-xl border border-white/20 text-white hover:bg-white/10 hover:border-blue-300 transition-all cursor-pointer focus:outline-none shrink-0"
+                className="flex items-center gap-1.5 px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-xl bg-white/15 hover:bg-white/25 border border-sky-300/40 text-white font-bold text-xs shadow-xs transition-all cursor-pointer focus:outline-none shrink-0"
                 title="Open Main Menu"
                 aria-label="Open Navigation Menu"
               >
-                <Menu className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
-                <span className="font-bold text-xs">Menu</span>
+                <Menu className="w-4 h-4 text-amber-300 shrink-0" />
+                <span className="font-bold text-xs text-white">Menu</span>
               </button>
             </div>
           </div>
