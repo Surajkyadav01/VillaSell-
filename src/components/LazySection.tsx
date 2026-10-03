@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
 
 interface LazySectionProps {
   children: React.ReactNode;
@@ -9,64 +9,18 @@ interface LazySectionProps {
   delayMs?: number;
 }
 
+/**
+ * High-performance section wrapper that avoids Cumulative Layout Shift (CLS)
+ * by keeping section dimensions stable and never collapsing into empty placeholders.
+ */
 export const LazySection: React.FC<LazySectionProps> = ({
   children,
   className = '',
   id,
-  threshold = 0.1,
-  rootMargin = '100px 0px',
-  delayMs = 0,
 }) => {
-  const [isVisible, setIsVisible] = useState(false);
-  const sectionRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const element = sectionRef.current;
-    if (!element) return;
-
-    // If IntersectionObserver is not supported, reveal immediately
-    if (typeof IntersectionObserver === 'undefined') {
-      setIsVisible(true);
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const entry = entries[0];
-        if (entry.isIntersecting) {
-          if (delayMs > 0) {
-            setTimeout(() => setIsVisible(true), delayMs);
-          } else {
-            setIsVisible(true);
-          }
-          observer.unobserve(entry.target);
-        }
-      },
-      {
-        threshold,
-        rootMargin,
-      }
-    );
-
-    observer.observe(element);
-
-    return () => {
-      observer.disconnect();
-    };
-  }, [threshold, rootMargin, delayMs]);
-
   return (
-    <div
-      ref={sectionRef}
-      id={id}
-      className={`transition-all duration-700 ease-out ${
-        isVisible
-          ? 'opacity-100 translate-y-0 filter-none'
-          : 'opacity-0 translate-y-8 pointer-events-none'
-      } ${className}`}
-    >
-      {/* Only render content once triggered or keep rendered */}
-      {isVisible ? children : <div className="min-h-[120px] w-full" />}
+    <div id={id} className={`w-full max-w-full ${className}`}>
+      {children}
     </div>
   );
 };

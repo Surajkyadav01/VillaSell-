@@ -45,13 +45,7 @@ import { CustomDropdown } from './components/CustomDropdown';
 import { LazySection } from './components/LazySection';
 import { MobileBottomNav } from './components/MobileBottomNav';
 import { FindPropertyPreferredCity } from './components/FindPropertyPreferredCity';
-import { 
-  onAuthStatusChanged, 
-  logoutFromFirebase, 
-  subscribeToFirestoreProperties, 
-  savePropertyToFirestore,
-  deduplicatePropertyList
-} from './services/firebase';
+import { deduplicatePropertyList } from './utils/propertyHelper';
 
 // Code-split heavy full-page views and modals to keep initial bundle ultra-light
 const PropertyDetailView = lazy(() => import('./components/PropertyDetailView').then(m => ({ default: m.PropertyDetailView })));
@@ -121,42 +115,70 @@ export default function App() {
   const [properties, setProperties] = useState<Property[]>(INITIAL_PROPERTIES);
   const [isFirestoreLive, setIsFirestoreLive] = useState(false);
 
-  // Live Firebase Auth sync
+  // Live Firebase Auth & Firestore sync (Deferred non-blocking load for instant mobile FCP/LCP)
   useEffect(() => {
-    const unsub = onAuthStatusChanged((user) => {
-      if (user) {
-        user.phone = sanitizeUserPhone(user.phone);
-        setCurrentUser(user);
-        try {
-          localStorage.setItem('villasell_user', JSON.stringify(user));
-        } catch (e) {
-          console.error(e);
-        }
-      }
-    });
-    return () => unsub();
-  }, []);
+    let unsubAuth: (() => void) | undefined;
+    let unsubFirestore: (() => void) | undefined;
+    let isMounted = true;
 
-  // Live Firestore Properties sync with fallback to mock data if collection is empty
-  useEffect(() => {
-    const unsub = subscribeToFirestoreProperties(
-      (firestoreList) => {
-        setIsFirestoreLive(true);
-        if (firestoreList && firestoreList.length > 0) {
-          // Merge Firestore properties with INITIAL_PROPERTIES & deduplicate
-          const firestoreIds = new Set(firestoreList.map((p) => p.id));
-          const remainingInitials = INITIAL_PROPERTIES.filter((p) => !firestoreIds.has(p.id));
-          setProperties(deduplicatePropertyList([...firestoreList, ...remainingInitials]));
-        } else {
-          setProperties(deduplicatePropertyList(INITIAL_PROPERTIES));
-        }
-      },
-      () => {
-        // Fallback cleanly to verified properties
-        setProperties((current) => deduplicatePropertyList(current.length > 0 ? current : INITIAL_PROPERTIES));
-      }
-    );
-    return () => unsub();
+    const initFirebase = () => {
+      import('./services/firebase')
+        .then(({ onAuthStatusChanged, subscribeToFirestoreProperties }) => {
+          if (!isMounted) return;
+
+          unsubAuth = onAuthStatusChanged((user) => {
+            if (!isMounted) return;
+            if (user) {
+              user.phone = sanitizeUserPhone(user.phone);
+              setCurrentUser(user);
+              try {
+                localStorage.setItem('villasell_user', JSON.stringify(user));
+              } catch (e) {
+                console.error(e);
+              }
+            }
+          });
+
+          unsubFirestore = subscribeToFirestoreProperties(
+            (firestoreList) => {
+              if (!isMounted) return;
+              setIsFirestoreLive(true);
+              if (firestoreList && firestoreList.length > 0) {
+                const firestoreIds = new Set(firestoreList.map((p) => p.id));
+                const remainingInitials = INITIAL_PROPERTIES.filter((p) => !firestoreIds.has(p.id));
+                setProperties(deduplicatePropertyList([...firestoreList, ...remainingInitials]));
+              } else {
+                setProperties(deduplicatePropertyList(INITIAL_PROPERTIES));
+              }
+            },
+            () => {
+              if (!isMounted) return;
+              setProperties((current) => deduplicatePropertyList(current.length > 0 ? current : INITIAL_PROPERTIES));
+            }
+          );
+        })
+        .catch((err) => {
+          console.warn('Firebase deferred init notice:', err);
+        });
+    };
+
+    if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
+      const idleHandle = (window as any).requestIdleCallback(initFirebase, { timeout: 1200 });
+      return () => {
+        isMounted = false;
+        (window as any).cancelIdleCallback(idleHandle);
+        unsubAuth?.();
+        unsubFirestore?.();
+      };
+    } else {
+      const timer = setTimeout(initFirebase, 250);
+      return () => {
+        isMounted = false;
+        clearTimeout(timer);
+        unsubAuth?.();
+        unsubFirestore?.();
+      };
+    }
   }, []);
 
   // Shortlist State with localStorage
@@ -229,6 +251,7 @@ export default function App() {
 
   const handleLogout = async () => {
     try {
+      const { logoutFromFirebase } = await import('./services/firebase');
       await logoutFromFirebase();
     } catch (e) {
       console.warn('Firebase logout notice:', e);

@@ -56,14 +56,22 @@ export const HeroSearch: React.FC<HeroSearchProps> = ({
 
   return (
     <div 
-      className="relative pt-8 sm:pt-12 pb-14 sm:pb-18 px-3 sm:px-6 lg:px-8 overflow-hidden min-h-[500px] sm:min-h-[560px] flex flex-col justify-center bg-cover bg-bottom bg-no-repeat border-b border-slate-200/80"
-      style={{
-        backgroundImage: `url("${getAssetUrl('images/header_bg_final.webp')}")`,
-        backgroundColor: '#eaf3fa'
-      }}
+      className="relative pt-8 sm:pt-12 pb-14 sm:pb-18 px-3 sm:px-6 lg:px-8 overflow-hidden min-h-[500px] sm:min-h-[560px] flex flex-col justify-center border-b border-slate-200/80 bg-[#eaf3fa]"
     >
+      {/* High-Performance LCP Hero Skyline Background Image */}
+      <img
+        src={getAssetUrl('images/header_bg_final.webp')}
+        alt="VillaSell Luxury Properties Skyline"
+        width="2866"
+        height="910"
+        fetchPriority="high"
+        loading="eager"
+        decoding="async"
+        className="absolute inset-0 w-full h-full object-cover object-bottom pointer-events-none select-none -z-0"
+      />
+
       {/* Very gentle sky gradient on the top portion only so text reads crisp, leaving the skyline buildings 100% clear and sharp */}
-      <div className="absolute inset-x-0 top-0 h-44 bg-gradient-to-b from-sky-100/50 via-sky-50/20 to-transparent pointer-events-none" />
+      <div className="absolute inset-x-0 top-0 h-44 bg-gradient-to-b from-sky-100/50 via-sky-50/20 to-transparent pointer-events-none z-1" />
 
       {/* FOREGROUND MAIN CONTENT */}
       <div className="relative max-w-5xl mx-auto w-full z-10">

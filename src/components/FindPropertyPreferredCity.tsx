@@ -187,7 +187,10 @@ export const FindPropertyPreferredCity: React.FC<FindPropertyPreferredCityProps>
                 <img
                   src={getAssetUrl(city.imageUrl)}
                   alt={city.name}
+                  width="86"
+                  height="86"
                   loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110"
                   onError={(e) => {
                     const fallback = CITY_FALLBACKS[city.id];
