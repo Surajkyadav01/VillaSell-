@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Search, MapPin, Home, IndianRupee, CheckCircle2, ShieldCheck, Zap, Sparkles, ChevronRight } from 'lucide-react';
 import { PropertyCategory, SearchFilterState } from '../types/property';
 import { CITIES } from '../data/mockProperties';
@@ -20,6 +20,19 @@ export const HeroSearch: React.FC<HeroSearchProps> = ({
   onSearchClick,
   onPostPropertyClick,
 }) => {
+  const [hasInteracted, setHasInteracted] = useState(false);
+
+  // If user changed any filter from initial default
+  const isCustomFilter =
+    filters.category !== 'all' ||
+    filters.city !== 'All Cities' ||
+    filters.keyword.trim() !== '' ||
+    filters.bhk !== 'all' ||
+    filters.budgetRange !== 'all' ||
+    Boolean(filters.propertyType && filters.propertyType !== 'all');
+
+  const showFoundBadge = hasInteracted || isCustomFilter;
+
   const categories: { key: PropertyCategory | 'all'; label: string; badge?: string }[] = [
     { key: 'all', label: 'ALL' },
     { key: 'buy', label: 'BUY' },
@@ -45,6 +58,7 @@ export const HeroSearch: React.FC<HeroSearchProps> = ({
   ];
 
   const popularKeywords = [
+    'Mumbai',
     'Civil Lines',
     'Gomti Nagar',
     'Sector 128 Noida',
@@ -103,7 +117,10 @@ export const HeroSearch: React.FC<HeroSearchProps> = ({
               {categories.map((cat) => (
                 <button
                   key={cat.key}
-                  onClick={() => setFilters((prev) => ({ ...prev, category: cat.key }))}
+                  onClick={() => {
+                    setHasInteracted(true);
+                    setFilters((prev) => ({ ...prev, category: cat.key }));
+                  }}
                   className={`relative px-3.5 sm:px-5 py-1.5 sm:py-2 rounded-lg sm:rounded-xl text-xs sm:text-sm font-black tracking-wider transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5 ${
                     filters.category === cat.key
                       ? 'bg-blue-600 text-white shadow-md shadow-blue-950/40 border border-blue-400/40'
@@ -135,7 +152,10 @@ export const HeroSearch: React.FC<HeroSearchProps> = ({
                 </label>
                 <CustomDropdown
                   value={filters.city}
-                  onChange={(val) => setFilters((prev) => ({ ...prev, city: val }))}
+                  onChange={(val) => {
+                    setHasInteracted(true);
+                    setFilters((prev) => ({ ...prev, city: val }));
+                  }}
                   options={CITIES}
                   placeholder="Select City"
                   size="sm"
@@ -153,7 +173,10 @@ export const HeroSearch: React.FC<HeroSearchProps> = ({
                   type="text"
                   placeholder="Search for locality, landmark, project..."
                   value={filters.keyword}
-                  onChange={(e) => setFilters((prev) => ({ ...prev, keyword: e.target.value }))}
+                  onChange={(e) => {
+                    setHasInteracted(true);
+                    setFilters((prev) => ({ ...prev, keyword: e.target.value }));
+                  }}
                   className="w-full bg-transparent font-semibold text-slate-900 text-sm focus:outline-none placeholder:text-slate-400 py-0.5"
                 />
               </div>
@@ -166,7 +189,10 @@ export const HeroSearch: React.FC<HeroSearchProps> = ({
                 </label>
                 <CustomDropdown
                   value={filters.bhk}
-                  onChange={(val) => setFilters((prev) => ({ ...prev, bhk: val }))}
+                  onChange={(val) => {
+                    setHasInteracted(true);
+                    setFilters((prev) => ({ ...prev, bhk: val }));
+                  }}
                   options={bhkOptions}
                   placeholder="Select BHK"
                   size="sm"
@@ -182,7 +208,10 @@ export const HeroSearch: React.FC<HeroSearchProps> = ({
                 </label>
                 <CustomDropdown
                   value={filters.budgetRange}
-                  onChange={(val) => setFilters((prev) => ({ ...prev, budgetRange: val }))}
+                  onChange={(val) => {
+                    setHasInteracted(true);
+                    setFilters((prev) => ({ ...prev, budgetRange: val }));
+                  }}
                   options={budgetOptions}
                   placeholder="Select Budget"
                   size="sm"
@@ -199,7 +228,14 @@ export const HeroSearch: React.FC<HeroSearchProps> = ({
                   <button
                     key={loc}
                     type="button"
-                    onClick={() => setFilters((prev) => ({ ...prev, keyword: loc }))}
+                    onClick={() => {
+                      setHasInteracted(true);
+                      if (loc === 'Mumbai') {
+                        setFilters((prev) => ({ ...prev, city: 'Mumbai', keyword: '' }));
+                      } else {
+                        setFilters((prev) => ({ ...prev, keyword: loc }));
+                      }
+                    }}
                     className="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-blue-50 hover:text-blue-700 text-slate-600 transition-colors text-[11px] font-medium cursor-pointer shrink-0 whitespace-nowrap active:scale-95"
                   >
                     {loc}
@@ -208,14 +244,19 @@ export const HeroSearch: React.FC<HeroSearchProps> = ({
               </div>
 
               <button
-                onClick={onSearchClick}
+                onClick={() => {
+                  setHasInteracted(true);
+                  onSearchClick();
+                }}
                 className="w-full sm:w-auto px-7 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-sm shadow-md shadow-blue-900/25 flex items-center justify-center gap-2 cursor-pointer transition-all transform active:scale-95 shrink-0"
               >
                 <Search className="w-4 h-4 text-emerald-300" />
                 <span>Search</span>
-                <span className="bg-blue-900/80 text-blue-100 text-xs px-2 py-0.5 rounded-full font-bold ml-1">
-                  {totalMatches} Found
-                </span>
+                {showFoundBadge && (
+                  <span className="bg-blue-900/80 text-blue-100 text-xs px-2 py-0.5 rounded-full font-bold ml-1 animate-in fade-in duration-200">
+                    {totalMatches} Found
+                  </span>
+                )}
               </button>
             </div>
           </div>

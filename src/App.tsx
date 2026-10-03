@@ -181,19 +181,24 @@ export default function App() {
     }
   }, []);
 
-  // Shortlist State with localStorage
+  // Shortlist State with localStorage (Defaults to 100% empty list; only buyer/client selected properties appear)
   const [shortlist, setShortlist] = useState<string[]>(() => {
     try {
-      const saved = localStorage.getItem('villasell_shortlist');
-      return saved ? JSON.parse(saved) : ['prop-1', 'prop-4'];
+      // Purge any legacy demo shortlist keys stored in user browser
+      localStorage.removeItem('villasell_shortlist');
+      const saved = localStorage.getItem('villasell_shortlist_v2');
+      if (!saved) return [];
+      const parsed = JSON.parse(saved);
+      if (!Array.isArray(parsed)) return [];
+      return parsed;
     } catch {
-      return ['prop-1', 'prop-4'];
+      return [];
     }
   });
 
   useEffect(() => {
     try {
-      localStorage.setItem('villasell_shortlist', JSON.stringify(shortlist));
+      localStorage.setItem('villasell_shortlist_v2', JSON.stringify(shortlist));
     } catch (e) {
       console.error(e);
     }
@@ -270,7 +275,7 @@ export default function App() {
 
   // Search & Filter State
   const [filters, setFilters] = useState<SearchFilterState>({
-    category: 'buy',
+    category: 'all',
     city: 'All Cities',
     keyword: '',
     bhk: 'all',
@@ -383,7 +388,8 @@ export default function App() {
         const matchesLocality = prop.locality.toLowerCase().includes(query);
         const matchesAddress = prop.address.toLowerCase().includes(query);
         const matchesType = prop.propertyType.toLowerCase().includes(query);
-        if (!matchesTitle && !matchesLocality && !matchesAddress && !matchesType) {
+        const matchesCity = prop.city.toLowerCase().includes(query);
+        if (!matchesTitle && !matchesLocality && !matchesAddress && !matchesType && !matchesCity) {
           return false;
         }
       }
@@ -476,7 +482,7 @@ export default function App() {
   const resetFilters = () => {
     setActiveQuickCard(null);
     setFilters({
-      category: 'buy',
+      category: 'all',
       city: 'All Cities',
       keyword: '',
       bhk: 'all',
