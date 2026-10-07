@@ -15,7 +15,7 @@ import {
   Video
 } from 'lucide-react';
 import { Property } from '../types/property';
-import { BRAND_CONFIG } from '../data/mockProperties';
+import { BRAND_CONFIG } from '../data/brandConfig';
 import { LazyImage } from './LazyImage';
 
 interface PropertyCardProps {

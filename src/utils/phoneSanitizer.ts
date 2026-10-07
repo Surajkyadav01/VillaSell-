@@ -1,4 +1,4 @@
-import { BRAND_CONFIG } from '../data/mockProperties';
+import { BRAND_CONFIG } from '../data/brandConfig';
 
 /**
  * Checks if a given phone number belongs to the website owner / admin helpline

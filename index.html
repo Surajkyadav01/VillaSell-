@@ -59,13 +59,14 @@
     <!-- Google Fonts Preconnect & Optimized Non-Blocking Styling (Housing.com Professional Font: Rubik) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
     <noscript>
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800&display=swap">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap">
     </noscript>
 
-    <!-- High-Priority Preload for City Skyline Hero Background (Instant zero-delay load) -->
-    <link rel="preload" as="image" href="./images/header_bg_final.webp" type="image/webp" fetchpriority="high">
+    <!-- High-Priority Responsive Preloads for City Skyline Hero Background (Instant zero-delay load) -->
+    <link rel="preload" as="image" href="/images/header_bg_mobile.webp" type="image/webp" media="(max-width: 768px)" fetchpriority="high">
+    <link rel="preload" as="image" href="/images/header_bg_final.webp" type="image/webp" media="(min-width: 769px)" fetchpriority="high">
 
     <!-- Schema.org Structured Data (JSON-LD) for Google Rich Snippets & Sitelinks -->
     <script type="application/ld+json">

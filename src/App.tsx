@@ -32,22 +32,22 @@ import {
 } from './types/property';
 import { 
   INITIAL_PROPERTIES, 
-  CUSTOMER_REVIEWS, 
-  BRAND_CONFIG, 
-  CITIES 
+  CUSTOMER_REVIEWS 
 } from './data/mockProperties';
+import { BRAND_CONFIG } from './data/brandConfig';
+import { CITIES } from './data/cities';
 import { Navbar } from './components/Navbar';
 import { HeroSearch } from './components/HeroSearch';
 import { PropertyCard } from './components/PropertyCard';
 import { PropertyCardSkeleton } from './components/PropertyCardSkeleton';
-import { Footer } from './components/Footer';
 import { CustomDropdown } from './components/CustomDropdown';
 import { LazySection } from './components/LazySection';
 import { MobileBottomNav } from './components/MobileBottomNav';
-import { FindPropertyPreferredCity } from './components/FindPropertyPreferredCity';
 import { deduplicatePropertyList } from './utils/propertyHelper';
 
-// Code-split heavy full-page views and modals to keep initial bundle ultra-light
+// Code-split heavy components, full-page views and modals to keep initial bundle ultra-light
+const Footer = lazy(() => import('./components/Footer').then(m => ({ default: m.Footer })));
+const FindPropertyPreferredCity = lazy(() => import('./components/FindPropertyPreferredCity').then(m => ({ default: m.FindPropertyPreferredCity })));
 const PropertyDetailView = lazy(() => import('./components/PropertyDetailView').then(m => ({ default: m.PropertyDetailView })));
 const PostPropertyView = lazy(() => import('./components/PostPropertyView').then(m => ({ default: m.PostPropertyView })));
 const ShortlistView = lazy(() => import('./components/ShortlistView').then(m => ({ default: m.ShortlistView })));
@@ -928,7 +928,9 @@ export default function App() {
 
             {/* Find Your Property in Your Preferred City (RealEstateIndia inspired feature with authentic landmark images) */}
             <LazySection id="preferred-cities">
-              <FindPropertyPreferredCity onSelectCity={handleOpenCityPage} />
+              <Suspense fallback={<div className="min-h-[220px]" />}>
+                <FindPropertyPreferredCity onSelectCity={handleOpenCityPage} />
+              </Suspense>
             </LazySection>
 
             {/* Featured & Verified Listings Grid (Progressive / Lazy Loaded) */}
@@ -1381,17 +1383,19 @@ export default function App() {
 
       {/* Professional Housing.com Style Footer (Hidden in dedicated Admin Panel) */}
       {activeView !== 'admin-panel' && (
-        <Footer
-          onSelectView={(view) => {
-            if (view === 'post-property') {
-              handleNavigateToPostProperty();
-              return;
-            }
-            setActiveView(view);
-          }}
-          onSelectCategory={(cat) => setFilters((prev) => ({ ...prev, category: cat }))}
-          onSelectCity={(city) => setFilters((prev) => ({ ...prev, city }))}
-        />
+        <Suspense fallback={<div className="h-40" />}>
+          <Footer
+            onSelectView={(view) => {
+              if (view === 'post-property') {
+                handleNavigateToPostProperty();
+                return;
+              }
+              setActiveView(view);
+            }}
+            onSelectCategory={(cat) => setFilters((prev) => ({ ...prev, category: cat }))}
+            onSelectCity={(city) => setFilters((prev) => ({ ...prev, city }))}
+          />
+        </Suspense>
       )}
 
       {/* User Login & Authentication Modal (Code-split) */}

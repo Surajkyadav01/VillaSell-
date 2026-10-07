@@ -35,84 +35,84 @@ export const PREFERRED_CITIES_LIST: PreferredCityItem[] = [
     id: 'mumbai',
     name: 'Mumbai',
     count: '34726 + Properties',
-    imageUrl: 'images/cities/mumbai.jpg',
+    imageUrl: 'images/cities/mumbai.webp',
     filterValue: 'Mumbai'
   },
   {
     id: 'lucknow',
     name: 'Lucknow',
     count: '38450 + Properties',
-    imageUrl: 'images/cities/lucknow.jpg',
+    imageUrl: 'images/cities/lucknow.webp',
     filterValue: 'Lucknow'
   },
   {
     id: 'varanasi',
     name: 'Varanasi',
     count: '32180 + Properties',
-    imageUrl: 'images/cities/varanasi.jpg',
+    imageUrl: 'images/cities/varanasi.webp',
     filterValue: 'Varanasi'
   },
   {
     id: 'prayagraj',
     name: 'Prayagraj',
     count: '28940 + Properties',
-    imageUrl: 'images/cities/prayagraj.jpg',
+    imageUrl: 'images/cities/prayagraj.webp',
     filterValue: 'Prayagraj'
   },
   {
     id: 'noida',
     name: 'Noida',
     count: '34120 + Properties',
-    imageUrl: 'images/cities/noida.jpg',
+    imageUrl: 'images/cities/noida.webp',
     filterValue: 'Noida'
   },
   {
     id: 'gurgaon',
     name: 'Gurgaon',
     count: '35049 + Properties',
-    imageUrl: 'images/cities/gurgaon.jpg',
+    imageUrl: 'images/cities/gurgaon.webp',
     filterValue: 'Gurgaon'
   },
   {
     id: 'delhi',
     name: 'Delhi',
     count: '31496 + Properties',
-    imageUrl: 'images/cities/delhi.jpg',
+    imageUrl: 'images/cities/delhi.webp',
     filterValue: 'Delhi'
   },
   {
     id: 'bangalore',
     name: 'Bangalore',
     count: '36018 + Properties',
-    imageUrl: 'images/cities/bangalore.jpg',
+    imageUrl: 'images/cities/bangalore.webp',
     filterValue: 'Bangalore'
   },
   {
     id: 'pune',
     name: 'Pune',
     count: '29506 + Properties',
-    imageUrl: 'images/cities/pune.jpg',
+    imageUrl: 'images/cities/pune.webp',
     filterValue: 'Pune'
   },
   {
     id: 'hyderabad',
     name: 'Hyderabad',
     count: '18794 + Properties',
-    imageUrl: 'images/cities/hyderabad.jpg',
+    imageUrl: 'images/cities/hyderabad.webp',
     filterValue: 'Hyderabad'
   },
   {
     id: 'chennai',
     name: 'Chennai',
     count: '22168 + Properties',
-    imageUrl: 'images/cities/chennai.jpg',
+    imageUrl: 'images/cities/chennai.webp',
     filterValue: 'Chennai'
   },
   {
     id: 'kolkata',
     name: 'Kolkata',
     count: '12540 + Properties',
-    imageUrl: 'images/cities/kolkata.jpg',
+    imageUrl: 'images/cities/kolkata.webp',
     filterValue: 'Kolkata'
   },
 ];
@@ -122,28 +122,28 @@ export const ADDITIONAL_CITIES_LIST: PreferredCityItem[] = [
     id: 'ahmedabad',
     name: 'Ahmedabad',
     count: '10038 + Properties',
-    imageUrl: 'images/cities/ahmedabad.jpg',
+    imageUrl: 'images/cities/ahmedabad.webp',
     filterValue: 'Ahmedabad'
   },
   {
     id: 'thane',
     name: 'Thane',
     count: '17442 + Properties',
-    imageUrl: 'images/cities/thane.jpg',
+    imageUrl: 'images/cities/thane.webp',
     filterValue: 'Thane'
   },
   {
     id: 'jaipur',
     name: 'Jaipur',
     count: '8950 + Properties',
-    imageUrl: 'images/cities/jaipur.jpg',
+    imageUrl: 'images/cities/jaipur.webp',
     filterValue: 'Jaipur'
   },
   {
     id: 'chandigarh',
     name: 'Chandigarh',
     count: '7910 + Properties',
-    imageUrl: 'images/cities/chandigarh.jpg',
+    imageUrl: 'images/cities/chandigarh.webp',
     filterValue: 'Chandigarh'
   }
 ];

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, lazy, Suspense } from 'react';
 import { 
   Home, 
   Heart, 
@@ -20,14 +20,16 @@ import {
   Briefcase,
   ShoppingBag
 } from 'lucide-react';
-import { BRAND_CONFIG, CITIES } from '../data/mockProperties';
+import { BRAND_CONFIG } from '../data/brandConfig';
+import { CITIES } from '../data/cities';
 import { sanitizeUserPhone, resolveUserDisplayName } from '../utils/phoneSanitizer';
 import { ActiveView, PropertyCategory, UserProfile } from '../types/property';
 import { CustomDropdown } from './CustomDropdown';
 import { CityMegaDropdown } from './CityMegaDropdown';
-import { MenuDrawer } from './MenuDrawer';
 import { ServicesDropdown } from './ServicesDropdown';
 import { DownloadAppButton } from './DownloadAppButton';
+
+const MenuDrawer = lazy(() => import('./MenuDrawer').then(m => ({ default: m.MenuDrawer })));
 
 interface NavbarProps {
   activeView: ActiveView;
@@ -455,21 +457,25 @@ export const Navbar: React.FC<NavbarProps> = ({
         </div>
       </header>
 
-      {/* Main Executive Slide-in Navigation Drawer */}
-      <MenuDrawer
-        isOpen={isDrawerOpen}
-        onClose={() => setIsDrawerOpen(false)}
-        currentUser={currentUser}
-        onOpenLogin={onOpenLogin}
-        onLogout={onLogout}
-        activeView={activeView}
-        setActiveView={setActiveView}
-        selectedCategory={selectedCategory}
-        onSelectCategory={onSelectCategory}
-        shortlistCount={shortlistCount}
-        selectedCity={selectedCity}
-        onSelectCity={onSelectCity}
-      />
+      {/* Main Executive Slide-in Navigation Drawer (Loaded on Demand) */}
+      {isDrawerOpen && (
+        <Suspense fallback={null}>
+          <MenuDrawer
+            isOpen={isDrawerOpen}
+            onClose={() => setIsDrawerOpen(false)}
+            currentUser={currentUser}
+            onOpenLogin={onOpenLogin}
+            onLogout={onLogout}
+            activeView={activeView}
+            setActiveView={setActiveView}
+            selectedCategory={selectedCategory}
+            onSelectCategory={onSelectCategory}
+            shortlistCount={shortlistCount}
+            selectedCity={selectedCity}
+            onSelectCity={onSelectCity}
+          />
+        </Suspense>
+      )}
     </>
   );
 };

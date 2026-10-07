@@ -9,6 +9,17 @@ interface LazyImageProps {
   fallbackIcon?: React.ReactNode;
 }
 
+const getResponsiveImageData = (url: string) => {
+  if (!url || !url.includes('images.unsplash.com')) {
+    return { src: url, srcSet: undefined, sizes: undefined };
+  }
+  const cleanUrl = url.split('?')[0];
+  const srcSet = `${cleanUrl}?auto=format&fit=crop&w=400&q=75 400w, ${cleanUrl}?auto=format&fit=crop&w=720&q=75 720w, ${cleanUrl}?auto=format&fit=crop&w=1080&q=75 1080w`;
+  const sizes = '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw';
+  const defaultSrc = `${cleanUrl}?auto=format&fit=crop&w=640&q=75`;
+  return { src: defaultSrc, srcSet, sizes };
+};
+
 export const LazyImage: React.FC<LazyImageProps> = ({
   src,
   alt,
@@ -20,6 +31,7 @@ export const LazyImage: React.FC<LazyImageProps> = ({
   const [isLoaded, setIsLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const imageData = React.useMemo(() => getResponsiveImageData(src), [src]);
 
   useEffect(() => {
     const el = containerRef.current;
@@ -79,7 +91,9 @@ export const LazyImage: React.FC<LazyImageProps> = ({
       {/* Actual Image when within viewport */}
       {isInView && !hasError && (
         <img
-          src={src}
+          src={imageData.src}
+          srcSet={imageData.srcSet}
+          sizes={imageData.sizes}
           alt={alt}
           width="640"
           height="400"

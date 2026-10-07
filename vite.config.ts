@@ -62,7 +62,8 @@ export default defineConfig(() => {
           ]
         },
         workbox: {
-          globPatterns: ['**/*.{js,css,html,ico,png,svg,webp,webmanifest}'],
+          globPatterns: ['**/*.{js,css,html,webmanifest}'],
+          globIgnores: ['**/images/**', '**/node_modules/**'],
           runtimeCaching: [
             {
               urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
@@ -91,12 +92,39 @@ export default defineConfig(() => {
                   statuses: [0, 200],
                 },
               },
-            }
+            },
+            {
+              urlPattern: /\.(?:png|jpg|jpeg|svg|webp)$/i,
+              handler: 'CacheFirst',
+              options: {
+                cacheName: 'images-cache',
+                expiration: {
+                  maxEntries: 60,
+                  maxAgeSeconds: 30 * 24 * 60 * 60,
+                },
+                cacheableResponse: {
+                  statuses: [0, 200],
+                },
+              },
+            },
+            {
+              urlPattern: /^https:\/\/images\.unsplash\.com\/.*/i,
+              handler: 'StaleWhileRevalidate',
+              options: {
+                cacheName: 'unsplash-images-cache',
+                expiration: {
+                  maxEntries: 60,
+                  maxAgeSeconds: 7 * 24 * 60 * 60,
+                },
+                cacheableResponse: {
+                  statuses: [0, 200],
+                },
+              },
+            },
           ]
         },
         devOptions: {
-          enabled: true,
-          type: 'module',
+          enabled: false,
         }
       })
     ],
@@ -123,6 +151,9 @@ export default defineConfig(() => {
             }
             if (id.includes('node_modules/lucide-react')) {
               return 'vendor-icons';
+            }
+            if (id.includes('src/data/mockProperties')) {
+              return 'data-properties';
             }
           },
         },

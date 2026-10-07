@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Search, MapPin, Home, IndianRupee, CheckCircle2, ShieldCheck, Zap, Sparkles, ChevronRight } from 'lucide-react';
 import { PropertyCategory, SearchFilterState } from '../types/property';
-import { CITIES } from '../data/mockProperties';
+import { CITIES } from '../data/cities';
 import { CustomDropdown } from './CustomDropdown';
 import { getAssetUrl } from '../utils/assetHelper';
 
@@ -72,17 +72,24 @@ export const HeroSearch: React.FC<HeroSearchProps> = ({
     <div 
       className="relative pt-8 sm:pt-12 pb-14 sm:pb-18 px-3 sm:px-6 lg:px-8 overflow-hidden min-h-[500px] sm:min-h-[560px] flex flex-col justify-center border-b border-slate-200/80 bg-[#eaf3fa]"
     >
-      {/* High-Performance LCP Hero Skyline Background Image */}
-      <img
-        src={getAssetUrl('images/header_bg_final.webp')}
-        alt="VillaSell Luxury Properties Skyline"
-        width="2866"
-        height="910"
-        fetchPriority="high"
-        loading="eager"
-        decoding="async"
-        className="absolute inset-0 w-full h-full object-cover object-bottom pointer-events-none select-none -z-0"
-      />
+      {/* High-Performance LCP Hero Skyline Background Image (Responsive Mobile/Desktop) */}
+      <picture className="absolute inset-0 w-full h-full pointer-events-none select-none -z-0">
+        <source
+          media="(max-width: 768px)"
+          srcSet={getAssetUrl('images/header_bg_mobile.webp')}
+          type="image/webp"
+        />
+        <img
+          src={getAssetUrl('images/header_bg_final.webp')}
+          alt="VillaSell Luxury Properties Skyline"
+          width="2866"
+          height="910"
+          fetchPriority="high"
+          loading="eager"
+          decoding="async"
+          className="w-full h-full object-cover object-bottom"
+        />
+      </picture>
 
       {/* Very gentle sky gradient on the top portion only so text reads crisp, leaving the skyline buildings 100% clear and sharp */}
       <div className="absolute inset-x-0 top-0 h-44 bg-gradient-to-b from-sky-100/50 via-sky-50/20 to-transparent pointer-events-none z-1" />
