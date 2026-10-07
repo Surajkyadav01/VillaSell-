@@ -176,10 +176,10 @@ export const Navbar: React.FC<NavbarProps> = ({
             </div>
 
             {/* Desktop Navigation Links (Visible on xl+ screens where space permits) */}
-            <nav className="hidden xl:flex items-center gap-0.5 2xl:gap-1 font-bold text-xs 2xl:text-sm ml-1 2xl:ml-3 shrink min-w-0">
+            <nav className="hidden xl:flex items-center gap-1 2xl:gap-1.5 font-bold text-[15px] 2xl:text-base ml-1.5 2xl:ml-4 shrink min-w-0">
               <button
                 onClick={() => handleCategoryClick('buy')}
-                className={`px-2 2xl:px-2.5 py-1.5 rounded-xl transition-all cursor-pointer ${
+                className={`px-3 py-2 rounded-xl transition-all cursor-pointer ${
                   activeView === 'home' && selectedCategory === 'buy'
                     ? 'text-white bg-blue-500/80 shadow-inner border border-blue-300/40'
                     : 'text-sky-100 hover:text-white hover:bg-white/10'
@@ -190,7 +190,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
               <button
                 onClick={() => handleCategoryClick('rent')}
-                className={`px-2 2xl:px-2.5 py-1.5 rounded-xl transition-all cursor-pointer ${
+                className={`px-3 py-2 rounded-xl transition-all cursor-pointer ${
                   activeView === 'home' && selectedCategory === 'rent'
                     ? 'text-white bg-blue-500/80 shadow-inner border border-blue-300/40'
                     : 'text-sky-100 hover:text-white hover:bg-white/10'
@@ -201,7 +201,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
               <button
                 onClick={() => handleCategoryClick('commercial')}
-                className={`px-2 2xl:px-2.5 py-1.5 rounded-xl transition-all cursor-pointer ${
+                className={`px-3 py-2 rounded-xl transition-all cursor-pointer ${
                   activeView === 'home' && selectedCategory === 'commercial'
                     ? 'text-white bg-blue-500/80 shadow-inner border border-blue-300/40'
                     : 'text-sky-100 hover:text-white hover:bg-white/10'
@@ -212,7 +212,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
               <button
                 onClick={() => handleCategoryClick('plots')}
-                className={`px-2 2xl:px-2.5 py-1.5 rounded-xl transition-all cursor-pointer ${
+                className={`px-3 py-2 rounded-xl transition-all cursor-pointer ${
                   activeView === 'home' && selectedCategory === 'plots'
                     ? 'text-white bg-blue-500/80 shadow-inner border border-blue-300/40'
                     : 'text-sky-100 hover:text-white hover:bg-white/10'
@@ -230,7 +230,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               {/* Contact Navigation Link */}
               <button
                 onClick={() => navigateTo('contact')}
-                className={`px-2 2xl:px-2.5 py-1.5 rounded-xl font-bold text-xs 2xl:text-sm transition-all cursor-pointer ${
+                className={`px-3 py-2 rounded-xl font-bold text-[15px] 2xl:text-base transition-all cursor-pointer ${
                   activeView === 'contact'
                     ? 'text-white bg-blue-500/80 shadow-inner border border-blue-300/40'
                     : 'text-sky-100 hover:text-white hover:bg-white/10'

@@ -44,7 +44,7 @@ export const ServicesDropdown: React.FC<ServicesDropdownProps> = ({
       <button
         type="button"
         onClick={() => setIsOpen((prev) => !prev)}
-        className={`flex items-center gap-1 px-3 py-2 rounded-xl font-bold text-sm transition-all cursor-pointer select-none ${
+        className={`flex items-center gap-1 px-3 py-2 rounded-xl font-bold text-[15px] 2xl:text-base transition-all cursor-pointer select-none ${
           isOpen || isServicesActive
             ? 'text-white bg-blue-500/80 shadow-inner border border-blue-300/40'
             : 'text-sky-100 hover:text-white hover:bg-white/10'
