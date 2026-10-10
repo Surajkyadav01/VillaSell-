@@ -70,29 +70,27 @@ export const HeroSearch: React.FC<HeroSearchProps> = ({
 
   return (
     <div 
-      className="relative pt-8 sm:pt-12 pb-14 sm:pb-18 px-3 sm:px-6 lg:px-8 overflow-hidden min-h-[500px] sm:min-h-[560px] flex flex-col justify-center border-b border-slate-200/80 bg-[#eaf3fa]"
+      className="relative pt-8 sm:pt-12 pb-14 sm:pb-18 px-3 sm:px-6 lg:px-8 overflow-hidden min-h-[520px] sm:min-h-[560px] lg:min-h-[600px] flex flex-col justify-center border-b border-slate-200"
     >
-      {/* High-Performance LCP Hero Skyline Background Image (Responsive Mobile/Desktop) */}
-      <picture className="absolute inset-0 w-full h-full pointer-events-none select-none -z-0">
-        <source
-          media="(max-width: 768px)"
-          srcSet={getAssetUrl('images/header_bg_mobile.webp')}
-          type="image/webp"
-        />
-        <img
-          src={getAssetUrl('images/header_bg_final.webp')}
-          alt="VillaSell Luxury Properties Skyline"
-          width="2866"
-          height="910"
-          fetchPriority="high"
-          loading="eager"
-          decoding="async"
-          className="w-full h-full object-cover object-bottom"
-        />
-      </picture>
-
-      {/* Very gentle sky gradient on the top portion only so text reads crisp, leaving the skyline buildings 100% clear and sharp */}
-      <div className="absolute inset-x-0 top-0 h-44 bg-gradient-to-b from-sky-100/50 via-sky-50/20 to-transparent pointer-events-none z-1" />
+      {/* High-Performance LCP Hero Background Image (Clean, Sharp, Zero Blur at Top or Bottom) */}
+      <div className="absolute inset-0 w-full h-full pointer-events-none select-none -z-0 overflow-hidden bg-slate-900">
+        <picture className="w-full h-full block">
+          <source
+            srcSet={getAssetUrl('images/villasellhomepage.webp')}
+            type="image/webp"
+          />
+          <img
+            src={getAssetUrl('images/villasellhomepage.png')}
+            alt="VillaSell Luxury Villas & Modern City Properties"
+            width="1981"
+            height="793"
+            fetchPriority="high"
+            loading="eager"
+            decoding="async"
+            className="w-full h-full object-cover object-center"
+          />
+        </picture>
+      </div>
 
       {/* FOREGROUND MAIN CONTENT */}
       <div className="relative max-w-5xl mx-auto w-full z-10">
@@ -107,11 +105,11 @@ export const HeroSearch: React.FC<HeroSearchProps> = ({
             </span>
           </div>
 
-          <h1 className="text-2xl sm:text-4xl lg:text-[44px] font-extrabold tracking-tight text-slate-900 mb-2.5 leading-tight drop-shadow-xs">
-            <span className="text-white [text-shadow:_0_1px_3px_rgba(15,23,42,0.9),_0_2px_6px_rgba(15,23,42,0.7)]">Villa</span><span className="text-amber-500 [text-shadow:_0_1px_3px_rgba(15,23,42,0.8),_0_2px_6px_rgba(15,23,42,0.6)]">Sell</span>{' '}
+          <h1 className="text-2xl sm:text-4xl lg:text-[44px] font-black tracking-tight text-slate-950 mb-2.5 leading-tight [text-shadow:_0_1px_4px_rgba(255,255,255,0.9)]">
+            <span className="text-blue-700 [text-shadow:_0_1px_3px_rgba(255,255,255,0.9)]">Villa</span><span className="text-amber-500 [text-shadow:_0_1px_3px_rgba(255,255,255,0.9)]">Sell</span>{' '}
             Find Your Dream Villa, Apartment & Commercial Property
           </h1>
-          <p className="text-slate-600 text-xs sm:text-base font-normal max-w-2xl mx-auto leading-relaxed px-2">
+          <p className="text-slate-800 text-xs sm:text-base font-medium max-w-2xl mx-auto leading-relaxed px-2 [text-shadow:_0_1px_3px_rgba(255,255,255,0.8)]">
             India's premier zero-brokerage property marketplace offering verified luxury villas, modern apartments, and premium commercial spaces with end-to-end legal assistance.
           </p>
         </div>

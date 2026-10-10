@@ -109,7 +109,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <>
-      <header className="sticky top-0 z-50 w-full max-w-full bg-gradient-to-r from-[#1b4a80] via-[#255e9c] to-[#2b568d] border-b border-sky-300/35 shadow-md backdrop-blur-md">
+      <header className="sticky top-0 z-50 w-full max-w-full bg-gradient-to-r from-[#1b4a80] via-[#255e9c] to-[#2b568d] border-b border-sky-300/35 shadow-md">
         <div className="w-full max-w-full px-2 sm:px-4 lg:px-6">
           <div className="flex items-center justify-between h-16 sm:h-18 w-full max-w-full min-w-0">
             {/* Left: Custom Luxury Real Estate Logo & City Selector in corner */}

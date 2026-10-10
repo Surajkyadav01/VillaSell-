@@ -15,6 +15,7 @@ import { Property } from '../types/property';
 import { PropertyCard } from './PropertyCard';
 import { PREFERRED_CITIES_LIST, ADDITIONAL_CITIES_LIST } from './FindPropertyPreferredCity';
 import { CustomDropdown } from './CustomDropdown';
+import { getAssetUrl } from '../utils/assetHelper';
 
 interface CityPropertiesViewProps {
   cityName: string;
@@ -92,6 +93,33 @@ export const CityPropertiesView: React.FC<CityPropertiesViewProps> = ({
       }
       if (target === 'mumbai') {
         return pCity.includes('mumbai') || pLoc.includes('worli') || pLoc.includes('bandra') || pLoc.includes('juhu') || pLoc.includes('bkc');
+      }
+      if (target === 'mirzapur' || target === 'vindhyachal') {
+        return pCity.includes('mirzapur') || pLoc.includes('mirzapur') || pLoc.includes('vindhyachal') || pAddr.includes('mirzapur');
+      }
+      if (target === 'bhadohi') {
+        return pCity.includes('bhadohi') || pLoc.includes('bhadohi') || pAddr.includes('bhadohi');
+      }
+      if (target === 'jaunpur') {
+        return pCity.includes('jaunpur') || pLoc.includes('jaunpur') || pLoc.includes('line bazar') || pLoc.includes('olandganj') || pAddr.includes('jaunpur');
+      }
+      if (target === 'hyderabad') {
+        return pCity.includes('hyderabad') || pLoc.includes('hitec') || pLoc.includes('banjara') || pLoc.includes('gachibowli');
+      }
+      if (target === 'chennai') {
+        return pCity.includes('chennai') || pLoc.includes('omr') || pLoc.includes('adyar') || pLoc.includes('anna nagar');
+      }
+      if (target === 'kolkata' || target === 'calcutta') {
+        return pCity.includes('kolkata') || pCity.includes('calcutta') || pLoc.includes('new town') || pLoc.includes('salt lake') || pLoc.includes('alipore');
+      }
+      if (target === 'ahmedabad') {
+        return pCity.includes('ahmedabad') || pLoc.includes('sg highway') || pLoc.includes('bodakdev') || pLoc.includes('prahlad nagar');
+      }
+      if (target === 'jaipur') {
+        return pCity.includes('jaipur') || pLoc.includes('vaishali') || pLoc.includes('mansarovar') || pLoc.includes('malviya');
+      }
+      if (target === 'chandigarh') {
+        return pCity.includes('chandigarh') || pLoc.includes('sector') || pLoc.includes('mohali') || pLoc.includes('panchkula');
       }
 
       return pCity.includes(target) || pLoc.includes(target) || pAddr.includes(target);
@@ -193,9 +221,18 @@ export const CityPropertiesView: React.FC<CityPropertiesViewProps> = ({
             {cityInfo?.imageUrl && (
               <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full border-4 border-white/20 shadow-2xl overflow-hidden shrink-0 bg-slate-800">
                 <img
-                  src={cityInfo.imageUrl}
+                  src={getAssetUrl(cityInfo.imageUrl)}
                   alt={cityName}
                   className="w-full h-full object-cover"
+                  onError={(e) => {
+                    if (cityName.toLowerCase().includes('mirzapur') || cityName.toLowerCase().includes('vindhyachal')) {
+                      e.currentTarget.src = 'https://upload.wikimedia.org/wikipedia/commons/2/24/Maa_Vindhyavasini_temple%2C_Vindhyachal.jpg';
+                    } else if (cityName.toLowerCase().includes('bhadohi')) {
+                      e.currentTarget.src = 'https://images.unsplash.com/photo-1600121848594-d8644e57abab?auto=format&fit=crop&w=300&q=80';
+                    } else if (cityName.toLowerCase().includes('jaunpur')) {
+                      e.currentTarget.src = 'https://upload.wikimedia.org/wikipedia/commons/e/e9/Shahi_bridge%2C_Jaunpur.jpg';
+                    }
+                  }}
                 />
               </div>
             )}
@@ -448,7 +485,7 @@ export const CityPropertiesView: React.FC<CityPropertiesViewProps> = ({
           </div>
 
           <div className="flex flex-wrap items-center justify-center gap-2">
-            {PREFERRED_CITIES_LIST.map((c) => {
+            {allKnownCities.map((c) => {
               const isCurrent = c.name.toLowerCase() === cityName.toLowerCase() || c.filterValue.toLowerCase() === cityName.toLowerCase();
               return (
                 <button

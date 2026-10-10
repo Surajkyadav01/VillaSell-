@@ -51,6 +51,39 @@ const POPULAR_CITIES: CityItem[] = [
     )
   },
   {
+    id: 'mirzapur',
+    name: 'Mirzapur',
+    subtitle: 'Vindhyachal Corridor',
+    icon: (
+      <svg viewBox="0 0 24 24" className="w-5 h-5 text-amber-600" fill="currentColor">
+        {/* Vindhyachal Temple & Heritage Ghat */}
+        <path d="M12 2L4 7v2h16V7l-8-5zm6 9h-2v8h2v-8zm-5 0h-2v8h2v-8zm-5 0H6v8h2v-8zM2 21h20v2H2v-2z" />
+      </svg>
+    )
+  },
+  {
+    id: 'bhadohi',
+    name: 'Bhadohi',
+    subtitle: 'Carpet City Hub',
+    icon: (
+      <svg viewBox="0 0 24 24" className="w-5 h-5 text-emerald-600" fill="currentColor">
+        {/* Handloom Craft & Villa Hub */}
+        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 2h2v3h-2V5zm-4 0h2v3H8V5zm8 14H8v-2h8v2zm2-4H6v-6h12v6z" />
+      </svg>
+    )
+  },
+  {
+    id: 'jaunpur',
+    name: 'Jaunpur',
+    subtitle: 'Shahi Bridge & Historical City',
+    icon: (
+      <svg viewBox="0 0 24 24" className="w-5 h-5 text-blue-600" fill="currentColor">
+        {/* Shahi Bridge & Fort Gate */}
+        <path d="M2 19h20v2H2v-2zm2-2l2-7h12l2 7H4zm4-2h8c-.5-1.5-1.8-3-4-3s-3.5 1.5-4 3zm4-9L9 9h6l-3-3z" />
+      </svg>
+    )
+  },
+  {
     id: 'bangalore',
     name: 'Bengaluru',
     icon: (

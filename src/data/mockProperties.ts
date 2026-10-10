@@ -1811,6 +1811,399 @@ export const INITIAL_PROPERTIES: Property[] = [
     },
     description: 'Iconic golf-facing luxury home on Noida Expressway. Double-height living room, floor-to-ceiling glass windows, and zero brokerage verified.',
     createdAt: '2026-03-26'
+  },
+  {
+    id: 'prop-mirzapur-1',
+    title: '3 BHK Ganga River-View Luxury Villa in Mirzapur',
+    category: 'buy',
+    propertyType: 'Villa',
+    city: 'Mirzapur',
+    locality: 'Civil Lines / Vindhyachal Corridor',
+    address: 'Vindhya Heritage Residency, Near Civil Lines, Mirzapur - 231001',
+    price: 8500000,
+    priceDisplay: '₹ 85 Lac',
+    pricePerSqFt: 3863,
+    bedrooms: 3,
+    bathrooms: 3,
+    balconies: 2,
+    areaSqFt: 2200,
+    carpetAreaSqFt: 1850,
+    status: 'Ready to Move',
+    possession: 'Immediate Possession',
+    furnishing: 'Semi-Furnished',
+    facing: 'East',
+    floor: 'G + 1 Independent Villa',
+    reraId: 'UPRERAPRJ/MZP/2025/00881',
+    isVerified: true,
+    isZeroBrokerage: true,
+    isFeatured: true,
+    images: [
+      'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=80',
+      'https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&w=1000&q=80'
+    ],
+    amenities: [
+      'Ganga River View Balcony',
+      'Private Landscaped Lawn',
+      '24x7 Security & CCTV',
+      'Covered Car Parking',
+      'Water Harvesting & Solar Backup'
+    ],
+    localityHighlights: [
+      { title: 'Vindhyachal Temple Corridor', distance: '4.5 km', type: 'highway' },
+      { title: 'Mirzapur Railway Junction', distance: '2.1 km', type: 'metro' },
+      { title: 'District Government Hospital', distance: '1.2 km', type: 'hospital' }
+    ],
+    postedBy: {
+      name: 'Santosh Mishra (Owner)',
+      type: 'Owner',
+      phone: '+91 8383826205'
+    },
+    description: 'Picturesque independent 3 BHK luxury villa with peaceful river view and private lawn in Mirzapur. Freehold property with 100% clear legal title, direct deal with owner without any brokerage fee.',
+    createdAt: '2026-04-01'
+  },
+  {
+    id: 'prop-bhadohi-1',
+    title: '4 BHK Grand Independent Villa with Private Garden in Bhadohi',
+    category: 'buy',
+    propertyType: 'Villa',
+    city: 'Bhadohi',
+    locality: 'Carpet City Enclave / Station Road',
+    address: 'Royal Loom Estate, Near Bhadohi Railway Station, Bhadohi - 221401',
+    price: 9200000,
+    priceDisplay: '₹ 92 Lac',
+    pricePerSqFt: 3538,
+    bedrooms: 4,
+    bathrooms: 4,
+    balconies: 3,
+    areaSqFt: 2600,
+    carpetAreaSqFt: 2200,
+    status: 'Ready to Move',
+    possession: 'Immediate Possession',
+    furnishing: 'Semi-Furnished',
+    facing: 'North-East',
+    floor: 'G + 2 Independent Villa',
+    reraId: 'UPRERAPRJ/BDH/2025/00742',
+    isVerified: true,
+    isZeroBrokerage: true,
+    isFeatured: true,
+    images: [
+      'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1000&q=80'
+    ],
+    amenities: [
+      'Expansive Rooftop Terrace & Garden',
+      'Grand Double-Height Entrance Lobby',
+      'Private 2-Car Covered Garage',
+      '24 Hours Running Sweet Borewell Water',
+      '100% Power Inverter Support'
+    ],
+    localityHighlights: [
+      { title: 'Bhadohi Junction Railway Station', distance: '1.5 km', type: 'metro' },
+      { title: 'Varanasi-Bhadohi 4-Lane Highway', distance: '800 m', type: 'highway' },
+      { title: 'Indian Institute of Carpet Technology', distance: '2.0 km', type: 'school' }
+    ],
+    postedBy: {
+      name: 'Vikas Baranwal (Owner)',
+      type: 'Owner',
+      phone: '+91 8383826205'
+    },
+    description: 'Immaculately constructed 4 BHK independent duplex villa situated in the premier residential pocket of Bhadohi. Premium marble flooring, expansive terrace, high ceiling bedrooms, and zero brokerage.',
+    createdAt: '2026-04-02'
+  },
+  {
+    id: 'prop-jaunpur-1',
+    title: '3 BHK Modern Duplex Villa near Line Bazar in Jaunpur',
+    category: 'buy',
+    propertyType: 'Villa',
+    city: 'Jaunpur',
+    locality: 'Line Bazar / Olandganj Corridor',
+    address: 'Gomti Green Residency, Near Line Bazar, Jaunpur - 222002',
+    price: 7800000,
+    priceDisplay: '₹ 78 Lac',
+    pricePerSqFt: 3714,
+    bedrooms: 3,
+    bathrooms: 3,
+    balconies: 2,
+    areaSqFt: 2100,
+    carpetAreaSqFt: 1750,
+    status: 'Ready to Move',
+    possession: 'Immediate Possession',
+    furnishing: 'Semi-Furnished',
+    facing: 'North',
+    floor: 'G + 1 Independent Duplex Villa',
+    reraId: 'UPRERAPRJ/JNP/2025/00914',
+    isVerified: true,
+    isZeroBrokerage: true,
+    isFeatured: true,
+    images: [
+      'https://images.unsplash.com/photo-1613977257363-707ba9348227?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1000&q=80'
+    ],
+    amenities: [
+      'Modular Kitchen with Chimney',
+      'Gated Community with 24x7 Security',
+      'Interlocking Wide Internal Roads',
+      'Dedicated Car Parking Space',
+      'Children Play Area'
+    ],
+    localityHighlights: [
+      { title: 'Jaunpur Junction Railway Station', distance: '2.8 km', type: 'metro' },
+      { title: 'Varanasi-Jaunpur Highway Toll Link', distance: '1.2 km', type: 'highway' },
+      { title: 'TD College & University Circle', distance: '1.5 km', type: 'school' }
+    ],
+    postedBy: {
+      name: 'Rameshwar Yadav (Owner)',
+      type: 'Owner',
+      phone: '+91 8383826205'
+    },
+    description: 'Charming modern 3 BHK duplex villa in prime Line Bazar locality of Jaunpur. Near top schools, shopping centers, and easy 40-minute drive to Varanasi via national expressway. Direct deal with owner with zero brokerage.',
+    createdAt: '2026-04-03'
+  },
+  {
+    id: 'prop-mirzapur-2',
+    title: '2 BHK Modern Lakeview Apartment in Civil Lines, Mirzapur',
+    category: 'buy',
+    propertyType: 'Apartment',
+    city: 'Mirzapur',
+    locality: 'Civil Lines',
+    address: 'Shivalik Heights, Opp. Collectorate, Civil Lines, Mirzapur - 231001',
+    price: 4200000,
+    priceDisplay: '₹ 42 Lac',
+    pricePerSqFt: 3500,
+    bedrooms: 2,
+    bathrooms: 2,
+    balconies: 2,
+    areaSqFt: 1200,
+    carpetAreaSqFt: 980,
+    status: 'Ready to Move',
+    possession: 'Immediate Possession',
+    furnishing: 'Semi-Furnished',
+    facing: 'East',
+    floor: '3rd of 6 Floors',
+    reraId: 'UPRERAPRJ/MZP/2025/00895',
+    isVerified: true,
+    isZeroBrokerage: true,
+    isFeatured: false,
+    images: [
+      'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=1000&q=80'
+    ],
+    amenities: [
+      'Lift with Power Backup',
+      'Covered Reserved Parking',
+      '24x7 Security & CCTV Surveillance',
+      'Continuous Municipal Water Supply',
+      'Community Rooftop Terrace'
+    ],
+    localityHighlights: [
+      { title: 'Collectorate & District Courts', distance: '500 m', type: 'metro' },
+      { title: 'Mirzapur Main Market', distance: '1.0 km', type: 'mall' },
+      { title: 'Mirzapur Railway Station', distance: '1.8 km', type: 'metro' }
+    ],
+    postedBy: {
+      name: 'Anand Srivastava (Owner)',
+      type: 'Owner',
+      phone: '+91 8383826205'
+    },
+    description: 'Well-ventilated 2 BHK apartment in prime Civil Lines Mirzapur. Clear legal title, lift, covered parking, and direct deal with owner with zero brokerage.',
+    createdAt: '2026-04-05'
+  },
+  {
+    id: 'prop-bhadohi-2',
+    title: 'Prime Commercial Showroom & Office Space on Station Road, Bhadohi',
+    category: 'commercial',
+    propertyType: 'Commercial Office',
+    city: 'Bhadohi',
+    locality: 'Station Road / Carpet City Centre',
+    address: 'Carpet Plaza, Station Road, Bhadohi - 221401',
+    price: 9500000,
+    priceDisplay: '₹ 95 Lac',
+    pricePerSqFt: 5277,
+    bedrooms: 0,
+    bathrooms: 2,
+    balconies: 1,
+    areaSqFt: 1800,
+    carpetAreaSqFt: 1600,
+    status: 'Ready to Move',
+    possession: 'Immediate Possession',
+    furnishing: 'Unfurnished',
+    facing: 'North-East',
+    floor: 'Ground Floor Road-Facing',
+    reraId: 'UPRERAPRJ/BDH/2025/00742',
+    isVerified: true,
+    isZeroBrokerage: true,
+    isFeatured: true,
+    images: [
+      'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=1000&q=80'
+    ],
+    amenities: [
+      'Main Highway / Station Road Frontage',
+      'High-Footfall Commercial Hub',
+      'Dedicated Customer Parking',
+      '3-Phase Industrial Power Connection',
+      'Water Supply & Modern Washrooms'
+    ],
+    localityHighlights: [
+      { title: 'Bhadohi Railway Junction', distance: '400 m', type: 'metro' },
+      { title: 'Carpet Export Mart Complex', distance: '800 m', type: 'mall' },
+      { title: 'National Highway Link', distance: '2.5 km', type: 'highway' }
+    ],
+    postedBy: {
+      name: 'Mohammad Tariq (Owner)',
+      type: 'Owner',
+      phone: '+91 8383826205'
+    },
+    description: 'High visibility road-facing commercial showroom and office in heart of Bhadohi. Ideal for banks, retail brands, or carpet exporters. Zero brokerage direct sale.',
+    createdAt: '2026-04-06'
+  },
+  {
+    id: 'prop-jaunpur-2',
+    title: '2 BHK Airy Residential Apartment near Olandganj, Jaunpur',
+    category: 'buy',
+    propertyType: 'Apartment',
+    city: 'Jaunpur',
+    locality: 'Olandganj / Poly Road',
+    address: 'Shree Krishna Enclave, Olandganj, Jaunpur - 222002',
+    price: 3800000,
+    priceDisplay: '₹ 38 Lac',
+    pricePerSqFt: 3454,
+    bedrooms: 2,
+    bathrooms: 2,
+    balconies: 2,
+    areaSqFt: 1100,
+    carpetAreaSqFt: 920,
+    status: 'Ready to Move',
+    possession: 'Immediate Possession',
+    furnishing: 'Semi-Furnished',
+    facing: 'East',
+    floor: '2nd of 5 Floors',
+    reraId: 'UPRERAPRJ/JNP/2025/00938',
+    isVerified: true,
+    isZeroBrokerage: true,
+    isFeatured: false,
+    images: [
+      'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=1000&q=80'
+    ],
+    amenities: [
+      'Modern High-Speed Elevator',
+      '24-Hour Sweet Water Supply',
+      'Intercom & Gated Security',
+      'Bike and Car Covered Parking',
+      'Rooftop Solar Lighting'
+    ],
+    localityHighlights: [
+      { title: 'Olandganj Commercial Chowk', distance: '600 m', type: 'mall' },
+      { title: 'Civil Hospital Jaunpur', distance: '1.2 km', type: 'hospital' },
+      { title: 'Jaunpur City Railway Station', distance: '2.0 km', type: 'metro' }
+    ],
+    postedBy: {
+      name: 'Vikas Singh (Owner)',
+      type: 'Owner',
+      phone: '+91 8383826205'
+    },
+    description: 'Affordable and peaceful 2 BHK apartment in prime Olandganj, Jaunpur. Near markets and clinics, ready for instant possession with zero brokerage.',
+    createdAt: '2026-04-06'
+  },
+  {
+    id: 'prop-jaipur-1',
+    title: '4 BHK Luxury Royal Villa in Vaishali Nagar, Jaipur',
+    category: 'buy',
+    propertyType: 'Villa',
+    city: 'Jaipur',
+    locality: 'Vaishali Nagar',
+    address: 'Pink City Grand Greens, Sector 4, Vaishali Nagar, Jaipur - 302021',
+    price: 18500000,
+    priceDisplay: '₹ 1.85 Cr',
+    pricePerSqFt: 5781,
+    bedrooms: 4,
+    bathrooms: 4,
+    balconies: 3,
+    areaSqFt: 3200,
+    carpetAreaSqFt: 2750,
+    status: 'Ready to Move',
+    possession: 'Immediate Possession',
+    furnishing: 'Furnished',
+    facing: 'North-East',
+    floor: 'Independent G+2 Villa',
+    reraId: 'RAJ/RERA/2025/1102',
+    isVerified: true,
+    isZeroBrokerage: true,
+    isFeatured: true,
+    images: [
+      'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=80'
+    ],
+    amenities: [
+      'Private Landscaped Lawn & Courtyard',
+      'Italian Marble Flooring',
+      'Modular European Kitchen',
+      'Dual Car Parking Garage',
+      'Gated Community with 24x7 Security'
+    ],
+    localityHighlights: [
+      { title: 'Vaishali Nagar Main Market', distance: '800 m', type: 'mall' },
+      { title: 'Jaipur Junction Railway Station', distance: '5.5 km', type: 'metro' },
+      { title: 'Ajmer Road Expressway', distance: '1.2 km', type: 'highway' }
+    ],
+    postedBy: {
+      name: 'Rajendra Singh Rathore (Owner)',
+      type: 'Owner',
+      phone: '+91 8383826205'
+    },
+    description: 'Magnificent 4 BHK luxury villa with private lawn in posh Vaishali Nagar Jaipur. Freehold JDA approved, zero brokerage direct owner deal.',
+    createdAt: '2026-04-05'
+  },
+  {
+    id: 'prop-chandigarh-1',
+    title: '4 BHK Independent Duplex Kothi in Sector 8, Chandigarh',
+    category: 'buy',
+    propertyType: 'Villa',
+    city: 'Chandigarh',
+    locality: 'Sector 8 / Sukhna Lake Environs',
+    address: 'Kothi 142, Sector 8-B, Chandigarh - 160009',
+    price: 36000000,
+    priceDisplay: '₹ 3.60 Cr',
+    pricePerSqFt: 9000,
+    bedrooms: 4,
+    bathrooms: 4,
+    balconies: 3,
+    areaSqFt: 4000,
+    carpetAreaSqFt: 3400,
+    status: 'Ready to Move',
+    possession: 'Immediate Possession',
+    furnishing: 'Semi-Furnished',
+    facing: 'North',
+    floor: 'Independent G+1 Kothi',
+    reraId: 'CH/RERA/2025/0821',
+    isVerified: true,
+    isZeroBrokerage: true,
+    isFeatured: true,
+    images: [
+      'https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&w=1000&q=80'
+    ],
+    amenities: [
+      'Large Front Green Lawn with Fruit Trees',
+      'Teak Wood Woodwork & Modern Fixtures',
+      'Servant Quarters with Attached Bath',
+      'Covered Driveway for 3 Cars',
+      'Near Sukhna Lake & Sector 8 Market'
+    ],
+    localityHighlights: [
+      { title: 'Sukhna Lake Promenade', distance: '1.2 km', type: 'highway' },
+      { title: 'Sector 8 Inner Market & Cafes', distance: '400 m', type: 'mall' },
+      { title: 'PGI & Punjab University', distance: '3.5 km', type: 'hospital' }
+    ],
+    postedBy: {
+      name: 'Col. Jasbir Cheema (Retd.) (Owner)',
+      type: 'Owner',
+      phone: '+91 8383826205'
+    },
+    description: 'Premier independent 4 BHK kothi in prime Sector 8 Chandigarh. Peaceful tree-lined avenue, private lawns, 100% clear title, direct owner connect.',
+    createdAt: '2026-04-06'
   }
 ];
 

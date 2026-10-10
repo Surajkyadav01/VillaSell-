@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { ChevronDown } from 'lucide-react';
 import { getAssetUrl } from '../utils/assetHelper';
 
 export interface PreferredCityItem {
@@ -14,6 +15,9 @@ const CITY_FALLBACKS: Record<string, string> = {
   lucknow: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=300&q=80',
   varanasi: 'https://images.unsplash.com/photo-1561361513-2d000a50f0dc?auto=format&fit=crop&w=300&q=80',
   prayagraj: 'https://images.unsplash.com/photo-1623880840003-889417865c3b?auto=format&fit=crop&w=300&q=80',
+  mirzapur: 'https://vindhyatirthparishad.org/assets/img/1.jpg',
+  bhadohi: 'https://images.unsplash.com/photo-1579656381226-5fc0f0100c3b?auto=format&fit=crop&w=300&q=80',
+  jaunpur: 'https://upload.wikimedia.org/wikipedia/commons/e/e9/Shahi_bridge%2C_Jaunpur.jpg',
   noida: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=300&q=80',
   gurgaon: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=300&q=80',
   delhi: 'https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&w=300&q=80',
@@ -29,7 +33,7 @@ const CITY_FALLBACKS: Record<string, string> = {
   chandigarh: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=300&q=80',
 };
 
-// Top cities ordered as requested: Mumbai, Lucknow, Varanasi, Prayagraj, Noida, Gurgaon, Delhi, Bangalore, Pune, etc.
+// Top cities: Exactly 12 cities (2 neat rows of 6 on desktop lg:grid-cols-6)
 export const PREFERRED_CITIES_LIST: PreferredCityItem[] = [
   {
     id: 'mumbai',
@@ -58,6 +62,27 @@ export const PREFERRED_CITIES_LIST: PreferredCityItem[] = [
     count: '28940 + Properties',
     imageUrl: 'images/cities/prayagraj.webp',
     filterValue: 'Prayagraj'
+  },
+  {
+    id: 'mirzapur',
+    name: 'Mirzapur',
+    count: '14250 + Properties',
+    imageUrl: 'images/cities/mirzapur.webp?v=vindhyachal',
+    filterValue: 'Mirzapur'
+  },
+  {
+    id: 'bhadohi',
+    name: 'Bhadohi',
+    count: '11840 + Properties',
+    imageUrl: 'images/cities/bhadohi.webp?v=carpet',
+    filterValue: 'Bhadohi'
+  },
+  {
+    id: 'jaunpur',
+    name: 'Jaunpur',
+    count: '13670 + Properties',
+    imageUrl: 'images/cities/jaunpur.webp',
+    filterValue: 'Jaunpur'
   },
   {
     id: 'noida',
@@ -93,7 +118,11 @@ export const PREFERRED_CITIES_LIST: PreferredCityItem[] = [
     count: '29506 + Properties',
     imageUrl: 'images/cities/pune.webp',
     filterValue: 'Pune'
-  },
+  }
+];
+
+// Additional cities shown when expanding 'View More Cities' (Hyderabad, Chennai, Kolkata moved here as requested)
+export const ADDITIONAL_CITIES_LIST: PreferredCityItem[] = [
   {
     id: 'hyderabad',
     name: 'Hyderabad',
@@ -115,9 +144,6 @@ export const PREFERRED_CITIES_LIST: PreferredCityItem[] = [
     imageUrl: 'images/cities/kolkata.webp',
     filterValue: 'Kolkata'
   },
-];
-
-export const ADDITIONAL_CITIES_LIST: PreferredCityItem[] = [
   {
     id: 'ahmedabad',
     name: 'Ahmedabad',
@@ -172,18 +198,18 @@ export const FindPropertyPreferredCity: React.FC<FindPropertyPreferredCityProps>
           </h2>
         </div>
 
-        {/* 6 columns per row on desktop, compact circular images matching reference */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-x-4 sm:gap-x-6 gap-y-7 sm:gap-y-9 justify-items-center">
+        {/* 6 columns per row on desktop (exactly 2 rows for 12 cities), responsive 3-column layout on mobile */}
+        <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-x-2.5 sm:gap-x-6 gap-y-6 sm:gap-y-9 justify-items-center">
           {displayedCities.map((city) => (
             <button
               key={city.id}
               type="button"
               onClick={() => onSelectCity(city.filterValue)}
-              className="group flex flex-col items-center text-center cursor-pointer select-none transition-transform duration-200 hover:-translate-y-1 focus:outline-none w-full max-w-[155px]"
+              className="group flex flex-col items-center text-center cursor-pointer select-none transition-all duration-200 hover:-translate-y-1 active:scale-95 focus:outline-none w-full max-w-[155px]"
               title={`View all properties in ${city.name}`}
             >
               {/* Compact circular landmark photo */}
-              <div className="relative w-[78px] h-[78px] sm:w-[86px] sm:h-[86px] rounded-full overflow-hidden border border-slate-200/90 shadow-xs group-hover:shadow-md group-hover:border-[#a31515] transition-all duration-300 bg-slate-100">
+              <div className="relative w-[68px] h-[68px] sm:w-[86px] sm:h-[86px] rounded-full overflow-hidden border border-slate-200/90 shadow-xs group-hover:shadow-md group-hover:border-[#a31515] transition-all duration-300 bg-slate-100">
                 <img
                   src={getAssetUrl(city.imageUrl)}
                   alt={city.name}
@@ -202,12 +228,12 @@ export const FindPropertyPreferredCity: React.FC<FindPropertyPreferredCityProps>
               </div>
 
               {/* City Name */}
-              <h3 className="font-semibold text-[15px] sm:text-base text-slate-800 group-hover:text-[#a31515] transition-colors mt-2.5 tracking-normal">
+              <h3 className="font-semibold text-[13px] sm:text-base text-slate-800 group-hover:text-[#a31515] transition-colors mt-2 sm:mt-2.5 tracking-normal line-clamp-1">
                 {city.name}
               </h3>
 
               {/* Property Count */}
-              <p className="text-[12px] sm:text-[13px] text-slate-500 font-normal tracking-tight mt-0.5 whitespace-nowrap">
+              <p className="text-[11px] sm:text-[13px] text-slate-500 font-normal tracking-tight mt-0.5 whitespace-nowrap">
                 {city.count}
               </p>
             </button>
@@ -215,13 +241,14 @@ export const FindPropertyPreferredCity: React.FC<FindPropertyPreferredCityProps>
         </div>
 
         {/* Exact View More Cities Pill Button */}
-        <div className="mt-9 sm:mt-11 text-center">
+        <div className="mt-8 sm:mt-11 text-center">
           <button
             type="button"
             onClick={() => setShowMore(!showMore)}
-            className="inline-flex items-center justify-center px-8 py-2 rounded-full border border-blue-600 bg-white text-blue-600 hover:bg-blue-50 text-xs sm:text-sm font-medium tracking-wide transition-all shadow-xs cursor-pointer active:scale-95"
+            className="inline-flex items-center justify-center px-7 sm:px-8 py-2.5 sm:py-2 rounded-full border border-blue-600 bg-white text-blue-600 hover:bg-blue-50 text-xs sm:text-sm font-semibold tracking-wide transition-all shadow-xs cursor-pointer active:scale-95"
           >
-            {showMore ? 'Show Less Cities' : 'View More Cities'}
+            <span>{showMore ? 'Show Less Cities' : 'View More Cities'}</span>
+            <ChevronDown className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ml-1.5 transition-transform duration-300 ${showMore ? 'rotate-180' : ''}`} />
           </button>
         </div>
 

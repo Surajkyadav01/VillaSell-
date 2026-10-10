@@ -28,7 +28,8 @@ import {
   ActiveView, 
   PropertyCategory, 
   SearchFilterState,
-  UserProfile 
+  UserProfile,
+  UserRole
 } from './types/property';
 import { 
   INITIAL_PROPERTIES, 
@@ -44,29 +45,31 @@ import { CustomDropdown } from './components/CustomDropdown';
 import { LazySection } from './components/LazySection';
 import { MobileBottomNav } from './components/MobileBottomNav';
 import { deduplicatePropertyList } from './utils/propertyHelper';
-
-// Code-split heavy components, full-page views and modals to keep initial bundle ultra-light
-const Footer = lazy(() => import('./components/Footer').then(m => ({ default: m.Footer })));
-const FindPropertyPreferredCity = lazy(() => import('./components/FindPropertyPreferredCity').then(m => ({ default: m.FindPropertyPreferredCity })));
-const PropertyDetailView = lazy(() => import('./components/PropertyDetailView').then(m => ({ default: m.PropertyDetailView })));
-const PostPropertyView = lazy(() => import('./components/PostPropertyView').then(m => ({ default: m.PostPropertyView })));
-const ShortlistView = lazy(() => import('./components/ShortlistView').then(m => ({ default: m.ShortlistView })));
-const ContactView = lazy(() => import('./components/ContactView').then(m => ({ default: m.ContactView })));
-const LegalView = lazy(() => import('./components/LegalView').then(m => ({ default: m.LegalView })));
-const HomeLoanView = lazy(() => import('./components/HomeLoanView').then(m => ({ default: m.HomeLoanView })));
-const HousingPremiumView = lazy(() => import('./components/HousingPremiumView').then(m => ({ default: m.HousingPremiumView })));
-const EmiCalculatorView = lazy(() => import('./components/EmiCalculatorView').then(m => ({ default: m.EmiCalculatorView })));
-const PropertyValuationView = lazy(() => import('./components/PropertyValuationView').then(m => ({ default: m.PropertyValuationView })));
-const RentReceiptView = lazy(() => import('./components/RentReceiptView').then(m => ({ default: m.RentReceiptView })));
-const CityPropertiesView = lazy(() => import('./components/CityPropertiesView').then(m => ({ default: m.CityPropertiesView })));
-const AdminDashboardView = lazy(() => import('./components/AdminDashboardView').then(m => ({ default: m.AdminDashboardView })));
-const DashboardView = lazy(() => import('./components/dashboard/DashboardView').then(m => ({ default: m.DashboardView })));
-const AuthModal = lazy(() => import('./components/AuthModal').then(m => ({ default: m.AuthModal })));
 import { sanitizeUserPhone, isHelplineOrAdminPhone } from './utils/phoneSanitizer';
+import { AuthModal } from './components/AuthModal';
+import { lazyWithRetry } from './utils/lazyWithRetry';
+
+// Code-split heavy components and full-page views with auto-retry resilience
+const Footer = lazyWithRetry(() => import('./components/Footer').then(m => ({ default: m.Footer })));
+const FindPropertyPreferredCity = lazyWithRetry(() => import('./components/FindPropertyPreferredCity').then(m => ({ default: m.FindPropertyPreferredCity })));
+const PropertyDetailView = lazyWithRetry(() => import('./components/PropertyDetailView').then(m => ({ default: m.PropertyDetailView })));
+const PostPropertyView = lazyWithRetry(() => import('./components/PostPropertyView').then(m => ({ default: m.PostPropertyView })));
+const ShortlistView = lazyWithRetry(() => import('./components/ShortlistView').then(m => ({ default: m.ShortlistView })));
+const ContactView = lazyWithRetry(() => import('./components/ContactView').then(m => ({ default: m.ContactView })));
+const LegalView = lazyWithRetry(() => import('./components/LegalView').then(m => ({ default: m.LegalView })));
+const HomeLoanView = lazyWithRetry(() => import('./components/HomeLoanView').then(m => ({ default: m.HomeLoanView })));
+const HousingPremiumView = lazyWithRetry(() => import('./components/HousingPremiumView').then(m => ({ default: m.HousingPremiumView })));
+const EmiCalculatorView = lazyWithRetry(() => import('./components/EmiCalculatorView').then(m => ({ default: m.EmiCalculatorView })));
+const PropertyValuationView = lazyWithRetry(() => import('./components/PropertyValuationView').then(m => ({ default: m.PropertyValuationView })));
+const RentReceiptView = lazyWithRetry(() => import('./components/RentReceiptView').then(m => ({ default: m.RentReceiptView })));
+const CityPropertiesView = lazyWithRetry(() => import('./components/CityPropertiesView').then(m => ({ default: m.CityPropertiesView })));
+const AdminDashboardView = lazyWithRetry(() => import('./components/AdminDashboardView').then(m => ({ default: m.AdminDashboardView })));
+const DashboardView = lazyWithRetry(() => import('./components/dashboard/DashboardView').then(m => ({ default: m.DashboardView })));
 
 export default function App() {
   // Navigation & View State (NO MODALS: All views are full-page!)
   const [activeView, setActiveView] = useState<ActiveView>('home');
+  const [previousView, setPreviousView] = useState<ActiveView>('home');
   const [selectedProperty, setSelectedProperty] = useState<Property | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [selectedCityForView, setSelectedCityForView] = useState<string>('Mumbai');
@@ -307,6 +310,7 @@ export default function App() {
   // View property details (full page)
   const handleSelectProperty = (property: Property) => {
     setSelectedProperty(property);
+    setPreviousView(activeView);
     setActiveView('property-detail');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -374,6 +378,21 @@ export default function App() {
         // Varanasi
         if (filterCity === 'varanasi' || filterCity === 'kashi') {
           matches = propCity.includes('varanasi') || propLoc.includes('sigra') || propLoc.includes('shivpur') || propAddr.includes('varanasi');
+        }
+
+        // Mirzapur
+        if (filterCity.includes('mirzapur') || filterCity.includes('vindhyachal')) {
+          matches = propCity.includes('mirzapur') || propLoc.includes('mirzapur') || propLoc.includes('vindhyachal') || propAddr.includes('mirzapur');
+        }
+
+        // Bhadohi
+        if (filterCity.includes('bhadohi')) {
+          matches = propCity.includes('bhadohi') || propLoc.includes('bhadohi') || propAddr.includes('bhadohi');
+        }
+
+        // Jaunpur
+        if (filterCity.includes('jaunpur')) {
+          matches = propCity.includes('jaunpur') || propLoc.includes('jaunpur') || propLoc.includes('line bazar') || propAddr.includes('jaunpur');
         }
 
         if (!matches) {
@@ -566,10 +585,10 @@ export default function App() {
               city: 'Varanasi',
             }}
             properties={properties}
-            onUpdateProperty={(updatedProp) => {
+            onUpdateProperty={(updatedProp: Property) => {
               setProperties((prev) => prev.map((p) => p.id === updatedProp.id ? updatedProp : p));
             }}
-            onDeleteProperty={(id) => {
+            onDeleteProperty={(id: string) => {
               setProperties((prev) => prev.filter((p) => p.id !== id));
             }}
             onSelectProperty={handleSelectProperty}
@@ -590,10 +609,10 @@ export default function App() {
         {activeView === 'dashboard' && currentUser && (
           <DashboardView
             user={currentUser}
-            onUpdateUserRole={(newRole) => {
+            onUpdateUserRole={(newRole: UserRole) => {
               setCurrentUser((prev) => prev ? { ...prev, role: newRole } : null);
             }}
-            onUpdateUserProfile={(updated) => {
+            onUpdateUserProfile={(updated: Partial<UserProfile>) => {
               setCurrentUser((prev) => {
                 if (!prev) return null;
                 const next = { ...prev, ...updated };
@@ -610,10 +629,10 @@ export default function App() {
             }}
             properties={properties}
             onAddProperty={handlePropertyAdded}
-            onUpdateProperty={(updatedProp) => {
+            onUpdateProperty={(updatedProp: Property) => {
               setProperties((prev) => prev.map((p) => p.id === updatedProp.id ? updatedProp : p));
             }}
-            onDeleteProperty={(id) => {
+            onDeleteProperty={(id: string) => {
               setProperties((prev) => prev.filter((p) => p.id !== id));
             }}
             onSelectProperty={handleSelectProperty}
@@ -642,7 +661,10 @@ export default function App() {
         {activeView === 'property-detail' && selectedProperty && (
           <PropertyDetailView
             property={selectedProperty}
-            onBack={() => setActiveView('home')}
+            onBack={() => {
+              setActiveView(previousView === 'city-properties' ? 'city-properties' : 'home');
+              window.scrollTo({ top: 0, behavior: 'auto' });
+            }}
             isShortlisted={shortlist.includes(selectedProperty.id)}
             onToggleShortlist={handleToggleShortlist}
             allProperties={properties}
@@ -782,7 +804,7 @@ export default function App() {
             onSelectProperty={handleSelectProperty}
             shortlistedIds={shortlist}
             onToggleShortlist={handleToggleShortlist}
-            onSwitchCity={(newCityName) => {
+            onSwitchCity={(newCityName: string) => {
               setSelectedCityForView(newCityName);
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
@@ -1385,37 +1407,35 @@ export default function App() {
       {activeView !== 'admin-panel' && (
         <Suspense fallback={<div className="h-40" />}>
           <Footer
-            onSelectView={(view) => {
+            onSelectView={(view: ActiveView) => {
               if (view === 'post-property') {
                 handleNavigateToPostProperty();
                 return;
               }
               setActiveView(view);
             }}
-            onSelectCategory={(cat) => setFilters((prev) => ({ ...prev, category: cat }))}
-            onSelectCity={(city) => setFilters((prev) => ({ ...prev, city }))}
+            onSelectCategory={(cat: string) => setFilters((prev) => ({ ...prev, category: cat as PropertyCategory | 'all' }))}
+            onSelectCity={(city: string) => setFilters((prev) => ({ ...prev, city }))}
           />
         </Suspense>
       )}
 
-      {/* User Login & Authentication Modal (Code-split) */}
+      {/* User Login & Authentication Modal */}
       {authModalOpen && (
-        <Suspense fallback={null}>
-          <AuthModal
-            isOpen={authModalOpen}
-            onClose={() => {
-              setAuthModalOpen(false);
-              setPostPropertyAuthPrompt(false);
-            }}
-            onLoginSuccess={handleLoginSuccess}
-            initialMode={authModalMode}
-            customMessage={
-              postPropertyAuthPrompt
-                ? 'List your property for free with 0% brokerage. Sign in or create an account to manage your listings, review buyer inquiries, and track live status updates.'
-                : undefined
-            }
-          />
-        </Suspense>
+        <AuthModal
+          isOpen={authModalOpen}
+          onClose={() => {
+            setAuthModalOpen(false);
+            setPostPropertyAuthPrompt(false);
+          }}
+          onLoginSuccess={handleLoginSuccess}
+          initialMode={authModalMode}
+          customMessage={
+            postPropertyAuthPrompt
+              ? 'List your property for free with 0% brokerage. Sign in or create an account to manage your listings, review buyer inquiries, and track live status updates.'
+              : undefined
+          }
+        />
       )}
     </div>
   );
