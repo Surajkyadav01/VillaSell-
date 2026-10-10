@@ -68,8 +68,9 @@
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap">
     </noscript>
 
-    <!-- High-Priority Preload for VillaSell Hero Background (Full Original Size, Instant zero-delay load) -->
-    <link rel="preload" as="image" href="/images/villasellhomepage.webp" type="image/webp" fetchpriority="high">
+    <!-- High-Priority Responsive Preloads for VillaSell Hero Background (41KB Mobile vs Desktop WebP) -->
+    <link rel="preload" as="image" href="./images/villasellhomepage_mobile.webp" type="image/webp" media="(max-width: 640px)" fetchpriority="high">
+    <link rel="preload" as="image" href="./images/villasellhomepage.webp" type="image/webp" media="(min-width: 641px)" fetchpriority="high">
 
     <!-- Schema.org Structured Data (JSON-LD) for Google Rich Snippets & Sitelinks -->
     <script type="application/ld+json">

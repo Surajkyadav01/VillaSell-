@@ -72,15 +72,23 @@ export const HeroSearch: React.FC<HeroSearchProps> = ({
     <div 
       className="relative pt-8 sm:pt-12 pb-14 sm:pb-18 px-3 sm:px-6 lg:px-8 overflow-hidden min-h-[520px] sm:min-h-[560px] lg:min-h-[600px] flex flex-col justify-center border-b border-slate-200"
     >
-      {/* High-Performance LCP Hero Background Image (Clean, Sharp, Zero Blur at Top or Bottom) */}
-      <div className="absolute inset-0 w-full h-full pointer-events-none select-none -z-0 overflow-hidden bg-slate-900">
+      {/* High-Performance LCP Hero Background Image (Smooth Sky/Slate Backdrop to Eliminate Black Flash) */}
+      <div className="absolute inset-0 w-full h-full pointer-events-none select-none -z-0 overflow-hidden bg-gradient-to-b from-sky-100/90 via-slate-100 to-slate-200">
         <picture className="w-full h-full block">
+          {/* Mobile High-Speed WebP (41KB vs 146KB/1.9MB for instant mobile load) */}
           <source
+            media="(max-width: 640px)"
+            srcSet={getAssetUrl('images/villasellhomepage_mobile.webp')}
+            type="image/webp"
+          />
+          {/* Desktop High-Resolution WebP */}
+          <source
+            media="(min-width: 641px)"
             srcSet={getAssetUrl('images/villasellhomepage.webp')}
             type="image/webp"
           />
           <img
-            src={getAssetUrl('images/villasellhomepage.png')}
+            src={getAssetUrl('images/villasellhomepage.webp')}
             alt="VillaSell Luxury Villas & Modern City Properties"
             width="1981"
             height="793"

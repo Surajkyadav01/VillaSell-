@@ -46,10 +46,10 @@ import { LazySection } from './components/LazySection';
 import { MobileBottomNav } from './components/MobileBottomNav';
 import { deduplicatePropertyList } from './utils/propertyHelper';
 import { sanitizeUserPhone, isHelplineOrAdminPhone } from './utils/phoneSanitizer';
-import { AuthModal } from './components/AuthModal';
 import { lazyWithRetry } from './utils/lazyWithRetry';
 
 // Code-split heavy components and full-page views with auto-retry resilience
+const AuthModal = lazyWithRetry(() => import('./components/AuthModal').then(m => ({ default: m.AuthModal })));
 const Footer = lazyWithRetry(() => import('./components/Footer').then(m => ({ default: m.Footer })));
 const FindPropertyPreferredCity = lazyWithRetry(() => import('./components/FindPropertyPreferredCity').then(m => ({ default: m.FindPropertyPreferredCity })));
 const PropertyDetailView = lazyWithRetry(() => import('./components/PropertyDetailView').then(m => ({ default: m.PropertyDetailView })));
@@ -1456,20 +1456,22 @@ export default function App() {
 
       {/* User Login & Authentication Modal */}
       {authModalOpen && (
-        <AuthModal
-          isOpen={authModalOpen}
-          onClose={() => {
-            setAuthModalOpen(false);
-            setPostPropertyAuthPrompt(false);
-          }}
-          onLoginSuccess={handleLoginSuccess}
-          initialMode={authModalMode}
-          customMessage={
-            postPropertyAuthPrompt
-              ? 'List your property for free with 0% brokerage. Sign in or create an account to manage your listings, review buyer inquiries, and track live status updates.'
-              : undefined
-          }
-        />
+        <Suspense fallback={null}>
+          <AuthModal
+            isOpen={authModalOpen}
+            onClose={() => {
+              setAuthModalOpen(false);
+              setPostPropertyAuthPrompt(false);
+            }}
+            onLoginSuccess={handleLoginSuccess}
+            initialMode={authModalMode}
+            customMessage={
+              postPropertyAuthPrompt
+                ? 'List your property for free with 0% brokerage. Sign in or create an account to manage your listings, review buyer inquiries, and track live status updates.'
+                : undefined
+            }
+          />
+        </Suspense>
       )}
     </div>
   );

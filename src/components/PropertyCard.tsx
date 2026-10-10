@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, lazy, Suspense } from 'react';
 import { 
   Heart, 
   MapPin, 
@@ -19,7 +19,8 @@ import {
 import { Property } from '../types/property';
 import { BRAND_CONFIG } from '../data/brandConfig';
 import { LazyImage } from './LazyImage';
-import { ShareModal } from './ShareModal';
+
+const ShareModal = lazy(() => import('./ShareModal').then(m => ({ default: m.ShareModal })));
 
 interface PropertyCardProps {
   property: Property;
@@ -259,12 +260,16 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({
         </div>
       </div>
 
-      {/* Share Modal Dialog */}
-      <ShareModal
-        isOpen={isShareModalOpen}
-        onClose={() => setIsShareModalOpen(false)}
-        property={property}
-      />
+      {/* Share Modal Dialog (Loaded on-demand only when opened) */}
+      {isShareModalOpen && (
+        <Suspense fallback={null}>
+          <ShareModal
+            isOpen={isShareModalOpen}
+            onClose={() => setIsShareModalOpen(false)}
+            property={property}
+          />
+        </Suspense>
+      )}
     </div>
   );
 };
