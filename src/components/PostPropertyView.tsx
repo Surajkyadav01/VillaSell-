@@ -37,7 +37,9 @@ import {
   Plus,
   X,
   LayoutDashboard,
-  LogIn
+  LogIn,
+  LandPlot,
+  Ruler
 } from 'lucide-react';
 import { Property, PropertyCategory, PropertyType, AdminEmailNotification, UserProfile } from '../types/property';
 import { CITIES, BRAND_CONFIG } from '../data/mockProperties';
@@ -89,8 +91,114 @@ export const PostPropertyView: React.FC<PostPropertyViewProps> = ({
   const [userRole, setUserRole] = useState<'Owner' | 'Agent' | 'Builder'>('Owner');
   const [listingPurpose, setListingPurpose] = useState<PropertyCategory>('buy');
   const [propertyType, setPropertyType] = useState<PropertyType>('Villa');
-  const [bedrooms, setBedrooms] = useState(3);
-  const [bathrooms, setBathrooms] = useState(3);
+  const [bedrooms, setBedrooms] = useState(1);
+  const [bathrooms, setBathrooms] = useState(1);
+
+  // Plot & Land specific state
+  const [plotAreaUnit, setPlotAreaUnit] = useState<'sq.ft' | 'bigha' | 'biswa' | 'gaj' | 'acre'>('sq.ft');
+  const [plotAreaValue, setPlotAreaValue] = useState<number>(1850);
+  const [boundaryWall, setBoundaryWall] = useState<'Yes' | 'No' | 'Fenced'>('Yes');
+  const [cornerPlot, setCornerPlot] = useState<boolean>(false);
+  const [openSides, setOpenSides] = useState<'1 Side Open' | '2 Sides Open (Corner)' | '3 Sides Open' | '4 Sides Open'>('1 Side Open');
+  const [roadWidth, setRoadWidth] = useState<'20-25 Ft' | '30-40 Ft' | '50-60 Ft' | '80+ Ft Main Road'>('30-40 Ft');
+  const [landZoning, setLandZoning] = useState<'Residential' | 'Commercial' | 'Agricultural' | 'Industrial'>('Residential');
+
+  // Helpers to detect if current selection is Plot or Land (ONLY vacant ground / land)
+  const isPlotOrLand = 
+    propertyType === 'Residential Plot' ||
+    propertyType === 'Commercial Land' ||
+    propertyType === 'Agricultural Land' ||
+    propertyType === 'Industrial Plot' ||
+    propertyType === 'Farmhouse Land' ||
+    propertyType === 'Plot / Land';
+
+  const isCommercialSpace = 
+    propertyType === 'Commercial Office' || 
+    propertyType === 'Commercial Shop';
+
+  // Only bare ground (plots and land) should hide rooms/washrooms; houses, apartments, offices, and shops have rooms and washrooms
+  const showBhkAndBathrooms = !isPlotOrLand;
+
+  // Conversion factors (Standard in UP / North India)
+  // 1 Pucca Bigha = 27,225 sq.ft (approx 3,025 sq.yards / 20 Biswa)
+  // 1 Biswa = 1,361.25 sq.ft
+  // 1 Gaj (Sq. Yard) = 9 sq.ft
+  // 1 Acre = 43,560 sq.ft (approx 1.6 Bigha)
+  const getCalculatedSqFt = (val: number, unit: 'sq.ft' | 'bigha' | 'biswa' | 'gaj' | 'acre') => {
+    if (!val || isNaN(val)) return 0;
+    switch (unit) {
+      case 'bigha':
+        return Math.round(val * 27225);
+      case 'biswa':
+        return Math.round(val * 1361.25);
+      case 'gaj':
+        return Math.round(val * 9);
+      case 'acre':
+        return Math.round(val * 43560);
+      case 'sq.ft':
+      default:
+        return Math.round(val);
+    }
+  };
+
+  const handlePlotAreaChange = (val: number, unit = plotAreaUnit) => {
+    setPlotAreaValue(val);
+    const convertedSqFt = getCalculatedSqFt(val, unit);
+    setCarpetArea(convertedSqFt);
+  };
+
+  const handlePlotUnitChange = (newUnit: 'sq.ft' | 'bigha' | 'biswa' | 'gaj' | 'acre') => {
+    setPlotAreaUnit(newUnit);
+    let newVal = plotAreaValue;
+    if (newUnit === 'bigha' && newVal > 50) {
+      newVal = 2;
+      setPlotAreaValue(newVal);
+    } else if (newUnit === 'acre' && newVal > 30) {
+      newVal = 1;
+      setPlotAreaValue(newVal);
+    } else if (newUnit === 'biswa' && newVal > 200) {
+      newVal = 10;
+      setPlotAreaValue(newVal);
+    } else if (newUnit === 'gaj' && (newVal > 5000 || newVal < 10)) {
+      newVal = 200;
+      setPlotAreaValue(newVal);
+    } else if (newUnit === 'sq.ft' && newVal < 50) {
+      newVal = 1850;
+      setPlotAreaValue(newVal);
+    }
+    const convertedSqFt = getCalculatedSqFt(newVal, newUnit);
+    setCarpetArea(convertedSqFt);
+  };
+
+  const handleListingPurposeChange = (catKey: PropertyCategory) => {
+    setListingPurpose(catKey);
+    if (catKey === 'plots') {
+      if (!['Residential Plot', 'Commercial Land', 'Agricultural Land', 'Industrial Plot', 'Farmhouse Land'].includes(propertyType)) {
+        setPropertyType('Residential Plot');
+      }
+      setSelectedAmenities([
+        'Clear Title & Registry Ready',
+        'Immediate Dakhil Kharij (दाखिल खारिज)',
+        'Boundary Wall Done',
+        'Wide Road Access (30-60 Ft Road)',
+        'Electricity Transformer & Poles Connected'
+      ]);
+    } else if (catKey === 'commercial') {
+      if (!['Commercial Office', 'Commercial Shop', 'Commercial Land', 'Industrial Plot'].includes(propertyType)) {
+        setPropertyType('Commercial Office');
+      }
+    } else {
+      if (['Residential Plot', 'Commercial Land', 'Agricultural Land', 'Industrial Plot', 'Farmhouse Land', 'Commercial Office', 'Commercial Shop'].includes(propertyType)) {
+        setPropertyType('Villa');
+      }
+      setSelectedAmenities([
+        '24x7 Security & CCTV',
+        '100% Power Backup',
+        'Reserved Car Parking',
+        'Swimming Pool'
+      ]);
+    }
+  };
 
   // Step 2: Location & Validation
   const [city, setCity] = useState('Bangalore');
@@ -163,8 +271,11 @@ export const PostPropertyView: React.FC<PostPropertyViewProps> = ({
       setStep3Error('Please enter a valid price/rent amount greater than 0.');
       return;
     }
-    if (!carpetArea || carpetArea <= 0) {
-      setStep3Error('Please enter a valid carpet area in sq.ft.');
+    const effectiveArea = isPlotOrLand ? getCalculatedSqFt(plotAreaValue, plotAreaUnit) : carpetArea;
+    if (!effectiveArea || effectiveArea <= 0) {
+      setStep3Error(isPlotOrLand 
+        ? 'Please enter a valid plot area (जमीन का क्षेत्रफल) greater than 0.' 
+        : 'Please enter a valid carpet area in sq.ft.');
       return;
     }
     setStep3Error(null);
@@ -317,7 +428,7 @@ export const PostPropertyView: React.FC<PostPropertyViewProps> = ({
     }
   };
 
-  const availableAmenities = [
+  const residentialAmenities = [
     '24x7 Security & CCTV',
     '100% Power Backup',
     'Reserved Car Parking',
@@ -329,6 +440,22 @@ export const PostPropertyView: React.FC<PostPropertyViewProps> = ({
     'EV Charging Point',
     'Intercom System'
   ];
+
+  const plotAmenities = [
+    'Clear Title & Registry Ready',
+    'Immediate Dakhil Kharij (दाखिल खारिज)',
+    'Boundary Wall Done',
+    'Wide Road Access (30-60 Ft Road)',
+    'Water Connection / Boring Available',
+    'Electricity Transformer & Poles Connected',
+    'Corner Plot (2 Sides Road)',
+    'Gated Colony / Boundary Township',
+    'Street Lights & Drainage System',
+    'Loan Available from Nationalized Banks',
+    'Park Facing / Green Belt'
+  ];
+
+  const availableAmenities = isPlotOrLand ? plotAmenities : residentialAmenities;
 
   const toggleAmenity = (name: string) => {
     if (selectedAmenities.includes(name)) {
@@ -368,8 +495,12 @@ export const PostPropertyView: React.FC<PostPropertyViewProps> = ({
 
     setIsSubmitting(true);
 
+    const finalEffectiveArea = isPlotOrLand 
+      ? getCalculatedSqFt(plotAreaValue, plotAreaUnit) 
+      : carpetArea;
+
     const formattedPriceStr = formatPrice(priceNumber, listingPurpose);
-    const pricePerSqFt = carpetArea > 0 ? Math.round(priceNumber / carpetArea) : 0;
+    const pricePerSqFt = finalEffectiveArea > 0 ? Math.round(priceNumber / finalEffectiveArea) : 0;
 
     const uploadedImages = successfulMedia
       .filter((m) => m.type === 'image')
@@ -380,14 +511,20 @@ export const PostPropertyView: React.FC<PostPropertyViewProps> = ({
       .map((m) => m.secureUrl!);
 
     // Default architectural photo fallback if user only uploaded video
-    const fallbackImage = 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80';
+    const fallbackImage = isPlotOrLand
+      ? 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80'
+      : 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80';
 
     const finalImages = uploadedImages.length > 0
       ? uploadedImages
       : [fallbackImage];
 
+    const plotAreaDisplay = `${plotAreaValue} ${plotAreaUnit === 'bigha' ? 'Bigha' : plotAreaUnit === 'biswa' ? 'Biswa' : plotAreaUnit === 'gaj' ? 'Gaj' : plotAreaUnit === 'acre' ? 'Acre' : 'Sq.Ft'}`;
+
     const generatedTitle = customTitle.trim() || 
-      `${bedrooms > 0 ? `${bedrooms} BHK ` : ''}${propertyType} in ${locality || projectName || city}`;
+      (isPlotOrLand 
+        ? `${propertyType} (${plotAreaDisplay}) in ${locality || projectName || city}`
+        : `${bedrooms > 0 ? `${bedrooms} BHK ` : ''}${propertyType} in ${locality || projectName || city}`);
 
     const newProp: Property = {
       id: `prop-${Date.now()}`,
@@ -400,17 +537,21 @@ export const PostPropertyView: React.FC<PostPropertyViewProps> = ({
       price: priceNumber,
       priceDisplay: formattedPriceStr,
       pricePerSqFt: pricePerSqFt,
-      bedrooms: bedrooms,
-      bathrooms: bathrooms,
-      balconies: 2,
-      areaSqFt: Math.round(carpetArea * 1.2),
-      carpetAreaSqFt: carpetArea,
+      bedrooms: isPlotOrLand || isCommercialSpace ? 0 : bedrooms,
+      bathrooms: isPlotOrLand || isCommercialSpace ? 0 : bathrooms,
+      balconies: isPlotOrLand ? 0 : 2,
+      areaSqFt: finalEffectiveArea,
+      carpetAreaSqFt: finalEffectiveArea,
       status: possession.includes('Ready') ? 'Ready to Move' : 'Under Construction',
       possession: possession,
-      furnishing: furnishing,
+      furnishing: isPlotOrLand ? 'Unfurnished' : furnishing,
       facing: facing,
-      floor: propertyType === 'Villa' ? 'G+2 Independent Villa' : '4th of 12 Floors',
+      floor: isPlotOrLand ? 'Plot / Vacant Land' : (propertyType === 'Villa' ? 'G+2 Independent Villa' : '4th of 12 Floors'),
       reraId: 'UPRERA-VERIFIED-2026',
+      plotAreaUnit: isPlotOrLand ? plotAreaUnit : undefined,
+      plotAreaValue: isPlotOrLand ? plotAreaValue : undefined,
+      boundaryWall: isPlotOrLand ? boundaryWall : undefined,
+      cornerPlot: isPlotOrLand ? cornerPlot : undefined,
       isVerified: true,
       isZeroBrokerage: true,
       isFeatured: true,
@@ -418,10 +559,10 @@ export const PostPropertyView: React.FC<PostPropertyViewProps> = ({
       videos: uploadedVideos.length > 0 ? uploadedVideos : undefined,
       amenities: selectedAmenities,
       localityHighlights: [
-        { title: 'Nearest Metro Station', distance: '1.2 km', type: 'metro' },
-        { title: 'International Airport Link', distance: '30 mins', type: 'airport' },
+        { title: 'Nearest Main Highway / Road', distance: '500 m', type: 'highway' },
+        { title: 'Nearest Metro / Railway Link', distance: '1.5 km', type: 'metro' },
         { title: 'Super Specialty Hospital', distance: '2.5 km', type: 'hospital' },
-        { title: 'Top Ranked School', distance: '1.0 km', type: 'school' }
+        { title: 'Top Ranked School / University', distance: '1.0 km', type: 'school' }
       ],
       postedBy: {
         name: contactName || currentUser?.name || resolveUserDisplayName(null, currentUser?.email) || 'Verified Owner',
@@ -431,7 +572,9 @@ export const PostPropertyView: React.FC<PostPropertyViewProps> = ({
         userId: currentUser?.id
       },
       postedByEmail: contactEmail || currentUser?.email,
-      description: description || `Splendid ${propertyType} offered with zero brokerage in prime ${city}. Complete with ${selectedAmenities.slice(0, 3).join(', ')}. Clear title, immediate loan sanction available.`,
+      description: description || (isPlotOrLand 
+        ? `Prime ${propertyType} (${plotAreaDisplay} / ${finalEffectiveArea} sq.ft) with clear registry title offered with zero brokerage in ${city}. Road facing, peaceful locality, high investment growth potential.`
+        : `Splendid ${propertyType} offered with zero brokerage in prime ${city}. Complete with ${selectedAmenities.slice(0, 3).join(', ')}. Clear title, immediate loan sanction available.`),
       createdAt: new Date().toISOString().split('T')[0],
       approvalStatus: 'pending' // Restricted: Must be approved by Admin before showing on public website
     };
@@ -612,22 +755,22 @@ export const PostPropertyView: React.FC<PostPropertyViewProps> = ({
                 <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
                   Listing For:
                 </label>
-                <div className="grid grid-cols-4 gap-2">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                   {(
                     [
                       { key: 'buy', label: 'Sale (Buy)' },
                       { key: 'rent', label: 'Rent' },
                       { key: 'commercial', label: 'Commercial' },
-                      { key: 'plots', label: 'Plots' },
+                      { key: 'plots', label: 'Plots & Land (प्लाॅट / जमीन)' },
                     ] as const
                   ).map((cat) => (
                     <button
                       key={cat.key}
                       type="button"
-                      onClick={() => setListingPurpose(cat.key)}
-                      className={`py-3 rounded-xl border text-xs font-bold transition-all cursor-pointer ${
+                      onClick={() => handleListingPurposeChange(cat.key)}
+                      className={`py-3 px-2 rounded-xl border text-xs font-bold transition-all cursor-pointer text-center ${
                         listingPurpose === cat.key
-                          ? 'border-blue-600 bg-blue-50 text-blue-600 shadow-xs'
+                          ? 'border-blue-600 bg-blue-50 text-blue-600 shadow-xs ring-2 ring-blue-100'
                           : 'border-slate-200 text-slate-700 hover:bg-slate-50'
                       }`}
                     >
@@ -641,50 +784,78 @@ export const PostPropertyView: React.FC<PostPropertyViewProps> = ({
                 <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
                   Property Type:
                 </label>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5">
                   {(
-                    [
-                      'Villa',
-                      'Luxury Apartment',
-                      'Apartment',
-                      'Independent Floor',
-                      'Penthouse',
-                      'Commercial Office',
-                      'Residential Plot',
-                    ] as const
-                  ).map((type) => (
+                    listingPurpose === 'plots'
+                      ? [
+                          { type: 'Residential Plot' as PropertyType, label: 'Residential Plot', sub: 'आवासीय प्लॉट' },
+                          { type: 'Agricultural Land' as PropertyType, label: 'Agricultural Land', sub: 'कृषि भूमि / खेत' },
+                          { type: 'Commercial Land' as PropertyType, label: 'Commercial Land', sub: 'कमर्शियल जमीन' },
+                          { type: 'Farmhouse Land' as PropertyType, label: 'Farmhouse Land', sub: 'फार्महाउस जमीन' },
+                          { type: 'Industrial Plot' as PropertyType, label: 'Industrial Plot', sub: 'औद्योगिक प्लॉट' },
+                        ]
+                      : listingPurpose === 'commercial'
+                      ? [
+                          { type: 'Commercial Office' as PropertyType, label: 'Commercial Office', sub: 'ऑफिस स्पेस' },
+                          { type: 'Commercial Shop' as PropertyType, label: 'Commercial Shop', sub: 'दुकान / शोरूम' },
+                          { type: 'Commercial Land' as PropertyType, label: 'Commercial Land', sub: 'कमर्शियल जमीन' },
+                          { type: 'Industrial Plot' as PropertyType, label: 'Industrial Plot', sub: 'औद्योगिक प्लॉट' },
+                        ]
+                      : [
+                          { type: 'Villa' as PropertyType, label: 'Villa', sub: 'स्वतंत्र विला / कोठी' },
+                          { type: 'Luxury Apartment' as PropertyType, label: 'Luxury Apartment', sub: 'प्रीमियम फ्लैट' },
+                          { type: 'Apartment' as PropertyType, label: 'Apartment', sub: 'अपार्टमेंट' },
+                          { type: 'Independent Floor' as PropertyType, label: 'Independent Floor', sub: 'इंडिपेंडेंट फ्लोर' },
+                          { type: 'Penthouse' as PropertyType, label: 'Penthouse', sub: 'टॉप पेंटहाउस' },
+                          { type: 'Residential Plot' as PropertyType, label: 'Residential Plot', sub: 'आवासीय प्लॉट' },
+                          { type: 'Agricultural Land' as PropertyType, label: 'Agricultural Land', sub: 'कृषि भूमि / खेत' },
+                          { type: 'Commercial Land' as PropertyType, label: 'Commercial Land', sub: 'कमर्शियल जमीन' },
+                        ]
+                  ).map((item) => (
                     <button
-                      key={type}
+                      key={item.type}
                       type="button"
-                      onClick={() => setPropertyType(type)}
+                      onClick={() => setPropertyType(item.type)}
                       className={`p-3 rounded-xl border text-xs font-bold transition-all cursor-pointer text-left ${
-                        propertyType === type
-                          ? 'border-blue-600 bg-blue-50 text-blue-600 shadow-xs'
+                        propertyType === item.type
+                          ? 'border-blue-600 bg-blue-50/90 text-blue-700 shadow-xs ring-2 ring-blue-100'
                           : 'border-slate-200 text-slate-700 hover:bg-slate-50'
                       }`}
                     >
-                      {type}
+                      <div className="font-bold truncate">{item.label}</div>
+                      <div className="text-[10px] text-slate-400 font-medium truncate mt-0.5">{item.sub}</div>
                     </button>
                   ))}
                 </div>
               </div>
 
-              {propertyType !== 'Residential Plot' && propertyType !== 'Commercial Office' && (
-                <div className="grid grid-cols-2 gap-4">
+              {/* For Built Spaces (Houses, Apartments, Offices, Shops): Show Rooms/BHK & Bathrooms/Washrooms */}
+              {showBhkAndBathrooms && (
+                <div className="grid grid-cols-2 gap-4 animate-in fade-in">
                   <div>
                     <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
-                      Bedrooms (BHK)
+                      {isCommercialSpace ? 'Rooms / Cabins (कमरे/केबिन)' : 'Bedrooms (BHK)'}
                     </label>
                     <CustomDropdown
                       value={bedrooms}
                       onChange={(val) => setBedrooms(Number(val))}
-                      options={[
-                        { value: 1, label: '1 BHK' },
-                        { value: 2, label: '2 BHK' },
-                        { value: 3, label: '3 BHK' },
-                        { value: 4, label: '4 BHK' },
-                        { value: 5, label: '5+ BHK Villa' },
-                      ]}
+                      options={
+                        isCommercialSpace
+                          ? [
+                              { value: 1, label: '1 Room / Cabin' },
+                              { value: 2, label: '2 Rooms / Cabins' },
+                              { value: 3, label: '3 Rooms / Cabins' },
+                              { value: 4, label: '4 Rooms / Cabins' },
+                              { value: 5, label: '5+ Rooms / Cabins' },
+                            ]
+                          : [
+                              { value: 1, label: '1 BHK' },
+                              { value: 2, label: '2 BHK' },
+                              { value: 3, label: '3 BHK' },
+                              { value: 4, label: '4 BHK' },
+                              { value: 5, label: '5+ BHK Villa' },
+                            ]
+                      }
                       theme="subtle"
                       size="md"
                     />
@@ -692,21 +863,77 @@ export const PostPropertyView: React.FC<PostPropertyViewProps> = ({
 
                   <div>
                     <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
-                      Bathrooms
+                      {isCommercialSpace ? 'Washrooms / Toilets (वॉशरूम)' : 'Bathrooms'}
                     </label>
                     <CustomDropdown
                       value={bathrooms}
                       onChange={(val) => setBathrooms(Number(val))}
+                      options={
+                        isCommercialSpace
+                          ? [
+                              { value: 1, label: '1 Washroom' },
+                              { value: 2, label: '2 Washrooms' },
+                              { value: 3, label: '3 Washrooms' },
+                              { value: 4, label: '4+ Washrooms' },
+                            ]
+                          : [
+                              { value: 1, label: '1 Bathroom' },
+                              { value: 2, label: '2 Bathrooms' },
+                              { value: 3, label: '3 Bathrooms' },
+                              { value: 4, label: '4 Bathrooms' },
+                              { value: 5, label: '5+ Bathrooms' },
+                            ]
+                      }
+                      theme="subtle"
+                      size="md"
+                    />
+                  </div>
+                </div>
+              )}
+
+              {/* For Plot / Land: Directly Show Land Area & Measurement Unit (कितने स्क्वायर फीट या कितने बीघे का जमीन है) */}
+              {isPlotOrLand && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 animate-in fade-in">
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                      Plot / Land Area (जमीन का क्षेत्रफल) *
+                    </label>
+                    <input
+                      type="number"
+                      min={0.01}
+                      step={plotAreaUnit === 'bigha' || plotAreaUnit === 'acre' ? 0.01 : 1}
+                      value={plotAreaValue}
+                      onChange={(e) => handlePlotAreaChange(Number(e.target.value))}
+                      placeholder={plotAreaUnit === 'bigha' ? 'e.g. 2' : 'e.g. 1850'}
+                      className="w-full p-3 rounded-xl border border-slate-200 text-sm font-bold bg-white text-slate-900 focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                      Measurement Unit (माप इकाई) *
+                    </label>
+                    <CustomDropdown
+                      value={plotAreaUnit}
+                      onChange={(val) => handlePlotUnitChange(val as any)}
                       options={[
-                        { value: 1, label: '1 Bathroom' },
-                        { value: 2, label: '2 Bathrooms' },
-                        { value: 3, label: '3 Bathrooms' },
-                        { value: 4, label: '4 Bathrooms' },
-                        { value: 5, label: '5+ Bathrooms' },
+                        { value: 'sq.ft', label: 'Square Feet (वर्ग फुट)' },
+                        { value: 'bigha', label: 'Bigha (बीघा)' },
+                        { value: 'gaj', label: 'Gaj / Sq.Yards (वर्ग गज)' },
+                        { value: 'biswa', label: 'Biswa (बिस्वा)' },
+                        { value: 'acre', label: 'Acre (एकड़)' },
                       ]}
                       theme="subtle"
                       size="md"
                     />
+                  </div>
+
+                  {/* Clean Equivalent Area Display */}
+                  <div className="sm:col-span-2 flex items-center justify-between px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs">
+                    <span className="font-semibold text-slate-600">कुल क्षेत्रफल (Equivalent Area):</span>
+                    <span className="font-extrabold text-blue-700 bg-blue-50 px-2.5 py-0.5 rounded-md border border-blue-200">
+                      {getCalculatedSqFt(plotAreaValue, plotAreaUnit).toLocaleString('en-IN')} Sq. Ft.
+                    </span>
                   </div>
                 </div>
               )}
@@ -900,7 +1127,7 @@ export const PostPropertyView: React.FC<PostPropertyViewProps> = ({
             <div className="space-y-5">
               <div>
                 <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
-                  {listingPurpose === 'rent' ? 'Expected Monthly Rent (₹)' : 'Expected Price (₹)'}
+                  {listingPurpose === 'rent' ? 'Expected Monthly Rent (₹) *' : 'Expected Total Price (₹) *'}
                 </label>
                 <div className="relative">
                   <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 font-bold text-sm">
@@ -915,80 +1142,207 @@ export const PostPropertyView: React.FC<PostPropertyViewProps> = ({
                     className="w-full pl-8 pr-4 py-3 rounded-xl border border-slate-200 text-sm font-bold focus:outline-none focus:border-blue-600"
                   />
                 </div>
-                <p className="text-xs text-blue-600 font-bold mt-1">
-                  Preview: {formatPrice(priceNumber, listingPurpose)}
-                </p>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
-                    Carpet Area (sq.ft) *
-                  </label>
-                  <input
-                    type="number"
-                    min={100}
-                    value={carpetArea}
-                    onChange={(e) => setCarpetArea(Number(e.target.value))}
-                    className="w-full p-3 rounded-xl border border-slate-200 text-sm font-semibold focus:outline-none focus:border-blue-600"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
-                    Furnishing Status
-                  </label>
-                  <CustomDropdown
-                    value={furnishing}
-                    onChange={(val) => setFurnishing(val)}
-                    options={[
-                      { value: 'Furnished', label: 'Furnished' },
-                      { value: 'Semi-Furnished', label: 'Semi-Furnished' },
-                      { value: 'Unfurnished', label: 'Unfurnished' },
-                    ]}
-                    theme="subtle"
-                    size="md"
-                  />
+                
+                {/* Dynamic Price & Rate Breakdown Preview */}
+                <div className="mt-2 flex flex-wrap items-center gap-2 text-xs">
+                  <span className="font-bold text-blue-700 bg-blue-50 px-2.5 py-1 rounded-lg border border-blue-200">
+                    Total: {formatPrice(priceNumber, listingPurpose)}
+                  </span>
+                  {isPlotOrLand && plotAreaValue > 0 && (
+                    <>
+                      {plotAreaUnit !== 'sq.ft' && (
+                        <span className="font-extrabold text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200">
+                          Rate: ₹ {Math.round(priceNumber / plotAreaValue).toLocaleString('en-IN')} / {plotAreaUnit === 'bigha' ? 'बीघा' : plotAreaUnit === 'biswa' ? 'बिस्वा' : plotAreaUnit === 'gaj' ? 'गज' : 'एकड़'}
+                        </span>
+                      )}
+                      {getCalculatedSqFt(plotAreaValue, plotAreaUnit) > 0 && (
+                        <span className="font-bold text-slate-600 bg-slate-100 px-2.5 py-1 rounded-lg">
+                          ₹ {Math.round(priceNumber / getCalculatedSqFt(plotAreaValue, plotAreaUnit)).toLocaleString('en-IN')} / sq.ft
+                        </span>
+                      )}
+                    </>
+                  )}
+                  {!isPlotOrLand && carpetArea > 0 && (
+                    <span className="font-bold text-slate-600 bg-slate-100 px-2.5 py-1 rounded-lg">
+                      ₹ {Math.round(priceNumber / carpetArea).toLocaleString('en-IN')} / sq.ft
+                    </span>
+                  )}
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
-                    Possession Status
-                  </label>
-                  <CustomDropdown
-                    value={possession}
-                    onChange={(val) => setPossession(val)}
-                    options={[
-                      { value: 'Ready to Move', label: 'Ready to Move (Immediate)' },
-                      { value: 'Within 3 Months', label: 'Within 3 Months' },
-                      { value: 'Under Construction (2026)', label: 'Under Construction (2026)' },
-                    ]}
-                    theme="subtle"
-                    size="md"
-                  />
+              {/* FOR PLOT & LAND: Multi-Unit Area Dimension Selector */}
+              {isPlotOrLand ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                      Plot / Land Area (जमीन का क्षेत्रफल) *
+                    </label>
+                    <input
+                      type="number"
+                      min={0.01}
+                      step={plotAreaUnit === 'bigha' || plotAreaUnit === 'acre' ? 0.01 : 1}
+                      value={plotAreaValue}
+                      onChange={(e) => handlePlotAreaChange(Number(e.target.value))}
+                      placeholder={plotAreaUnit === 'bigha' ? 'e.g. 2' : 'e.g. 1850'}
+                      className="w-full p-3 rounded-xl border border-slate-200 text-sm font-bold bg-white text-slate-900 focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                      Measurement Unit (माप इकाई) *
+                    </label>
+                    <CustomDropdown
+                      value={plotAreaUnit}
+                      onChange={(val) => handlePlotUnitChange(val as any)}
+                      options={[
+                        { value: 'sq.ft', label: 'Square Feet (वर्ग फुट)' },
+                        { value: 'bigha', label: 'Bigha (बीघा)' },
+                        { value: 'gaj', label: 'Gaj / Sq.Yards (वर्ग गज)' },
+                        { value: 'biswa', label: 'Biswa (बिस्वा)' },
+                        { value: 'acre', label: 'Acre (एकड़)' },
+                      ]}
+                      theme="subtle"
+                      size="md"
+                    />
+                  </div>
+
+                  <div className="sm:col-span-2 flex items-center justify-between px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs">
+                    <span className="font-semibold text-slate-600">कुल क्षेत्रफल (Equivalent Area):</span>
+                    <span className="font-extrabold text-blue-700 bg-blue-50 px-2.5 py-0.5 rounded-md border border-blue-200">
+                      {getCalculatedSqFt(plotAreaValue, plotAreaUnit).toLocaleString('en-IN')} Sq. Ft.
+                    </span>
+                  </div>
                 </div>
+              ) : (
+                /* FOR BUILT HOMES: Standard Carpet Area */
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                      Carpet Area (sq.ft) *
+                    </label>
+                    <input
+                      type="number"
+                      min={100}
+                      value={carpetArea}
+                      onChange={(e) => setCarpetArea(Number(e.target.value))}
+                      className="w-full p-3 rounded-xl border border-slate-200 text-sm font-semibold focus:outline-none focus:border-blue-600"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                      Furnishing Status
+                    </label>
+                    <CustomDropdown
+                      value={furnishing}
+                      onChange={(val) => setFurnishing(val)}
+                      options={[
+                        { value: 'Furnished', label: 'Furnished' },
+                        { value: 'Semi-Furnished', label: 'Semi-Furnished' },
+                        { value: 'Unfurnished', label: 'Unfurnished' },
+                      ]}
+                      theme="subtle"
+                      size="md"
+                    />
+                  </div>
+                </div>
+              )}
+
+              {/* Land Zoning / Permitted Use (For Plots) OR Possession Status */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {isPlotOrLand ? (
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                      Land Zoning / Permitted Use (भू-उपयोग)
+                    </label>
+                    <CustomDropdown
+                      value={landZoning}
+                      onChange={(val) => setLandZoning(val as any)}
+                      options={[
+                        { value: 'Residential', label: 'Residential (आवासीय कॉलोनी / प्लॉट)' },
+                        { value: 'Commercial', label: 'Commercial (व्यावसायिक उपयोग)' },
+                        { value: 'Agricultural', label: 'Agricultural / Kheti (कृषि योग्य खेत)' },
+                        { value: 'Industrial', label: 'Industrial (औद्योगिक क्षेत्र)' },
+                      ]}
+                      theme="subtle"
+                      size="md"
+                    />
+                  </div>
+                ) : (
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                      Possession Status
+                    </label>
+                    <CustomDropdown
+                      value={possession}
+                      onChange={(val) => setPossession(val)}
+                      options={[
+                        { value: 'Ready to Move', label: 'Ready to Move (Immediate)' },
+                        { value: 'Within 3 Months', label: 'Within 3 Months' },
+                        { value: 'Under Construction (2026)', label: 'Under Construction (2026)' },
+                      ]}
+                      theme="subtle"
+                      size="md"
+                    />
+                  </div>
+                )}
 
                 <div>
                   <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
-                    Facing Direction
+                    {isPlotOrLand ? 'Registry & Possession Timeline' : 'Facing Direction'}
+                  </label>
+                  {isPlotOrLand ? (
+                    <CustomDropdown
+                      value={possession}
+                      onChange={(val) => setPossession(val)}
+                      options={[
+                        { value: 'Ready to Move', label: 'Immediate Registry & Possession (कब्ज़ा तुरंत)' },
+                        { value: 'Within 3 Months', label: 'Possession in 1-3 Months' },
+                        { value: 'Under Construction (2026)', label: 'Township Under Development' },
+                      ]}
+                      theme="subtle"
+                      size="md"
+                    />
+                  ) : (
+                    <CustomDropdown
+                      value={facing}
+                      onChange={(val) => setFacing(val)}
+                      options={[
+                        { value: 'North', label: 'North' },
+                        { value: 'East', label: 'East' },
+                        { value: 'North-East', label: 'North-East (Vaastu Compliant)' },
+                        { value: 'West', label: 'West' },
+                        { value: 'South-East', label: 'South-East' },
+                      ]}
+                      theme="subtle"
+                      size="md"
+                    />
+                  )}
+                </div>
+              </div>
+
+              {/* Facing Direction for Plot/Land */}
+              {isPlotOrLand && (
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                    Plot Facing Direction (दिशा)
                   </label>
                   <CustomDropdown
                     value={facing}
                     onChange={(val) => setFacing(val)}
                     options={[
-                      { value: 'North', label: 'North' },
-                      { value: 'East', label: 'East' },
-                      { value: 'North-East', label: 'North-East (Vaastu Compliant)' },
-                      { value: 'West', label: 'West' },
-                      { value: 'South-East', label: 'South-East' },
+                      { value: 'East', label: 'East Facing (पूर्व दिशा - शुभ/वास्तु)' },
+                      { value: 'North', label: 'North Facing (उत्तर दिशा)' },
+                      { value: 'North-East', label: 'North-East (ईशान कोण / Vaastu Compliant)' },
+                      { value: 'West', label: 'West Facing (पश्चिम दिशा)' },
+                      { value: 'South-East', label: 'South-East Facing (आग्नेय कोण)' },
                     ]}
                     theme="subtle"
                     size="md"
                   />
                 </div>
-              </div>
+              )}
 
               {step3Error && (
                 <div className="p-3.5 rounded-xl bg-rose-50 border border-rose-200 flex items-center gap-2 text-xs font-bold text-rose-800 animate-in fade-in">
@@ -1452,13 +1806,21 @@ export const PostPropertyView: React.FC<PostPropertyViewProps> = ({
                   </div>
                   <p className="text-xs text-amber-950 leading-relaxed font-medium">
                     {currentStep === 1 &&
-                      'Select the precise property type (e.g. Villa or Apartment) and exact BHK configuration to help genuine buyers locate your listing faster.'}
+                      (isPlotOrLand
+                        ? 'अपनी जमीन या प्लॉट का सटीक क्षेत्रफल दर्ज करें और इकाई (बीघा, गज, या स्क्वायर फुट) चुनें।'
+                        : isCommercialSpace
+                        ? 'Select the number of rooms/cabins and washrooms available in your commercial office or shop.'
+                        : 'Select the precise property type (e.g. Villa or Apartment) and exact BHK configuration to help genuine buyers locate your listing faster.')}
                     {currentStep === 2 &&
                       'Mention nearby landmarks, highways, or metro stations alongside your locality. Verified landmarks generate up to 3x more buyer inquiries.'}
                     {currentStep === 3 &&
-                      'Set a realistic and competitive price aligned with current market trends in your area. Balanced pricing closes deals twice as quickly.'}
+                      (isPlotOrLand
+                        ? 'अपनी जमीन का माप बीघा, बिस्वा, गज या स्क्वायर फुट में दर्ज करें। सिस्टम स्वचालित रूप से स्क्वायर फुट और प्रति बीघा/गज दर कैलकुलेट कर देता है।'
+                        : 'Set a realistic and competitive price aligned with current market trends in your area. Balanced pricing closes deals twice as quickly.')}
                     {currentStep === 4 &&
-                      'Upload high-quality daylight photographs and walkthrough video tours directly from your device. Real media generates up to 5x more verified buyer calls.'}
+                      (isPlotOrLand
+                        ? 'प्लॉट या जमीन की चारों तरफ की स्पष्ट तस्वीरें, मुख्य सड़क का दृश्य व वीडियो अपलोड करें। ओरिजिनल तस्वीरें खरीदारों का भरोसा 5 गुना बढ़ाती हैं।'
+                        : 'Upload high-quality daylight photographs and walkthrough video tours directly from your device. Real media generates up to 5x more verified buyer calls.')}
                   </p>
                 </div>
 

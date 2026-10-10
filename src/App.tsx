@@ -207,6 +207,24 @@ export default function App() {
     }
   }, [shortlist]);
 
+  // Deep-linking: Automatically open property detail if shared link URL contains ?property=<id>
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    try {
+      const urlParams = new URLSearchParams(window.location.search);
+      const propertyId = urlParams.get('property');
+      if (propertyId && properties.length > 0) {
+        const found = properties.find((p) => p.id === propertyId);
+        if (found) {
+          setSelectedProperty(found);
+          setActiveView('property-detail');
+        }
+      }
+    } catch (e) {
+      console.warn('URL property deep-link parse notice:', e);
+    }
+  }, [properties]);
+
   // Toast Notification
   const [toast, setToast] = useState<string | null>(null);
   const showToast = (msg: string) => {
@@ -312,6 +330,13 @@ export default function App() {
     setSelectedProperty(property);
     setPreviousView(activeView);
     setActiveView('property-detail');
+    if (typeof window !== 'undefined') {
+      try {
+        const url = new URL(window.location.href);
+        url.searchParams.set('property', property.id);
+        window.history.replaceState({}, '', url.toString());
+      } catch {}
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -662,6 +687,13 @@ export default function App() {
           <PropertyDetailView
             property={selectedProperty}
             onBack={() => {
+              if (typeof window !== 'undefined') {
+                try {
+                  const url = new URL(window.location.href);
+                  url.searchParams.delete('property');
+                  window.history.replaceState({}, '', url.toString());
+                } catch {}
+              }
               setActiveView(previousView === 'city-properties' ? 'city-properties' : 'home');
               window.scrollTo({ top: 0, behavior: 'auto' });
             }}
@@ -1053,6 +1085,8 @@ export default function App() {
                         { value: 'Penthouse', label: 'Penthouse' },
                         { value: 'Commercial Office', label: 'Commercial Office' },
                         { value: 'Residential Plot', label: 'Residential Plot' },
+                        { value: 'Agricultural Land', label: 'Agricultural Land (कृषि भूमि / खेत)' },
+                        { value: 'Commercial Land', label: 'Commercial Land / Plot' },
                       ]}
                       theme="subtle"
                       size="sm"

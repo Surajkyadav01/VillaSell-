@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { 
   Heart, 
   MapPin, 
@@ -12,17 +12,21 @@ import {
   ArrowRight,
   Sparkles,
   Building,
-  Video
+  Video,
+  Check,
+  Share2
 } from 'lucide-react';
 import { Property } from '../types/property';
 import { BRAND_CONFIG } from '../data/brandConfig';
 import { LazyImage } from './LazyImage';
+import { ShareModal } from './ShareModal';
 
 interface PropertyCardProps {
   property: Property;
   isShortlisted: boolean;
   onToggleShortlist: (id: string) => void;
   onSelectProperty: (property: Property) => void;
+  onShare?: (property: Property) => void;
 }
 
 export const PropertyCard: React.FC<PropertyCardProps> = ({
@@ -30,7 +34,19 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({
   isShortlisted,
   onToggleShortlist,
   onSelectProperty,
+  onShare,
 }) => {
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+
+  const handleOpenShare = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (onShare) {
+      onShare(property);
+    } else {
+      setIsShareModalOpen(true);
+    }
+  };
+
   const whatsappMessage = encodeURIComponent(
     `Hello VillaSell, I am interested in: "${property.title}" (Price: ${property.priceDisplay}, Location: ${property.locality}, ${property.city}). Please connect me with the seller.`
   );
@@ -78,22 +94,37 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({
           )}
         </div>
 
-        {/* Shortlist Heart Button */}
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            onToggleShortlist(property.id);
-          }}
-          className="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/90 backdrop-blur-md hover:bg-white text-slate-700 flex items-center justify-center transition-all shadow-md cursor-pointer hover:scale-110 active:scale-90"
-          title={isShortlisted ? 'Remove from Shortlist' : 'Add to Shortlist'}
-          aria-label="Toggle shortlist"
-        >
-          <Heart
-            className={`w-4 h-4 transition-colors ${
-              isShortlisted ? 'fill-rose-500 text-rose-500' : 'text-slate-600'
-            }`}
-          />
-        </button>
+        {/* Top Right Action Buttons: Share & Shortlist */}
+        <div className="absolute top-3 right-3 flex items-center gap-1.5 z-10">
+          {/* Share Button */}
+          <button
+            type="button"
+            onClick={handleOpenShare}
+            className="w-9 h-9 rounded-full bg-white/90 backdrop-blur-md hover:bg-white text-slate-700 hover:text-blue-600 flex items-center justify-center transition-all shadow-md cursor-pointer hover:scale-110 active:scale-90"
+            title="Share Property (WhatsApp, Link & Social Media)"
+            aria-label="Share property"
+          >
+            <Share2 className="w-4 h-4" />
+          </button>
+
+          {/* Shortlist Heart Button */}
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              onToggleShortlist(property.id);
+            }}
+            className="w-9 h-9 rounded-full bg-white/90 backdrop-blur-md hover:bg-white text-slate-700 flex items-center justify-center transition-all shadow-md cursor-pointer hover:scale-110 active:scale-90"
+            title={isShortlisted ? 'Remove from Shortlist' : 'Add to Shortlist'}
+            aria-label="Toggle shortlist"
+          >
+            <Heart
+              className={`w-4 h-4 transition-colors ${
+                isShortlisted ? 'fill-rose-500 text-rose-500' : 'text-slate-600'
+              }`}
+            />
+          </button>
+        </div>
 
         {/* Bottom Banner inside Image: Property Type & Status */}
         <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-white text-xs">
@@ -153,41 +184,65 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({
               </div>
             ) : (
               <div className="flex items-center gap-1.5 text-slate-700">
-                <Sparkles className="w-3.5 h-3.5 text-blue-600 shrink-0" />
-                <span className="font-bold">{property.propertyType}</span>
+                <Sparkles className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                <span className="font-bold truncate">{property.propertyType}</span>
+              </div>
+            )}
+
+            {property.bathrooms > 0 ? (
+              <div className="flex items-center gap-1.5 text-slate-700">
+                <Bath className="w-3.5 h-3.5 text-blue-600 shrink-0" />
+                <span className="font-bold">{property.bathrooms} Baths</span>
+              </div>
+            ) : (
+              <div className="flex items-center gap-1.5 text-slate-700">
+                <Check className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                <span className="font-bold truncate text-emerald-800">
+                  {property.cornerPlot ? 'Corner Plot' : property.boundaryWall ? `Wall: ${property.boundaryWall}` : 'Clear Title'}
+                </span>
               </div>
             )}
 
             <div className="flex items-center gap-1.5 text-slate-700">
-              <Bath className="w-3.5 h-3.5 text-blue-600 shrink-0" />
-              <span className="font-bold">{property.bathrooms} Baths</span>
-            </div>
-
-            <div className="flex items-center gap-1.5 text-slate-700">
               <Maximize2 className="w-3.5 h-3.5 text-blue-600 shrink-0" />
-              <span className="font-bold">{property.areaSqFt} sq.ft</span>
+              <span className="font-bold truncate">
+                {property.plotAreaValue && property.plotAreaUnit 
+                  ? `${property.plotAreaValue} ${property.plotAreaUnit}`
+                  : `${property.areaSqFt} sq.ft`}
+              </span>
             </div>
           </div>
         </div>
 
-        {/* Action Buttons: View Details & Direct WhatsApp */}
-        <div className="pt-2 border-t border-slate-100 flex items-center gap-2">
+        {/* Action Buttons: View Details, WhatsApp, Share & Direct Call */}
+        <div className="pt-2.5 border-t border-slate-100 flex items-center gap-1.5 sm:gap-2">
           {/* WhatsApp Owner */}
           <a
             href={directWhatsAppLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-bold text-xs border border-emerald-200 transition-colors"
+            className="flex-1 flex items-center justify-center gap-1 px-2.5 py-2 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-bold text-xs border border-emerald-200 transition-colors"
             title="Chat directly on WhatsApp (+91 8383826205)"
           >
             <MessageCircle className="w-3.5 h-3.5 text-emerald-600" />
-            <span>WhatsApp</span>
+            <span className="hidden xs:inline">WhatsApp</span>
           </a>
+
+          {/* Quick Share Button */}
+          <button
+            type="button"
+            onClick={handleOpenShare}
+            className="p-2 rounded-xl bg-blue-50 hover:bg-blue-100 text-blue-700 transition-colors border border-blue-200 flex items-center justify-center cursor-pointer hover:scale-105 active:scale-95"
+            title="Share Property (WhatsApp, Link & Social Media)"
+            aria-label="Share property"
+          >
+            <Share2 className="w-3.5 h-3.5 text-blue-600" />
+          </button>
 
           {/* Quick Call */}
           <a
             href={`tel:${BRAND_CONFIG.phoneClean}`}
-            className="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors border border-slate-200"
+            className="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors border border-slate-200 flex items-center justify-center"
             title={`Call +91 8383826205`}
           >
             <Phone className="w-3.5 h-3.5 text-slate-700" />
@@ -196,13 +251,20 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({
           {/* Full Dedicated Page View Details */}
           <button
             onClick={() => onSelectProperty(property)}
-            className="flex-[1.3] flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-xs hover:shadow-md transition-all cursor-pointer transform active:scale-95"
+            className="flex-[1.2] flex items-center justify-center gap-1 px-3 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-xs hover:shadow-md transition-all cursor-pointer transform active:scale-95"
           >
-            <span>View Details</span>
+            <span>Details</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </button>
         </div>
       </div>
+
+      {/* Share Modal Dialog */}
+      <ShareModal
+        isOpen={isShareModalOpen}
+        onClose={() => setIsShareModalOpen(false)}
+        property={property}
+      />
     </div>
   );
 };

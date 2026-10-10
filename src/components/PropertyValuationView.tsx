@@ -60,6 +60,8 @@ export const PropertyValuationView: React.FC<PropertyValuationViewProps> = ({
     if (propertyType === 'Luxury Apartment') typeMultiplier = 1.15;
     if (propertyType === 'Commercial Office') typeMultiplier = 1.4;
     if (propertyType === 'Residential Plot') typeMultiplier = 0.85;
+    if (propertyType === 'Commercial Land') typeMultiplier = 1.15;
+    if (propertyType === 'Agricultural Land') typeMultiplier = 0.45;
 
     // Age discount/premium
     let ageMultiplier = 1.0;
@@ -213,7 +215,9 @@ export const PropertyValuationView: React.FC<PropertyValuationViewProps> = ({
                       { value: 'Apartment', label: 'Standard Apartment / Flat' },
                       { value: 'Penthouse', label: 'Penthouse' },
                       { value: 'Commercial Office', label: 'Commercial Space' },
-                      { value: 'Residential Plot', label: 'Residential Plot' }
+                      { value: 'Residential Plot', label: 'Residential Plot' },
+                      { value: 'Commercial Land', label: 'Commercial Land / Plot' },
+                      { value: 'Agricultural Land', label: 'Agricultural Land / Farm Land' }
                     ]}
                     theme="subtle"
                     size="sm"

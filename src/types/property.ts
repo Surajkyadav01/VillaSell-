@@ -8,7 +8,12 @@ export type PropertyType =
   | 'Penthouse' 
   | 'Commercial Office' 
   | 'Commercial Shop' 
-  | 'Residential Plot';
+  | 'Residential Plot'
+  | 'Commercial Land'
+  | 'Agricultural Land'
+  | 'Industrial Plot'
+  | 'Farmhouse Land'
+  | 'Plot / Land';
 
 export interface LocalityHighlight {
   title: string;
@@ -38,6 +43,10 @@ export interface Property {
   facing: 'North' | 'East' | 'North-East' | 'West' | 'South-East';
   floor: string;
   reraId?: string;
+  plotAreaUnit?: 'sq.ft' | 'bigha' | 'biswa' | 'gaj' | 'acre';
+  plotAreaValue?: number;
+  boundaryWall?: 'Yes' | 'No' | 'Fenced';
+  cornerPlot?: boolean;
   isVerified: boolean;
   isZeroBrokerage: boolean;
   isFeatured: boolean;

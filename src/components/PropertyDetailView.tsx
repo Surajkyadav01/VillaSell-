@@ -33,6 +33,7 @@ import {
 import { Property } from '../types/property';
 import { BRAND_CONFIG } from '../data/mockProperties';
 import { isVideoUrl } from '../services/cloudinary';
+import { ShareModal } from './ShareModal';
 
 interface PropertyDetailViewProps {
   property: Property;
@@ -53,6 +54,7 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({
 }) => {
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [copiedShare, setCopiedShare] = useState(false);
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
 
   // Combined gallery media list (images & videos)
   const mediaItems = useMemo(() => {
@@ -107,11 +109,7 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({
   }, [loanAmount, interestRate, tenureYears]);
 
   const handleShare = () => {
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(window.location.href);
-      setCopiedShare(true);
-      setTimeout(() => setCopiedShare(false), 2500);
-    }
+    setIsShareModalOpen(true);
   };
 
   const handleInquirySubmit = (e: React.FormEvent) => {
@@ -186,20 +184,12 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({
 
             <button
               onClick={handleShare}
-              className="flex items-center gap-1.5 px-3 py-2 rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50 text-xs font-semibold cursor-pointer"
-              title="Share Link"
+              className="flex items-center gap-1.5 px-3 py-2 rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50 text-xs font-semibold cursor-pointer transition-colors"
+              title="Share Property (WhatsApp, Link & Social Media)"
+              aria-label="Share property"
             >
-              {copiedShare ? (
-                <>
-                  <Check className="w-3.5 h-3.5 text-emerald-600" />
-                  <span className="text-emerald-700 font-bold">Copied!</span>
-                </>
-              ) : (
-                <>
-                  <Share2 className="w-3.5 h-3.5" />
-                  <span className="hidden sm:inline">Share</span>
-                </>
-              )}
+              <Share2 className="w-3.5 h-3.5 text-blue-600" />
+              <span className="hidden sm:inline">Share</span>
             </button>
 
             <a
@@ -345,10 +335,16 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({
                 </div>
 
                 <div className="bg-slate-50 p-3.5 rounded-xl border border-slate-100">
-                  <span className="text-xs text-slate-500 font-medium block mb-1">Carpet Area</span>
+                  <span className="text-xs text-slate-500 font-medium block mb-1">
+                    {property.plotAreaUnit ? 'Plot / Land Area' : 'Carpet Area'}
+                  </span>
                   <div className="flex items-center gap-1.5 font-bold text-slate-900 text-sm">
                     <Maximize2 className="w-4 h-4 text-blue-600" />
-                    <span>{property.carpetAreaSqFt} sq.ft</span>
+                    <span>
+                      {property.plotAreaValue && property.plotAreaUnit 
+                        ? `${property.plotAreaValue} ${property.plotAreaUnit === 'bigha' ? 'Bigha' : property.plotAreaUnit === 'biswa' ? 'Biswa' : property.plotAreaUnit === 'gaj' ? 'Gaj' : property.plotAreaUnit === 'acre' ? 'Acre' : 'Sq.Ft'} (${property.carpetAreaSqFt} sq.ft)`
+                        : `${property.carpetAreaSqFt} sq.ft`}
+                    </span>
                   </div>
                 </div>
 
@@ -361,10 +357,18 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({
                 </div>
 
                 <div className="bg-slate-50 p-3.5 rounded-xl border border-slate-100">
-                  <span className="text-xs text-slate-500 font-medium block mb-1">Furnishing</span>
+                  <span className="text-xs text-slate-500 font-medium block mb-1">
+                    {property.plotAreaUnit || property.bedrooms === 0 ? 'Boundary / Status' : 'Furnishing'}
+                  </span>
                   <div className="flex items-center gap-1.5 font-bold text-slate-900 text-sm">
-                    <Sparkles className="w-4 h-4 text-blue-600" />
-                    <span>{property.furnishing}</span>
+                    <Sparkles className="w-4 h-4 text-emerald-600" />
+                    <span>
+                      {property.boundaryWall 
+                        ? `Wall: ${property.boundaryWall}` 
+                        : property.cornerPlot 
+                        ? 'Corner Plot (2 Sides)' 
+                        : property.furnishing}
+                    </span>
                   </div>
                 </div>
 
@@ -740,7 +744,16 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({
           </div>
         )}
         {/* Mobile Sticky Floating Contact Bar (Instant WhatsApp & Direct Call on Phones) */}
-        <div className="fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200 px-3.5 py-2.5 flex items-center gap-2.5 lg:hidden shadow-2xl">
+        <div className="fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200 px-3.5 py-2.5 flex items-center gap-2 lg:hidden shadow-2xl">
+          <button
+            type="button"
+            onClick={handleShare}
+            className="p-2.5 rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700 transition-colors cursor-pointer shrink-0"
+            title="Share Property"
+            aria-label="Share property"
+          >
+            <Share2 className="w-4 h-4 text-blue-600" />
+          </button>
           <a
             href={whatsappInquiryUrl}
             target="_blank"
@@ -759,6 +772,13 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({
           </a>
         </div>
       </div>
+
+      {/* Share Modal Dialog */}
+      <ShareModal
+        isOpen={isShareModalOpen}
+        onClose={() => setIsShareModalOpen(false)}
+        property={property}
+      />
     </div>
   );
 };
